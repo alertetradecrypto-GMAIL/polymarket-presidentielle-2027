@@ -105,3 +105,16 @@ def test_one_failure_does_not_block(tmp_path, monkeypatch):
     setup(tmp_path, monkeypatch, hist)
     assert collect.run() == 0
     assert (tmp_path / "history" / "edouard-philippe.json").exists()
+
+
+def test_price_24h_for_dashboard(tmp_path, monkeypatch):
+    def hist(token, kw):
+        if kw.get("interval") == "1w":
+            return [(NOW - 86400 - 600, 0.20), (NOW - 900, 0.24)]
+        return []
+
+    setup(tmp_path, monkeypatch, hist)
+    collect.run()
+    c = json.loads((tmp_path / "candidates.json").read_text())["candidates"][0]
+    assert c["last_hist"] == 0.24
+    assert c["price_24h"] == 0.20           # point à ±30 min de last_t − 24 h

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Présidentielle 2027 · Polymarket</title>
+  <meta name="description" content="Suivi du marché Polymarket « Next French Presidential Election » : cours Oui/Non par candidat, volumes, moyennes mobiles.">
+  <meta name="color-scheme" content="dark light">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23131722'/%3E%3Cpath d='M5 22l7-8 5 5 10-11' fill='none' stroke='%233987e5' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lightweight-charts@5.2.1/dist/lightweight-charts.standalone.production.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <h1>Présidentielle 2027</h1>
+      <a id="event-link" class="sub" href="https://polymarket.com/event/next-french-presidential-election" target="_blank" rel="noopener">Polymarket · Next French Presidential Election ↗</a>
+    </div>
+    <dl class="kpis">
+      <div><dt>Volume total</dt><dd id="k-vol">—</dd></div>
+      <div><dt>Volume 24 h</dt><dd id="k-vol24">—</dd></div>
+      <div><dt>Mise à jour</dt><dd id="k-upd">—</dd></div>
+    </dl>
+  </header>
+
+  <main>
+    <section class="panel chart-panel" aria-label="Graphique">
+      <div class="toolbar" role="toolbar">
+        <div class="seg" id="tf" aria-label="Période">
+          <button data-v="1D">1J</button><button data-v="1W">1S</button><button data-v="1M">1M</button><button data-v="ALL">Tout</button>
+        </div>
+        <div class="seg" id="side" aria-label="Côté">
+          <button data-v="yes">Oui</button><button data-v="no">Non</button>
+        </div>
+        <div class="seg" id="ma" aria-label="Moyennes mobiles">
+          <button data-v="20">MM20</button><button data-v="50">MM50</button>
+        </div>
+        <label class="chk"><input type="checkbox" id="vol-toggle" checked> Volume</label>
+        <span class="step" id="step"></span>
+      </div>
+      <div class="legend" id="legend"></div>
+      <div class="chart-wrap">
+        <div id="chart"></div>
+        <div class="empty" id="chart-empty" hidden>Sélectionnez un candidat dans le tableau.</div>
+      </div>
+      <p class="note" id="note"></p>
+    </section>
+
+    <section class="panel" aria-label="Candidats">
+      <div class="table-head">
+        <h2>Candidats</h2>
+        <label class="chk"><input type="checkbox" id="hide-small" checked> Masquer &lt; 1 %</label>
+      </div>
+      <div class="table-wrap">
+        <table id="table">
+          <thead><tr>
+            <th class="c-sel" aria-label="Affiché"></th>
+            <th data-k="name">Candidat</th>
+            <th data-k="yes" class="num">Oui</th>
+            <th data-k="no" class="num">Non</th>
+            <th data-k="d24" class="num">Δ 24 h</th>
+            <th data-k="r24" class="num">Δ 24 h %</th>
+            <th data-k="vol24" class="num">Vol. 24 h</th>
+            <th data-k="vol" class="num">Vol. total</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note">Cliquer sur une ligne pour l'afficher ou la retirer du graphique (8 au maximum). Prix Oui = milieu de fourchette ; Non = 100 − Oui.</p>
+    </section>
+  </main>
+
+  <footer>Outil de suivi en lecture seule — données publiques Polymarket, collectées toutes les 15 min.</footer>
+</body>
+</html>

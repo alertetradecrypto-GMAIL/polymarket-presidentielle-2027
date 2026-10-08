@@ -14,18 +14,16 @@ Règles :
 """
 from __future__ import annotations
 
-import bisect
 import html
 import logging
 import sys
 import time
 
 import mailer
-from collect import read_json, write_json
+from collect import price_at, read_json, write_json  # noqa: F401 (price_at réexporté)
 from config import (
     ALERT_CONFIRM_PASSES,
     ALERT_MAX_AGE_S,
-    ALERT_REF_TOLERANCE_S,
     ALERT_REMIND_ABS,
     ALERT_REMIND_COOLDOWN_H,
     ALERT_STATE_FILE,
@@ -42,21 +40,6 @@ SENS = ("up", "down")
 
 
 # ---------------------------------------------------------------- calcul
-
-def price_at(points: list, target: int, tol: int = ALERT_REF_TOLERANCE_S) -> float | None:
-    """Prix du point le plus proche de `target`, à ±tol près (points triés par t)."""
-    if not points:
-        return None
-    times = [p[0] for p in points]
-    i = bisect.bisect_left(times, target)
-    best = None
-    for j in (i - 1, i):
-        if 0 <= j < len(points):
-            gap = abs(points[j][0] - target)
-            if gap <= tol and (best is None or gap < best[0]):
-                best = (gap, points[j][1])
-    return None if best is None else best[1]
-
 
 def evaluate(candidates: list, histories: dict, state: dict, now: int) -> list[dict]:
     """Met à jour les compteurs de `state` et renvoie les alertes à envoyer."""

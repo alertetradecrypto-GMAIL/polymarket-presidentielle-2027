@@ -6,6 +6,7 @@ Le prix « Non » n'est pas stocké : Non = 1 - Oui (calculé à l'affichage).
 """
 from __future__ import annotations
 
+import bisect
 import json
 import logging
 import os
@@ -17,6 +18,7 @@ from pathlib import Path
 
 import polymarket as pm
 from config import (
+    ALERT_REF_TOLERANCE_S,
     BACKFILL_FIDELITY_MIN,
     CANDIDATES_FILE,
     FIDELITY_MIN,
@@ -65,6 +67,22 @@ def write_json(path: Path, data, *, pretty: bool = False) -> bool:
 
 
 # ---------------------------------------------------------------- séries
+
+def price_at(points: list, target: int, tol: int = ALERT_REF_TOLERANCE_S) -> float | None:
+    """Prix du point le plus proche de `target`, à ±tol près (points triés par t)."""
+    if not points:
+        return None
+    times = [p[0] for p in points]
+    i = bisect.bisect_left(times, target)
+    best = None
+    for j in (i - 1, i):
+        if 0 <= j < len(points):
+            gap = abs(points[j][0] - target)
+            if gap <= tol and (best is None or gap < best[0]):
+                best = (gap, points[j][1])
+    return None if best is None else best[1]
+
+
 
 def merge_points(existing: list, new: list, bucket_s: int = BUCKET_S) -> list:
     """Fusionne des points [t, p] par tranche ; le plus récent l'emporte."""
@@ -115,6 +133,11 @@ def update_candidate(c: dict, now: int) -> bool:
         hist["p"] = compact(merge_points(hist["p"], new), now)
         # Volume cumulé relevé à chaque passage ; le dashboard affiche les deltas
         hist["v"] = compact(merge_points(hist["v"], [[now, c["volume"]]]), now)
+
+    # Variation 24 h pour le tableau de bord (même calcul que l'alerte et le récap)
+    pts = hist["p"]
+    c["last_hist"] = pts[-1][1] if pts else None
+    c["price_24h"] = price_at(pts, pts[-1][0] - 86400) if pts else None
 
     return write_json(path, hist)
 
