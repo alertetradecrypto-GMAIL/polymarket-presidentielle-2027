@@ -24,6 +24,11 @@ OVERLAP_S = 3600             # recouvrement à chaque passage (comble les crons 
 MAX_SPREAD_FOR_MID = 0.10    # au-delà, Polymarket affiche le dernier prix échangé
 HTTP_TIMEOUT_S = 20
 
+# Volume (trades de la Data API, côté taker = définition du volume Gamma)
+TRADES_PAGE = 500            # taille max d'une page /trades
+TRADES_MAX_OFFSET = 10000    # offset max accepté par /trades
+VOL_BACKFILL_PER_RUN = 3     # rattrapages complets max par collecte (nouveaux candidats)
+
 # Alertes de volatilité (prix « Oui », en probabilité 0-1)
 ALERT_WINDOWS = (
     # (libellé, durée en s, variation relative >, variation absolue ≥)

@@ -20,6 +20,8 @@ from config import (
     HTTP_TIMEOUT_S,
     MAX_SPREAD_FOR_MID,
     POLYGON_RPCS,
+    TRADES_MAX_OFFSET,
+    TRADES_PAGE,
 )
 
 log = logging.getLogger(__name__)
@@ -155,6 +157,50 @@ def get_positions(address: str) -> list[dict]:
             break
         offset += 500
     return out
+
+
+def get_trades(condition_id: str, *, start: int | None = None, end: int | None = None,
+               offset: int = 0) -> list[dict]:
+    """Une page de trades (côté taker, plus récents d'abord). start/end inclusifs."""
+    params: dict = {"market": condition_id, "limit": TRADES_PAGE, "offset": offset,
+                    "takerOnly": "true"}
+    if start is not None:
+        params["start"] = int(start)
+    if end is not None:
+        params["end"] = int(end)
+    page = _get(f"{DATA_API_URL}/trades", params)
+    return page if isinstance(page, list) else []
+
+
+def iter_trades(condition_id: str, start: int | None, end: int):
+    """Tous les trades entre start et end (inclus), par fenêtres glissantes.
+
+    L'API plafonne l'offset à 10 000 : quand une fenêtre est pleine, on écarte
+    la seconde la plus ancienne (peut-être incomplète) et on repart avec
+    end = cette seconde. Ni doublon ni trou. Renvoie (t, parts, prix).
+    """
+    window_end = int(end)
+    while True:
+        rows, offset, full = [], 0, False
+        while True:
+            page = get_trades(condition_id, start=start, end=window_end, offset=offset)
+            rows.extend(page)
+            if len(page) < TRADES_PAGE:
+                break
+            if offset + TRADES_PAGE > TRADES_MAX_OFFSET:
+                full = True
+                break
+            offset += TRADES_PAGE
+        trades = [(int(r["timestamp"]), float(r["size"]), float(r["price"]))
+                  for r in rows if "timestamp" in r and "size" in r and "price" in r]
+        if not full:
+            yield from trades
+            return
+        oldest = min(t for t, _, _ in trades)
+        if oldest >= window_end:
+            raise RuntimeError(f"plus de {TRADES_MAX_OFFSET} trades dans la même seconde")
+        yield from (x for x in trades if x[0] > oldest)
+        window_end = oldest
 
 
 # ---------------------------------------------------------------- Polygon (cash)

@@ -1,0 +1,49 @@
+name: backfill-volume
+
+# Rattrapage complet du volume depuis l'ouverture du marché (lancement manuel).
+# Ensuite, collect.yml tient le volume à jour et rattrape seul les nouveaux candidats.
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Refaire tous les candidats (même déjà rattrapés)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-writer        # partagé avec collect.yml et daily.yml
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Rattrapage du volume
+        run: python src/backfill_volume.py ${{ inputs.force && '--force' || '' }}
+
+      - name: Commit des données
+        if: ${{ !cancelled() }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data
+          if git diff --cached --quiet; then echo "Rien à commiter"; exit 0; fi
+          git commit -q -m "data: rattrapage du volume $(date -u +'%Y-%m-%d %H:%M') UTC"
+          for i in 1 2 3; do
+            git pull -q --rebase && git push -q && exit 0
+            sleep 5
+          done
+          exit 1

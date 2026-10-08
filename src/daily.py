@@ -77,7 +77,10 @@ def candidate_moves(candidates: list, histories: dict, now: int) -> dict:
             "slug": c["slug"], "name": c["name"], "cur": cur, "ref": ref,
             "delta": None if cur is None or ref is None else cur - ref,
             "rel": None if cur is None or not ref else (cur - ref) / ref,
-            "volume24h": _f(c.get("volume24h")), "active": c.get("active", True),
+            # Volume 24 h en dollars (trades) ; à défaut, chiffre Gamma (en parts)
+            "volume24h": _f(c.get("volume24h_usd")) if c.get("volume24h_usd") is not None
+            else _f(c.get("volume24h")),
+            "active": c.get("active", True),
         }
     return out
 

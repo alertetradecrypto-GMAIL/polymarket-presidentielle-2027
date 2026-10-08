@@ -1,6 +1,7 @@
 /* Tableau de bord Polymarket – Présidentielle 2027 (lecture seule).
  * Données : data/candidates.json + data/history/<slug>.json (collect.py).
- *   history.p = [[t, prixOui 0-1], …]  history.v = [[t, volume cumulé], …]
+ *   history.p = [[t, prixOui 0-1], …]
+ *   history.vol = [[début de tranche, parts, dollars], …] (trades, tranches 15 min / 1 h)
  * Heures affichées en Europe/Paris. Aucune donnée personnelle.
  */
 "use strict";
@@ -113,15 +114,14 @@ function sma(data, n) {
   }
   return out;
 }
-/** Volume échangé par barre = écarts du volume cumulé relevé à chaque collecte. */
-function volumeBars(cum, step) {
+/** Volume en dollars par barre = somme des tranches (parts × prix de chaque trade). */
+function volumeBars(vol, step) {
   const out = [];
-  for (let i = 1; i < cum.length; i++) {
-    const d = Math.max(0, cum[i][1] - cum[i - 1][1]);
-    const L = toLocal(cum[i][0]);
+  for (const [t, , usd] of vol) {
+    const L = toLocal(t);
     const b = L - (L % step);
-    if (out.length && out[out.length - 1].time === b) out[out.length - 1].value += d;
-    else out.push({ time: b, value: d });
+    if (out.length && out[out.length - 1].time === b) out[out.length - 1].value += usd;
+    else out.push({ time: b, value: usd });
   }
   return out;
 }
@@ -213,12 +213,12 @@ function renderChart(keepRange = false) {
         m.setData(sma(data, n));
         series.push({ slug: `${slug}#mm${n}`, s: m, data: [], color, ma: n });
       }
-      if (state.vol && h.v && h.v.length > 1) {
+      if (state.vol && h.vol && h.vol.length) {
         volSeries = chart.addSeries(LWC.HistogramSeries, {
           color: alpha(color, 0.55), priceLineVisible: false, lastValueVisible: false,
           priceFormat: { type: "custom", formatter: money, minMove: 1 },
         }, 1);
-        volSeries.setData(volumeBars(h.v, tf.step));
+        volSeries.setData(volumeBars(h.vol, tf.step));
         const panes = chart.panes();
         panes[0].setStretchFactor(4);
         if (panes[1]) panes[1].setStretchFactor(1);
@@ -286,8 +286,8 @@ function renderNote() {
   const h = state.focus && state.hist.get(state.focus);
   const parts = [state.side === "yes" ? "Cours Oui (probabilité de victoire)." : "Cours Non = 100 − Oui."];
   if (state.tf !== "1D" && state.tf !== "1W") parts.push("Historique de plus de 30 jours : 1 point par heure.");
-  if (state.vol && h && h.v && h.v.length) parts.push(`Volume relevé depuis le ${fmtParis(h.v[0][0])}.`);
-  if (state.vol && h && (!h.v || h.v.length < 2)) parts.push("Volume : pas encore assez de relevés.");
+  if (state.vol && h && h.vol_since) parts.push(`Volume en $ (parts × prix de chaque trade) depuis le ${fmtParis(h.vol_since)}.`);
+  if (state.vol && h && !h.vol_since) parts.push("Volume : historique en cours de reconstruction.");
   $("#note").textContent = parts.join(" ");
 }
 
@@ -301,7 +301,7 @@ function rows() {
       yes: c.price != null ? c.price * 100 : null,
       no: c.price != null ? 100 - c.price * 100 : null,
       d24, r24: d24 != null && c.price_24h > 0 ? (d24 / (c.price_24h * 100)) * 100 : null,
-      vol24: c.volume24h, vol: c.volume,
+      vol24: c.volume24h_usd ?? null, vol: c.volume_usd ?? null,
     };
   });
 }
@@ -344,8 +344,8 @@ function renderTable() {
 
 function renderHeader() {
   const e = state.data.event || {};
-  $("#k-vol").textContent = money(e.volume);
-  $("#k-vol24").textContent = money(e.volume24h);
+  $("#k-vol").textContent = money(e.volume_usd ?? null);
+  $("#k-vol24").textContent = money(e.volume24h_usd ?? null);
   const age = Date.now() / 1000 - state.data.updated;
   $("#k-upd").textContent = fmtParis(state.data.updated) + (age > 3600 ? " ⚠" : "");
   $("#k-upd").title = age > 3600 ? "Données de plus d'une heure : collecte en retard ?" : "";

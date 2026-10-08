@@ -4,7 +4,11 @@ Outil de suivi (lecture seule, aucun ordre) du marché Polymarket
 « Next French Presidential Election » (`next-french-presidential-election`).
 
 - `src/collect.py` : prix « Oui » de tous les candidats toutes les 15 min → `docs/data/`
-  (le prix « Non » = 1 − Oui est calculé à l'affichage)
+  (le prix « Non » = 1 − Oui est calculé à l'affichage), et volume par tranche de 15 min
+  reconstruit à partir des trades (Data API `/trades`, côté taker) : parts (= volume Gamma)
+  et dollars (parts × prix de chaque trade)
+- `src/backfill_volume.py` (backfill-volume.yml, lancement manuel) : historique du volume depuis
+  l'ouverture du marché. Les nouveaux candidats sont rattrapés seuls par la collecte (3 max par passage)
 - `docs/` : tableau de bord GitHub Pages (Lightweight Charts) — https://alertetradecrypto-gmail.github.io/polymarket-presidentielle-2027/
   courbes Oui/Non, vues 1J/1S/1M/Tout, comparaison (8 max), MM20/MM50 et volume du candidat sélectionné ; l'état de la vue est dans l'URL
 - Alerte email « URGENT » : variation 24 h (> 15 % et ≥ 1 pt) ou 7 j (> 30 % et ≥ 2 pts), confirmée sur 2 collectes, sans répétition tant que le mouvement ne s'aggrave pas

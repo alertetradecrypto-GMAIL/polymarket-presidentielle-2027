@@ -41,6 +41,7 @@ def setup(tmp_path, monkeypatch, history_fn):
         return history_fn(token, kw)
 
     monkeypatch.setattr(pm, "get_price_history", fake_hist)
+    monkeypatch.setattr(pm, "get_trades", lambda *a, **kw: [])   # pas de réseau
     return calls
 
 
@@ -87,7 +88,7 @@ def test_backfill_then_incremental(tmp_path, monkeypatch):
     assert data["candidates"][0]["token_yes"] == "1111"
 
     h = json.loads((tmp_path / "history" / "marine-le-pen.json").read_text())
-    assert len(h["p"]) == 10 + 24 + 4 and h["v"] == [[NOW, 1000.0]]
+    assert len(h["p"]) == 10 + 24 + 4 and h["vol"] == [] and h["vol_since"] == NOW
     assert not (tmp_path / "history" / "candidat-retire.json").read_text().count('"p":[[')
 
     # 2e passage : appel incrémental startTs/endTs
