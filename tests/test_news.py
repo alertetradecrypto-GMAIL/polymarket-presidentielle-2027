@@ -84,10 +84,19 @@ def test_run_hourly_and_keeps_previous_on_error(tmp_path, monkeypatch):
 def test_run_fetches_only_missing_when_fresh(tmp_path, monkeypatch):
     calls = []
     setup(tmp_path, monkeypatch, lambda n, now: calls.append(n) or [])
-    (tmp_path / "news.json").write_text(json.dumps({"updated": NOW - 60, "items": {"a": []}}))
+    (tmp_path / "news.json").write_text(json.dumps({"updated": NOW - 60, "version": news.QUERY_VERSION, "items": {"a": []}}))
     news.run()
     assert calls == ["B"]
     assert read(tmp_path)["updated"] == NOW - 60
+
+
+def test_run_full_refresh_when_filters_change(tmp_path, monkeypatch):
+    calls = []
+    setup(tmp_path, monkeypatch, lambda n, now: calls.append(n) or [])
+    (tmp_path / "news.json").write_text(json.dumps({"updated": NOW - 60, "items": {"a": []}}))
+    news.run()
+    assert calls == ["A", "B"]
+    assert read(tmp_path)["version"] == news.QUERY_VERSION
 
 
 def test_run_stops_after_consecutive_errors(tmp_path, monkeypatch):
@@ -103,3 +112,61 @@ def test_run_stops_after_consecutive_errors(tmp_path, monkeypatch):
     assert news.run() == 0
     assert len(calls) == news.MAX_CONSECUTIVE_ERRORS
     assert not (tmp_path / "news.json").exists()
+
+
+def art(title, source="Le Monde", t=NOW):
+    return {"t": t, "title": title, "source": source, "url": "https://x"}
+
+
+def test_surname():
+    assert news.surname("Dominique de Villepin") == "villepin"
+    assert news.surname("Marine Le Pen") == "le pen"
+    assert news.surname("Jean-Luc Mélenchon") == "melenchon"
+    assert news.surname("Nicolas Dupont-Aignan") == "dupont aignan"
+    assert news.surname("Yaël Braun-Pivet") == "braun pivet"
+
+
+def test_relevant():
+    ok = news.relevant
+    assert ok(art("Présidentielle : Édouard Philippe au défi"), "Édouard Philippe")
+    assert ok(art("Dominique de Villepin affirme..."), "Dominique de Villepin")
+    assert ok(art("Le Pen creuse l’écart"), "Marine Le Pen")
+    assert ok(art("Bayrou jugé en appel"), "François Bayrou")
+    # le titre ne cite pas le candidat
+    assert not ok(art("Les députés rétablissent l’entretien obligatoire"), "Clémentine Autain")
+    assert not ok(art("Pen-testing : le guide"), "Marine Le Pen")
+    # médias people / satiriques / archives
+    assert not ok(art("François Hollande et Ségolène Royal...", "Le Gorafi.fr Gorafi News Network"),
+                  "François Hollande")
+    assert not ok(art("Michèle Laroque et François Baroin", "Closer"), "François Baroin")
+    assert not ok(art("Christine Lagarde inquiétée", "Orange Actualités"), "Christine Lagarde")
+    # pages fiche / résultats
+    assert not ok(art("Eric Zemmour : Actualités, vidéos, images et infos en direct"), "Éric Zemmour")
+    assert not ok(art("Bernard Cazeneuve : homme politique, France - Actualité et infos"),
+                  "Bernard Cazeneuve")
+    assert not ok(art("Dominique de Villepin"), "Dominique de Villepin")
+
+
+def test_fetch_news_election_first_then_fallback(monkeypatch):
+    queries = []
+
+    def search(q, now):
+        queries.append(q)
+        if "présidentielle" in q:
+            return [art("Philippe candidat", t=NOW - 50), art("Hors sujet", t=NOW)]
+        return [art("Philippe au Havre", t=NOW - 10), art("Philippe candidat", t=NOW - 50),
+                art("Philippe ministre", t=NOW - 99)]
+
+    monkeypatch.setattr(news, "search", search)
+    monkeypatch.setattr(news.time, "sleep", lambda s: None)
+    got = news.fetch_news("Édouard Philippe", NOW)
+    assert len(queries) == 2 and queries[0].startswith('"Édouard Philippe" (présidentielle')
+    assert [a["title"] for a in got] == ["Philippe au Havre", "Philippe candidat", "Philippe ministre"]
+
+
+def test_fetch_news_no_fallback_when_enough(monkeypatch):
+    queries = []
+    monkeypatch.setattr(news, "search", lambda q, now: queries.append(q) or
+                        [art(f"Bayrou {i}", t=NOW - i) for i in range(7)])
+    assert len(news.fetch_news("François Bayrou", NOW)) == 5
+    assert len(queries) == 1

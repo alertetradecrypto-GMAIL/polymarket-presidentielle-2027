@@ -11,6 +11,8 @@ Outil de suivi (lecture seule, aucun ordre) du marché Polymarket
   l'ouverture du marché. Les nouveaux candidats sont rattrapés seuls par la collecte (3 max par passage)
 - `src/news.py` (après la collecte, au plus 1 fois par heure) : 5 actualités les plus récentes
   de chaque candidat (flux RSS Google News, 30 derniers jours ; titre, média, date, lien) → `docs/data/news.json`.
+  Requête « nom + présidentielle/2027/candidat/sondage… », complétée par le nom seul ; le titre doit citer
+  le nom de famille ; médias people/satiriques, archives vidéo et pages « fiche » écartés
   Une panne de la source ne bloque pas la collecte. `python src/news.py --force` pour forcer
 - `docs/` : tableau de bord GitHub Pages (Lightweight Charts) — https://alertetradecrypto-gmail.github.io/polymarket-presidentielle-2027/
   courbes Oui/Non, vues 1J/1S/1M/Tout, comparaison (8 max), MM20/MM50 et volume du candidat sélectionné ; variations du prix Oui sur 1 h / 4 h / 12 h / 24 h
