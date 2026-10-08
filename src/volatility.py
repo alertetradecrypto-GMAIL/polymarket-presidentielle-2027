@@ -177,6 +177,12 @@ def run(now: int | None = None, send=mailer.send) -> int:
     else:
         log.info("Aucune alerte")
 
+    try:  # tweet d'alerte : indépendant de l'email, ne le bloque jamais
+        import x_alerts
+        x_alerts.queue(alerts, now)
+    except Exception as exc:
+        log.error("File d'attente du tweet d'alerte : %s", exc)
+
     write_json(ALERT_STATE_FILE, state, pretty=True)
     return rc
 

@@ -38,6 +38,33 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           ALERT_TO: ${{ secrets.ALERT_TO }}
 
+      # Tweet d'alerte : seulement si volatility.py a mis un tweet en attente
+      # (Chromium n'est installé que dans ce cas).
+      - name: Tweet d'alerte
+        id: xalert
+        if: ${{ !cancelled() && hashFiles('out/x_alert.json') != '' }}
+        continue-on-error: true    # un échec X ne doit jamais bloquer la sauvegarde des données
+        run: |
+          pip install -r requirements-x.txt
+          python -m playwright install --with-deps chromium
+          python src/x_alerts.py
+        env:
+          DRY_RUN: ${{ vars.X_LIVE == '1' && '0' || '1' }}   # publication réelle si X_LIVE = 1
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+
+      - name: Visuel d'alerte en artefact
+        if: ${{ !cancelled() && hashFiles('out/x_alert_*.png') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: x-alert-${{ github.run_id }}
+          path: |
+            out/x_alert_*.png
+            out/x_alert_*.txt
+          retention-days: 14
+
       - name: Commit des données
         if: ${{ !cancelled() }}   # on sauvegarde données et état même si l'email a échoué
         run: |

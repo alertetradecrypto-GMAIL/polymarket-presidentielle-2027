@@ -13,6 +13,11 @@ Outil de suivi (lecture seule, aucun ordre) du marché Polymarket
   courbes Oui/Non, vues 1J/1S/1M/Tout, comparaison (8 max), MM20/MM50 et volume du candidat sélectionné ; l'état de la vue est dans l'URL
 - Alerte email « URGENT » : variation 24 h (> 15 % et ≥ 1 pt) ou 7 j (> 30 % et ≥ 2 pts), confirmée sur 2 collectes, sans répétition tant que le mouvement ne s'aggrave pas
 - `src/daily.py` (daily.yml) : récap email à 8h00 heure de Paris — valeur (positions de ce marché + cash pUSD/USDC.e), PnL par position et par adresse, variation 24 h des candidats ≥ 2 % ou détenus. Lancement manuel : Actions → daily → Run workflow (envoi immédiat)
+- Publication X (@MarketSentinelX), sans lien ni donnée de portefeuille :
+  - `src/x_daily.py` (tweet.yml) : tweet quotidien à 15h30 heure de Paris, visuel bilingue des candidats ≥ 2 % + top 3 en texte
+  - `src/x_alerts.py` (étape de collect.yml) : tweet « Mouvement fort / Strong move » sur les alertes 24 h / 7 j, 1 tweet max par candidat et par sens toutes les 6 h, 3 par jour maximum
+  - `src/render.py` : visuels PNG via Playwright ; `src/x_post.py` : publication (tweepy), anti-doublon, une seule tentative
+  - **Tout tourne en `DRY_RUN` tant que la variable de dépôt `X_LIVE` ne vaut pas `1`** (Settings → Secrets and variables → Actions → Variables). Test : Actions → tweet → Run workflow (dry_run coché) → PNG et texte dans l'artefact
 
 Aucune donnée personnelle n'est commitée : les positions ne sont lues qu'en mémoire.
 

@@ -1,0 +1,82 @@
+name: tweet
+
+on:
+  schedule:
+    # 15h30 à Paris = 13:30 UTC (été) ou 14:30 UTC (hiver) : le script choisit
+    - cron: "30 13 * * *"
+    - cron: "30 14 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Test sans publier (PNG et texte en artefact)"
+        type: boolean
+        default: true
+      force:
+        description: "Lancer maintenant, même hors créneau"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-writer        # partagé avec collect.yml et daily.yml
+  cancel-in-progress: false
+
+jobs:
+  tweet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Dépendances (tweepy, Playwright + Chromium)
+        run: |
+          pip install -r requirements-x.txt
+          python -m playwright install --with-deps chromium
+
+      - name: Tweet quotidien
+        run: python src/x_daily.py ${{ inputs.force && '--force' || '' }}
+        env:
+          # Manuel : case « dry_run ». Planifié : publication réelle seulement si la
+          # variable de dépôt X_LIVE vaut 1 (Settings → Secrets and variables → Variables).
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && (inputs.dry_run && '1' || '0') || (vars.X_LIVE == '1' && '0' || '1') }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+
+      - name: Démo du visuel d'alerte (test manuel, jamais publiée)
+        if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: python src/x_alerts.py --demo
+
+      - name: Visuel et texte en artefact
+        if: ${{ !cancelled() && hashFiles('out/*.png') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: x-daily-${{ github.run_id }}
+          path: |
+            out/*.png
+            out/*.txt
+          retention-days: 14
+
+      - name: Commit de l'état
+        if: ${{ !cancelled() }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state
+          if git diff --cached --quiet; then echo "Rien à commiter"; exit 0; fi
+          git commit -q -m "state: tweet $(date -u +'%Y-%m-%d')"
+          for i in 1 2 3; do
+            git pull -q --rebase && git push -q && exit 0
+            sleep 5
+          done
+          exit 1
