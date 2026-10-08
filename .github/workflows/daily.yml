@@ -43,6 +43,7 @@ jobs:
           ALERT_TO: ${{ secrets.ALERT_TO }}
           POLY_ADDR_1: ${{ secrets.POLY_ADDR_1 }}
           POLY_ADDR_2: ${{ secrets.POLY_ADDR_2 }}
+          POLY_ADDR_3: ${{ secrets.POLY_ADDR_3 }}
           POLYGON_RPC_URL: ${{ secrets.POLYGON_RPC_URL }}   # facultatif
 
       - name: Commit de l'état

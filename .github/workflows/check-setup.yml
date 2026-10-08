@@ -25,3 +25,4 @@ jobs:
           ALERT_TO: ${{ secrets.ALERT_TO }}
           POLY_ADDR_1: ${{ secrets.POLY_ADDR_1 }}
           POLY_ADDR_2: ${{ secrets.POLY_ADDR_2 }}
+          POLY_ADDR_3: ${{ secrets.POLY_ADDR_3 }}

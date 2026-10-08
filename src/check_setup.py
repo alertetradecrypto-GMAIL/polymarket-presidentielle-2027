@@ -14,7 +14,8 @@ import mailer
 import polymarket as pm
 
 log = logging.getLogger("check")
-SECRETS = ["GMAIL_USER", "GMAIL_APP_PASSWORD", "ALERT_TO", "POLY_ADDR_1", "POLY_ADDR_2"]
+SECRETS = ["GMAIL_USER", "GMAIL_APP_PASSWORD", "ALERT_TO",
+           "POLY_ADDR_1", "POLY_ADDR_2", "POLY_ADDR_3"]
 
 
 def mask(addr: str) -> str:
@@ -29,7 +30,7 @@ def main() -> int:
         return 1
 
     rows, ok = [], True
-    for i in (1, 2):
+    for i in (1, 2, 3):
         addr = os.environ[f"POLY_ADDR_{i}"].strip()
         valid = addr.startswith("0x") and len(addr) == 42
         try:

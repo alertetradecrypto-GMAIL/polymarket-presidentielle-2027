@@ -287,9 +287,9 @@ def build_email(day_label: str, accounts: list, total: dict, cands: list,
 # ---------------------------------------------------------------- principal
 
 def load_accounts() -> tuple[list, list]:
-    """Lit positions et cash des 2 adresses. Renvoie (comptes, avertissements)."""
+    """Lit positions et cash des 3 adresses. Renvoie (comptes, avertissements)."""
     accounts, warnings = [], []
-    for i in (1, 2):
+    for i in (1, 2, 3):
         addr = os.environ.get(f"POLY_ADDR_{i}", "").strip()
         acc = {"label": f"Adresse {i} ({mask(addr)})", "short": f"#{i}",
                "raw": [], "positions": [], "cash": None}
