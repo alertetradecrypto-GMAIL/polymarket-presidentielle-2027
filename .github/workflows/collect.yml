@@ -18,6 +18,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main           # dernier état, pas le commit du déclenchement (run en file d'attente)
 
       - uses: actions/setup-python@v5
         with:
