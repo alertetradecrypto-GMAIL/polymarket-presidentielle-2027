@@ -3,12 +3,15 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 from config import (
+    CASH_DECIMALS,
+    CASH_TOKENS,
     CLOB_URL,
     DATA_API_URL,
     EVENT_ID,
@@ -16,6 +19,7 @@ from config import (
     GAMMA_URL,
     HTTP_TIMEOUT_S,
     MAX_SPREAD_FOR_MID,
+    POLYGON_RPCS,
 )
 
 log = logging.getLogger(__name__)
@@ -151,3 +155,46 @@ def get_positions(address: str) -> list[dict]:
             break
         offset += 500
     return out
+
+
+# ---------------------------------------------------------------- Polygon (cash)
+
+def balance_of_call(token: str, owner: str) -> dict:
+    """Paramètres eth_call pour ERC-20 balanceOf(owner)."""
+    data = "0x70a08231" + owner.lower().removeprefix("0x").rjust(64, "0")
+    return {"to": token, "data": data}
+
+
+def _rpc_urls() -> list[str]:
+    custom = os.environ.get("POLYGON_RPC_URL", "").strip()
+    return ([custom] if custom else []) + list(POLYGON_RPCS)
+
+
+def get_cash(address: str) -> float:
+    """Solde cash de l'adresse proxy (pUSD + USDC.e), en dollars.
+
+    Essaie plusieurs RPC publics ; lève une exception si tous échouent.
+    """
+    batch = [
+        {"jsonrpc": "2.0", "id": i, "method": "eth_call",
+         "params": [balance_of_call(token, address), "latest"]}
+        for i, token in enumerate(CASH_TOKENS.values())
+    ]
+    last_exc: Exception | None = None
+    for url in _rpc_urls():
+        try:
+            r = SESSION.post(url, json=batch, timeout=HTTP_TIMEOUT_S)
+            r.raise_for_status()
+            res = r.json()
+            if not isinstance(res, list) or len(res) != len(batch):
+                raise ValueError("réponse RPC inattendue")
+            total = 0
+            for item in res:
+                if "error" in item:
+                    raise ValueError(str(item["error"])[:80])
+                total += int(item.get("result") or "0x0", 16)
+            return total / 10 ** CASH_DECIMALS
+        except Exception as exc:  # RPC suivant
+            last_exc = exc
+            log.warning("RPC Polygon indisponible (%s), essai suivant", type(exc).__name__)
+    raise RuntimeError(f"aucun RPC Polygon disponible : {last_exc}")

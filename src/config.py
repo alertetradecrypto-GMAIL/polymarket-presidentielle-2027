@@ -41,3 +41,20 @@ MARKET_URL = f"https://polymarket.com/event/{EVENT_SLUG}"
 # Récap quotidien
 TIMEZONE = "Europe/Paris"
 DAILY_HOUR = 8
+DAILY_LATEST_HOUR = 12       # cron retardé : on envoie encore jusqu'à 11h59
+DAILY_STATE_FILE = STATE_DIR / "daily.json"   # contient uniquement la date du dernier envoi
+DAILY_MIN_PRICE = 0.02       # candidats listés : prix Oui ≥ 2 % ou détenus
+DAILY_STALE_S = 2 * 3600     # données de prix plus vieilles → avertissement dans l'email
+
+# Cash on-chain (Polygon) : pUSD (collatéral actuel) + USDC.e (ancien), 6 décimales
+POLYGON_RPCS = (
+    "https://polygon-bor-rpc.publicnode.com",
+    "https://polygon.drpc.org",
+    "https://1rpc.io/matic",
+    "https://polygon-rpc.com",
+)
+CASH_TOKENS = {
+    "pUSD": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+    "USDC.e": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+}
+CASH_DECIMALS = 6
