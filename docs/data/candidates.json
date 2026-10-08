@@ -1,5 +1,5 @@
 {
-  "updated": 1791451018,
+  "updated": 1791451229,
   "event": {
     "id": "79987",
     "slug": "next-french-presidential-election",
@@ -17,7 +17,7 @@
       "price": 0.4325,
       "bid": 0.432,
       "ask": 0.433,
-      "last": 0.433,
+      "last": 0.432,
       "volume": 3383340.4820830002,
       "volume24h": 32984.53565499999,
       "active": true,
