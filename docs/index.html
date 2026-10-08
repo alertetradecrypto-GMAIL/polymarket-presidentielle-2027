@@ -27,6 +27,9 @@
   <main>
     <section class="panel chart-panel" aria-label="Graphique">
       <div class="toolbar" role="toolbar">
+        <div class="seg" id="disp" aria-label="Affichage des prix">
+          <button data-v="usd" title="Prix du jeton en $ (1 $ si victoire) et cote">$</button><button data-v="pct" title="Probabilité en %">%</button>
+        </div>
         <div class="seg" id="tf" aria-label="Période">
           <button data-v="1D">1J</button><button data-v="1W">1S</button><button data-v="1M">1M</button><button data-v="ALL">Tout</button>
         </div>
@@ -51,10 +54,7 @@
       <div class="table-head">
         <h2>Candidats</h2>
         <div class="table-tools">
-          <div class="seg" id="unit" aria-label="Unité des variations">
-            <button data-v="usd" title="Variation du prix du jeton, en $">$</button><button data-v="pct" title="Variation relative">%</button>
-          </div>
-          <label class="chk"><input type="checkbox" id="hide-small" checked> Masquer &lt; 0,01 $</label>
+          <label class="chk"><input type="checkbox" id="hide-small" checked> <span id="hide-small-lbl">Masquer &lt; 0,01 $</span></label>
         </div>
       </div>
       <div class="table-wrap">
@@ -64,7 +64,7 @@
             <th data-k="name">Candidat</th>
             <th data-k="yes" class="num">Oui</th>
             <th data-k="no" class="num">Non</th>
-            <th data-k="cote" class="num" title="Cote décimale du Oui = 1 / prix">Cote</th>
+            <th data-k="cote" id="th-cote" class="num" title="Cote décimale du Oui = 1 / prix">Cote</th>
             <th data-k="c1h" class="num">1 h</th>
             <th data-k="c4h" class="num">4 h</th>
             <th data-k="c12h" class="num">12 h</th>
@@ -75,7 +75,7 @@
           <tbody></tbody>
         </table>
       </div>
-      <p class="note">Cliquer sur un nom pour ses 5 dernières actualités ; ailleurs sur la ligne pour l'afficher ou le retirer du graphique (8 au maximum ; 1 seul → bougies). Prix des jetons en $ : Oui = milieu de fourchette, 1 $ si victoire ; Non = 1 − Oui ; cote = 1 / prix Oui. Variations du prix Oui sur 1 h, 4 h, 12 h et 24 h, en $ par jeton ou en %.</p>
+      <p class="note">Cliquer sur un nom pour ses 5 dernières actualités ; ailleurs sur la ligne pour l'afficher ou le retirer du graphique (8 au maximum ; 1 seul → bougies). Bouton $ / % au-dessus du graphique : prix du jeton en $ (1 $ si victoire, Oui = milieu de fourchette, Non = 1 − Oui, cote = 1 / prix Oui) ou probabilité en %. Variations du Oui sur 1 h, 4 h, 12 h et 24 h en $ par jeton ou en points ; variation relative au survol.</p>
     </section>
   </main>
 

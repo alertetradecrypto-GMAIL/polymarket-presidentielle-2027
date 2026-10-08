@@ -30,7 +30,7 @@ const state = {
   vol: true,
   hideSmall: true,
   sort: { k: "yes", asc: false },
-  unit: "usd",            // variations en $ par jeton ou en %
+  disp: "usd",            // affichage : prix du jeton en $ (usd) ou probabilité en % (pct)
   news: null,             // news.json (chargé à la première ouverture)
   newsSlug: null,         // candidat affiché dans la fenêtre d'actualités
 };
@@ -59,9 +59,27 @@ function cote(v) {
   if (v == null || !isFinite(v) || v <= 0) return "—";
   return (1 / v).toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
-const pxChg = (v) => (v == null || !isFinite(v) || Math.abs(v) < 0.0005 ? signed(0, " $") : signed(v, " $", 3));
-const PRICE_FMT = { type: "custom", formatter: px, minMove: 0.001 };
+/** Probabilité en % (0,428 → 42,8 %). */
+function pc(v) {
+  if (v == null || !isFinite(v)) return "—";
+  const x = Math.abs(v) < 0.00005 ? 0 : v * 100;
+  const d = Math.abs(x) < 1 ? 2 : 1;
+  return x.toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }) + " %";
+}
+const isPct = () => state.disp === "pct";
+/** Prix selon l'affichage choisi (bouton $ / % au-dessus du graphique). */
+const price = (v) => (isPct() ? pc(v) : px(v));
+/** Variation absolue : $ par jeton, ou points de probabilité. */
+function pxChg(v) {
+  if (v == null || !isFinite(v)) return "—";
+  if (isPct()) { const p = v * 100; return signed(p, " pt", Math.abs(p) < 1 ? 2 : 1); }
+  return Math.abs(v) < 0.0005 ? signed(0, " $") : signed(v, " $", 3);
+}
+const coteNote = (v) => (isPct() ? "" : `<span class="note">cote ${cote(v)}</span>`);
+const PRICE_FMT = { type: "custom", formatter: (v) => price(v), minMove: 0.001 };
 const cls = (v) => (v > 0 ? "up" : v < 0 ? "down" : "");
+/** Couleur d'une variation de prix (0-1) : neutre si elle s'affiche arrondie à zéro. */
+const chgCls = (v) => (v == null || Math.abs(v) < (state.disp === "pct" ? 0.00005 : 0.0005) ? "" : cls(v));
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
 // Heure de Paris : on décale les timestamps pour que le graphique (UTC) affiche l'heure locale.
@@ -296,9 +314,9 @@ function renderLegend(vals) {
     chip.innerHTML =
       `<span class="sw" style="background:${it.color}"></span>` +
       `<span>${esc(c ? c.name : it.slug)}</span>` +
-      `<span class="val">${px(v)}</span><span class="note">cote ${cote(v)}</span>` +
-      (d && d.open != null ? `<span class="note">O ${px(d.open)} H ${px(d.high)} B ${px(d.low)} C ${px(d.close)}</span>` : "") +
-      (chg != null ? `<span class="chg ${cls(chg)}">${pxChg(chg)}</span>` : "") +
+      `<span class="val">${price(v)}</span>${coteNote(v)}` +
+      (d && d.open != null ? `<span class="note">O ${price(d.open)} H ${price(d.high)} B ${price(d.low)} C ${price(d.close)}</span>` : "") +
+      (chg != null ? `<span class="chg ${chgCls(chg)}">${pxChg(chg)}</span>` : "") +
       `<span class="x" role="button" aria-label="Retirer">×</span>`;
     chip.addEventListener("click", (e) => {
       if (e.target.classList.contains("x")) toggle(it.slug);
@@ -318,8 +336,10 @@ function renderLegend(vals) {
 
 function renderNote() {
   const h = state.focus && state.hist.get(state.focus);
-  const parts = [state.side === "yes" ? "Prix du jeton Oui en $ (1 $ si victoire ; cote = 1 / prix)."
-                                       : "Prix du jeton Non en $ = 1 − Oui (cote = 1 / prix)."];
+  const parts = [isPct()
+    ? (state.side === "yes" ? "Probabilité Oui en % (prix du jeton × 100)." : "Probabilité Non = 100 − Oui.")
+    : (state.side === "yes" ? "Prix du jeton Oui en $ (1 $ si victoire ; cote = 1 / prix)."
+                            : "Prix du jeton Non en $ = 1 − Oui (cote = 1 / prix).")];
   if (state.sel.length === 1) parts.push("Bougies calculées sur les relevés 15 min (ouverture = clôture précédente).");
   if (state.tf !== "1D" && state.tf !== "1W") parts.push("Historique de plus de 30 jours : 1 point par heure.");
   if (state.vol && h && h.vol_since) parts.push(`Volume en $ (parts × prix de chaque trade) depuis le ${fmtParis(h.vol_since)}.`);
@@ -336,10 +356,11 @@ function change(c, k) {
   const usd = c.last_hist - ref;
   return { usd, pct: ref > 0 ? (usd / ref) * 100 : null };
 }
-function fmtChange(ch, unit) {
-  const v = ch[unit];
-  return unit === "usd" ? (v == null ? "—" : pxChg(v)) : signed(v, " %");
+/** Cellule de variation : absolue selon l'affichage, relative (%) au survol. */
+function fmtChange(ch) {
+  return pxChg(ch.usd);
 }
+const relTitle = (ch) => (ch.pct == null ? "" : `Variation relative : ${signed(ch.pct, " %")}`);
 
 function rows() {
   return state.data.candidates.map((c) => {
@@ -353,7 +374,7 @@ function rows() {
     for (const k of CHG) {
       r.ch = r.ch || {};
       r.ch[k] = change(c, k);
-      r["c" + k] = r.ch[k][state.unit];
+      r["c" + k] = r.ch[k].usd;
     }
     return r;
   });
@@ -372,6 +393,8 @@ function renderTable() {
       const r = typeof x === "string" ? x.localeCompare(y, "fr") : x - y;
       return asc ? r : -r;
     });
+  $("#th-cote").hidden = isPct();
+  if (state.sort.k === "cote" && isPct()) state.sort = { k: "yes", asc: false };
   const tb = $("#table tbody");
   tb.innerHTML = list.map((r) => {
     const slot = selSet.get(r.slug);
@@ -381,10 +404,10 @@ function renderTable() {
     return `<tr data-slug="${esc(r.slug)}" class="${on ? "on" : ""}${!r.c.active ? " closed" : ""}" aria-selected="${on}">
       <td class="c-sel">${dot}</td>
       <td class="name"><button class="name-btn" title="Dernières actualités">${esc(r.name)}</button>${tag}</td>
-      <td class="num">${px(r.yes)}</td>
-      <td class="num">${px(r.no)}</td>
-      <td class="num">${cote(r.yes)}</td>
-      ${CHG.map((k) => `<td class="num ${cls(r["c" + k])}">${fmtChange(r.ch[k], state.unit)}</td>`).join("")}
+      <td class="num">${price(r.yes)}</td>
+      <td class="num">${price(r.no)}</td>
+      ${isPct() ? "" : `<td class="num">${cote(r.yes)}</td>`}
+      ${CHG.map((k) => `<td class="num ${chgCls(r["c" + k])}" title="${esc(relTitle(r.ch[k]))}">${fmtChange(r.ch[k])}</td>`).join("")}
       <td class="num">${money(r.vol24)}</td>
       <td class="num">${money(r.vol)}</td>
     </tr>`;
@@ -458,11 +481,10 @@ function renderNews() {
   const c = cand(state.newsSlug);
   if (!c) return;
   $("#news-title").textContent = c.name;
-  $("#news-sub").innerHTML = `Oui <b>${px(c.price)}</b> (cote ${cote(c.price)}) · Non ${px(c.price != null ? 1 - c.price : null)}`;
+  $("#news-sub").innerHTML = `Oui <b>${price(c.price)}</b>${isPct() ? "" : ` (cote ${cote(c.price)})`} · Non ${price(c.price != null ? 1 - c.price : null)}`;
   $("#news-chg").innerHTML = CHG.map((k) => {
     const ch = change(c, k);
-    const v = ch[state.unit];
-    return `<div><dt>${k.replace("h", " h")}</dt><dd class="${cls(v)}">${fmtChange(ch, state.unit)}</dd></div>`;
+    return `<div><dt>${k.replace("h", " h")}</dt><dd class="${chgCls(ch.usd)}" title="${esc(relTitle(ch))}">${fmtChange(ch)}</dd></div>`;
   }).join("");
 
   const list = $("#news-list");
@@ -488,7 +510,7 @@ function saveHash() {
     c: state.sel.map((x) => x.slug).join(","),
     f: state.focus || "",
     tf: state.tf, side: state.side,
-    ma: [...state.ma].join(","), vol: state.vol ? "1" : "0", u: state.unit,
+    ma: [...state.ma].join(","), vol: state.vol ? "1" : "0", px: state.disp,
   });
   history.replaceState(null, "", "#" + h.toString());
 }
@@ -507,8 +529,7 @@ function readHash() {
   if (["yes", "no"].includes(h.get("side"))) state.side = h.get("side");
   if (h.has("ma")) state.ma = new Set(h.get("ma").split(",").map(Number).filter((n) => n === 20 || n === 50));
   if (h.has("vol")) state.vol = h.get("vol") !== "0";
-  if (h.get("u") === "pct") state.unit = "pct";
-  else if (["usd", "pt"].includes(h.get("u"))) state.unit = "usd";   // « pt » : anciens liens
+  if (["usd", "pct"].includes(h.get("px"))) state.disp = h.get("px");
   const f = h.get("f");
   state.focus = state.sel.some((x) => x.slug === f) ? f : state.sel[0]?.slug ?? null;
 }
@@ -517,7 +538,8 @@ function syncControls() {
   document.querySelectorAll("#tf button").forEach((b) => b.classList.toggle("on", b.dataset.v === state.tf));
   document.querySelectorAll("#side button").forEach((b) => b.classList.toggle("on", b.dataset.v === state.side));
   document.querySelectorAll("#ma button").forEach((b) => b.classList.toggle("on", state.ma.has(+b.dataset.v)));
-  document.querySelectorAll("#unit button").forEach((b) => b.classList.toggle("on", b.dataset.v === state.unit));
+  document.querySelectorAll("#disp button").forEach((b) => b.classList.toggle("on", b.dataset.v === state.disp));
+  $("#hide-small-lbl").textContent = isPct() ? "Masquer < 1 %" : "Masquer < 0,01 $";
   $("#vol-toggle").checked = state.vol;
   $("#hide-small").checked = state.hideSmall;
 }
@@ -538,9 +560,9 @@ function bindControls() {
   });
   $("#vol-toggle").addEventListener("change", (e) => { state.vol = e.target.checked; saveHash(); renderChart(true); });
   $("#hide-small").addEventListener("change", (e) => { state.hideSmall = e.target.checked; renderTable(); });
-  $("#unit").addEventListener("click", (e) => {
-    const v = e.target.dataset.v; if (!v) return;
-    state.unit = v; syncControls(); saveHash(); renderTable();
+  $("#disp").addEventListener("click", (e) => {
+    const v = e.target.dataset.v; if (!v || v === state.disp) return;
+    state.disp = v; syncControls(); saveHash(); renderChart(true); renderTable();
     if ($("#news").open) renderNews();
   });
   $("#table tbody").addEventListener("click", (e) => {
