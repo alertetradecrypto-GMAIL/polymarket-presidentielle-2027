@@ -1,5 +1,5 @@
 {
-  "updated": 1791463815,
+  "updated": 1791464034,
   "event": {
     "id": "79987",
     "slug": "next-french-presidential-election",
@@ -194,11 +194,11 @@
       "last_hist": 0.0125,
       "price_ref": {
         "1h": 0.0125,
-        "4h": 0.012,
+        "4h": 0.0125,
         "12h": 0.013,
-        "24h": 0.0155
+        "24h": 0.014
       },
-      "price_24h": 0.0155
+      "price_24h": 0.014
     },
     {
       "id": "679029",
@@ -249,10 +249,10 @@
       "price_ref": {
         "1h": 0.01,
         "4h": 0.01,
-        "12h": 0.01,
-        "24h": 0.01
+        "12h": 0.011,
+        "24h": 0.0095
       },
-      "price_24h": 0.01
+      "price_24h": 0.0095
     },
     {
       "id": "679019",
@@ -304,9 +304,9 @@
         "1h": 0.008,
         "4h": 0.0085,
         "12h": 0.01,
-        "24h": 0.008
+        "24h": 0.0105
       },
-      "price_24h": 0.008
+      "price_24h": 0.0105
     },
     {
       "id": "679020",
@@ -331,9 +331,9 @@
         "1h": 0.0075,
         "4h": 0.0075,
         "12h": 0.0085,
-        "24h": 0.009
+        "24h": 0.0085
       },
-      "price_24h": 0.009
+      "price_24h": 0.0085
     },
     {
       "id": "679060",
@@ -383,33 +383,6 @@
       "last_hist": 0.0025,
       "price_ref": {
         "1h": 0.0025,
-        "4h": 0.0025,
-        "12h": 0.0025,
-        "24h": 0.0025
-      },
-      "price_24h": 0.0025
-    },
-    {
-      "id": "679035",
-      "name": "Ségolène Royal",
-      "condition_id": "0x34ed4ad7a7825f168e1084f53e8f60a161579d783b2740e50aa52f710925a136",
-      "token_yes": "84076705244364178126697754730242283842575751486659062354818892653573605561738",
-      "price": 0.002,
-      "bid": 0.001,
-      "ask": 0.003,
-      "last": 0.001,
-      "volume": 6865857.609204001,
-      "volume24h": 26620.206,
-      "active": true,
-      "closed": false,
-      "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-sgolne-royal-win-the-2027-french-presidential-election-deXKVzyK1Roc.jpg",
-      "slug": "segolene-royal",
-      "first_seen": 1791451018,
-      "volume_usd": 2810451.43,
-      "volume24h_usd": 149.2,
-      "last_hist": 0.0015,
-      "price_ref": {
-        "1h": 0.002,
         "4h": 0.0025,
         "12h": 0.0025,
         "24h": 0.0025
@@ -520,9 +493,36 @@
         "1h": 0.0015,
         "4h": 0.0015,
         "12h": 0.0015,
-        "24h": 0.002
+        "24h": 0.0015
       },
-      "price_24h": 0.002
+      "price_24h": 0.0015
+    },
+    {
+      "id": "679035",
+      "name": "Ségolène Royal",
+      "condition_id": "0x34ed4ad7a7825f168e1084f53e8f60a161579d783b2740e50aa52f710925a136",
+      "token_yes": "84076705244364178126697754730242283842575751486659062354818892653573605561738",
+      "price": 0.0015,
+      "bid": 0.001,
+      "ask": 0.002,
+      "last": 0.001,
+      "volume": 6865857.609204001,
+      "volume24h": 26620.206,
+      "active": true,
+      "closed": false,
+      "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-sgolne-royal-win-the-2027-french-presidential-election-deXKVzyK1Roc.jpg",
+      "slug": "segolene-royal",
+      "first_seen": 1791451018,
+      "volume_usd": 2810451.43,
+      "volume24h_usd": 149.2,
+      "last_hist": 0.0015,
+      "price_ref": {
+        "1h": 0.002,
+        "4h": 0.0025,
+        "12h": 0.0025,
+        "24h": 0.0025
+      },
+      "price_24h": 0.0025
     },
     {
       "id": "679055",
