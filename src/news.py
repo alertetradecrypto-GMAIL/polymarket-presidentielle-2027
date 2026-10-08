@@ -47,14 +47,14 @@ log = logging.getLogger("news")
 MAX_CONSECUTIVE_ERRORS = 3   # source indisponible : on abandonne ce passage
 
 # Changer cette valeur force un rafraîchissement complet (nouveaux filtres)
-QUERY_VERSION = 2
+QUERY_VERSION = 3
 ELECTION_TERMS = "(présidentielle OR 2027 OR candidat OR candidate OR candidature OR sondage OR primaire)"
 
 # Médias people, satiriques, archives vidéo, agrégateurs de réseaux sociaux
 BLOCKED_SOURCES = (
     "gorafi", "closer", "voici", "gala", "purepeople", "public.fr", "nextplz", "melty",
     "toutelatele", "tele-loisirs", "tele loisirs", "tv-programme", "programme-tv",
-    "orange actualites", "howl.link",
+    "orange actualites", "howl.link", "ohmymag", "public sante",
 )
 # Pages « fiche » ou résultats d'anciennes élections
 JUNK_TITLES = re.compile(
@@ -115,7 +115,7 @@ def parse_rss(xml_text: str, now: int, limit: int | None = NEWS_PER_CANDIDATE) -
             continue
         if t < now - NEWS_MAX_AGE_DAYS * 86400 or t > now + 3600:
             continue
-        key = title.casefold()
+        key = norm(title)   # doublons à la ponctuation près (guillemets…)
         if key in seen:
             continue
         seen.add(key)

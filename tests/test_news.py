@@ -32,6 +32,12 @@ def test_parse_rss_sorted_dedup_and_filtered():
     assert items[1]["t"] == 1791367200       # fuseau +0200 pris en compte
 
 
+def test_parse_rss_dedup_ignores_quotes():
+    feed = rss(("«La violence» : Panot - LCP", "https://n.g/1", "Thu, 08 Oct 2026 08:00:00 GMT", "LCP"),
+               ("'La violence' : Panot - LCP", "https://n.g/2", "Thu, 08 Oct 2026 07:00:00 GMT", "LCP"))
+    assert len(news.parse_rss(feed, NOW)) == 1
+
+
 def test_parse_rss_limit():
     feed = rss(*[(f"A{i} - M", f"https://n.g/{i}", f"Thu, 08 Oct 2026 0{i}:00:00 GMT", "M")
                  for i in range(8)])
