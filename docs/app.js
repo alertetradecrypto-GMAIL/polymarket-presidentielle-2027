@@ -1,7 +1,7 @@
 /* Tableau de bord Polymarket – Présidentielle 2027 (lecture seule).
  * Données : data/candidates.json + data/history/<slug>.json (collect.py),
  *   data/news.json (news.py) : 5 dernières actualités par candidat.
- *   history.p = [[t, prixOui 0-1], …]
+ *   history.p = [[t, prixOui 0-1], …] → prix du jeton en $ (1 $ si victoire)
  *   history.vol = [[début de tranche, parts, dollars], …] (trades, tranches 15 min / 1 h)
  * Heures affichées en Europe/Paris. Aucune donnée personnelle.
  */
@@ -30,7 +30,7 @@ const state = {
   vol: true,
   hideSmall: true,
   sort: { k: "yes", asc: false },
-  unit: "pt",             // variations en points ou en %
+  unit: "usd",            // variations en $ par jeton ou en %
   news: null,             // news.json (chargé à la première ouverture)
   newsSlug: null,         // candidat affiché dans la fenêtre d'actualités
 };
@@ -42,19 +42,25 @@ let volSeries = null;
 
 const nfMoney = new Intl.NumberFormat("fr-FR", { notation: "compact", maximumFractionDigits: 1 });
 const money = (v) => (v == null ? "—" : nfMoney.format(v) + " $");
-function pct(v) {
-  if (v == null || !isFinite(v)) return "—";
-  const a = Math.abs(v);
-  const d = a < 1 ? 2 : 1;
-  return v.toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }) + " %";
-}
 function signed(v, unit, dec = 1) {
   if (v == null || !isFinite(v)) return "—";
-  if (Math.abs(v) < 0.005) return "0" + unit;
+  if (Math.abs(v) < 0.5 * 10 ** -dec) return "0" + unit;
   const s = v > 0 ? "▲ +" : v < 0 ? "▼ −" : "";
   return s + Math.abs(v).toLocaleString("fr-FR", { minimumFractionDigits: dec, maximumFractionDigits: dec }) + unit;
 }
-const PRICE_FMT = { type: "custom", formatter: pct, minMove: 0.01 };
+/** Prix d'un jeton en $ (3 décimales) ; Non = 1 − Oui. */
+function px(v) {
+  if (v == null || !isFinite(v)) return "—";
+  if (Math.abs(v) < 0.0005) v = 0;   // évite « −0,000 $ » sur l'axe
+  return v.toLocaleString("fr-FR", { minimumFractionDigits: 3, maximumFractionDigits: 3 }) + " $";
+}
+/** Cote décimale = 1 / prix. */
+function cote(v) {
+  if (v == null || !isFinite(v) || v <= 0) return "—";
+  return (1 / v).toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+const pxChg = (v) => (v == null || !isFinite(v) || Math.abs(v) < 0.0005 ? signed(0, " $") : signed(v, " $", 3));
+const PRICE_FMT = { type: "custom", formatter: px, minMove: 0.001 };
 const cls = (v) => (v > 0 ? "up" : v < 0 ? "down" : "");
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
@@ -97,18 +103,27 @@ async function loadHistories(slugs) {
 }
 const cand = (slug) => state.data.candidates.find((c) => c.slug === slug);
 
-/** Barres de clôture au pas `step` (en heure de Paris) ; valeur en % (Oui ou Non). */
-function bars(points, step, side) {
+/** Bougies OHLC au pas `step` (heure de Paris) depuis history.p ; prix en $ (Oui ou Non = 1 − Oui).
+ *  Ouverture = clôture de la bougie précédente (relevés toutes les 15 min, pas de trade par trade). */
+function candles(points, step, side) {
   const out = [];
+  let prev = null;
   for (const [t, p] of points) {
     const L = toLocal(t);
     const b = L - (L % step);
-    const val = (side === "no" ? 1 - p : p) * 100;
-    if (out.length && out[out.length - 1].time === b) out[out.length - 1].value = val;
-    else out.push({ time: b, value: val });
+    const v = side === "no" ? 1 - p : p;
+    const last = out[out.length - 1];
+    if (last && last.time === b) {
+      last.close = v; last.high = Math.max(last.high, v); last.low = Math.min(last.low, v);
+    } else {
+      const o = prev ?? v;
+      out.push({ time: b, open: o, high: Math.max(o, v), low: Math.min(o, v), close: v });
+    }
+    prev = v;
   }
   return out;
 }
+const closes = (cs) => cs.map((c) => ({ time: c.time, value: c.close }));
 function sma(data, n) {
   const out = [];
   let sum = 0;
@@ -165,7 +180,7 @@ function initChart() {
     if (param.time !== undefined) {
       for (const it of series) {
         const d = param.seriesData.get(it.s);
-        if (d) vals.set(it.slug, d.value);
+        if (d) vals.set(it.slug, d);
       }
     }
     renderLegend(param.time !== undefined ? vals : null);
@@ -192,19 +207,31 @@ function renderChart(keepRange = false) {
 
   $("#chart-empty").hidden = state.sel.length > 0;
   const tf = TF[state.tf];
-  $("#step").textContent = `Barres : ${tf.label} · heure de Paris`;
+  const candleMode = state.sel.length === 1;   // 1 candidat → bougies ; plusieurs → courbes
+  $("#step").textContent = `${candleMode ? "Bougies" : "Courbes"} : ${tf.label} · heure de Paris`;
 
   for (const { slug, slot } of state.sel) {
     const h = state.hist.get(slug);
     if (!h) continue;
     const color = slotColor(slot);
-    const data = bars(h.p, tf.step, state.side);
+    const ohlc = candles(h.p, tf.step, state.side);
+    const data = closes(ohlc);
     const isFocus = slug === state.focus;
-    const s = chart.addSeries(LWC.LineSeries, {
-      color, lineWidth: 2, priceLineVisible: false, lastValueVisible: true,
-      crosshairMarkerRadius: 4, priceFormat: PRICE_FMT,
-    });
-    s.setData(data);
+    let s;
+    if (candleMode) {
+      const up = css("--up"), down = css("--down");
+      s = chart.addSeries(LWC.CandlestickSeries, {
+        upColor: up, downColor: down, borderUpColor: up, borderDownColor: down,
+        wickUpColor: up, wickDownColor: down, priceLineVisible: false, priceFormat: PRICE_FMT,
+      });
+      s.setData(ohlc);
+    } else {
+      s = chart.addSeries(LWC.LineSeries, {
+        color, lineWidth: 2, priceLineVisible: false, lastValueVisible: true,
+        crosshairMarkerRadius: 4, priceFormat: PRICE_FMT,
+      });
+      s.setData(data);
+    }
     series.push({ slug, s, data, color, ma: false });
 
     if (isFocus) {
@@ -259,7 +286,8 @@ function renderLegend(vals) {
   for (const it of series.filter((x) => !x.ma)) {
     const c = cand(it.slug);
     const last = it.data.length ? it.data[it.data.length - 1].value : null;
-    const v = vals ? vals.get(it.slug) : last;
+    const d = vals ? vals.get(it.slug) : null;
+    const v = vals ? (d ? d.value ?? d.close : null) : last;
     const ref = windowRef(it.data);
     const chg = vals || last == null || ref == null ? null : last - ref;
     const chip = document.createElement("button");
@@ -268,8 +296,9 @@ function renderLegend(vals) {
     chip.innerHTML =
       `<span class="sw" style="background:${it.color}"></span>` +
       `<span>${esc(c ? c.name : it.slug)}</span>` +
-      `<span class="val">${pct(v)}</span>` +
-      (chg != null ? `<span class="chg ${cls(chg)}">${signed(chg, " pt", Math.abs(chg) < 1 ? 2 : 1)}</span>` : "") +
+      `<span class="val">${px(v)}</span><span class="note">cote ${cote(v)}</span>` +
+      (d && d.open != null ? `<span class="note">O ${px(d.open)} H ${px(d.high)} B ${px(d.low)} C ${px(d.close)}</span>` : "") +
+      (chg != null ? `<span class="chg ${cls(chg)}">${pxChg(chg)}</span>` : "") +
       `<span class="x" role="button" aria-label="Retirer">×</span>`;
     chip.addEventListener("click", (e) => {
       if (e.target.classList.contains("x")) toggle(it.slug);
@@ -289,7 +318,9 @@ function renderLegend(vals) {
 
 function renderNote() {
   const h = state.focus && state.hist.get(state.focus);
-  const parts = [state.side === "yes" ? "Cours Oui (probabilité de victoire)." : "Cours Non = 100 − Oui."];
+  const parts = [state.side === "yes" ? "Prix du jeton Oui en $ (1 $ si victoire ; cote = 1 / prix)."
+                                       : "Prix du jeton Non en $ = 1 − Oui (cote = 1 / prix)."];
+  if (state.sel.length === 1) parts.push("Bougies calculées sur les relevés 15 min (ouverture = clôture précédente).");
   if (state.tf !== "1D" && state.tf !== "1W") parts.push("Historique de plus de 30 jours : 1 point par heure.");
   if (state.vol && h && h.vol_since) parts.push(`Volume en $ (parts × prix de chaque trade) depuis le ${fmtParis(h.vol_since)}.`);
   if (state.vol && h && !h.vol_since) parts.push("Volume : historique en cours de reconstruction.");
@@ -298,24 +329,25 @@ function renderNote() {
 
 // ---------------------------------------------------------------- tableau
 
-/** Variation du prix Oui sur la fenêtre k : en points (pt) et relative (%). */
+/** Variation du prix du jeton Oui sur la fenêtre k : en $ par jeton (usd) et relative (%). */
 function change(c, k) {
   const ref = c.price_ref ? c.price_ref[k] : k === "24h" ? c.price_24h : null;
-  if (c.last_hist == null || ref == null) return { pt: null, pct: null };
-  const pt = (c.last_hist - ref) * 100;
-  return { pt, pct: ref > 0 ? (pt / (ref * 100)) * 100 : null };
+  if (c.last_hist == null || ref == null) return { usd: null, pct: null };
+  const usd = c.last_hist - ref;
+  return { usd, pct: ref > 0 ? (usd / ref) * 100 : null };
 }
 function fmtChange(ch, unit) {
   const v = ch[unit];
-  return unit === "pt" ? signed(v, " pt", v != null && Math.abs(v) < 1 ? 2 : 1) : signed(v, " %");
+  return unit === "usd" ? (v == null ? "—" : pxChg(v)) : signed(v, " %");
 }
 
 function rows() {
   return state.data.candidates.map((c) => {
     const r = {
       c, slug: c.slug, name: c.name,
-      yes: c.price != null ? c.price * 100 : null,
-      no: c.price != null ? 100 - c.price * 100 : null,
+      yes: c.price ?? null,
+      no: c.price != null ? 1 - c.price : null,
+      cote: c.price > 0 ? 1 / c.price : null,
       vol24: c.volume24h_usd ?? null, vol: c.volume_usd ?? null,
     };
     for (const k of CHG) {
@@ -331,7 +363,7 @@ function renderTable() {
   const { k, asc } = state.sort;
   const selSet = new Map(state.sel.map((x) => [x.slug, x.slot]));
   const list = rows()
-    .filter((r) => !state.hideSmall || selSet.has(r.slug) || (r.c.active && (r.yes ?? 0) >= 1))
+    .filter((r) => !state.hideSmall || selSet.has(r.slug) || (r.c.active && (r.yes ?? 0) >= 0.01))
     .sort((a, b) => {
       const x = a[k], y = b[k];
       if (x == null && y == null) return 0;
@@ -349,8 +381,9 @@ function renderTable() {
     return `<tr data-slug="${esc(r.slug)}" class="${on ? "on" : ""}${!r.c.active ? " closed" : ""}" aria-selected="${on}">
       <td class="c-sel">${dot}</td>
       <td class="name"><button class="name-btn" title="Dernières actualités">${esc(r.name)}</button>${tag}</td>
-      <td class="num">${pct(r.yes)}</td>
-      <td class="num">${pct(r.no)}</td>
+      <td class="num">${px(r.yes)}</td>
+      <td class="num">${px(r.no)}</td>
+      <td class="num">${cote(r.yes)}</td>
       ${CHG.map((k) => `<td class="num ${cls(r["c" + k])}">${fmtChange(r.ch[k], state.unit)}</td>`).join("")}
       <td class="num">${money(r.vol24)}</td>
       <td class="num">${money(r.vol)}</td>
@@ -425,7 +458,7 @@ function renderNews() {
   const c = cand(state.newsSlug);
   if (!c) return;
   $("#news-title").textContent = c.name;
-  $("#news-sub").innerHTML = `Oui <b>${pct(c.price != null ? c.price * 100 : null)}</b> · Non ${pct(c.price != null ? 100 - c.price * 100 : null)}`;
+  $("#news-sub").innerHTML = `Oui <b>${px(c.price)}</b> (cote ${cote(c.price)}) · Non ${px(c.price != null ? 1 - c.price : null)}`;
   $("#news-chg").innerHTML = CHG.map((k) => {
     const ch = change(c, k);
     const v = ch[state.unit];
@@ -474,7 +507,8 @@ function readHash() {
   if (["yes", "no"].includes(h.get("side"))) state.side = h.get("side");
   if (h.has("ma")) state.ma = new Set(h.get("ma").split(",").map(Number).filter((n) => n === 20 || n === 50));
   if (h.has("vol")) state.vol = h.get("vol") !== "0";
-  if (["pt", "pct"].includes(h.get("u"))) state.unit = h.get("u");
+  if (h.get("u") === "pct") state.unit = "pct";
+  else if (["usd", "pt"].includes(h.get("u"))) state.unit = "usd";   // « pt » : anciens liens
   const f = h.get("f");
   state.focus = state.sel.some((x) => x.slug === f) ? f : state.sel[0]?.slug ?? null;
 }

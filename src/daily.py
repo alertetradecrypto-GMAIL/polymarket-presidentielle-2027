@@ -169,6 +169,16 @@ def pct(p: float | None) -> str:
     return "—" if p is None else f"{num(p * 100)} %"
 
 
+def px(p: float | None, signed: bool = False) -> str:
+    """Prix d'un jeton en $ (3 décimales). Un jeton gagnant vaut 1 $."""
+    return "—" if p is None else f"{num(p, 3, signed)} $"
+
+
+def cote(p: float | None) -> str:
+    """Cote décimale = 1 / prix."""
+    return "—" if not p or p <= 0 else num(1 / p, 2)
+
+
 def color(x: float | None) -> str:
     if not x:
         return "#555"
@@ -226,11 +236,10 @@ def build_email(day_label: str, accounts: list, total: dict, cands: list,
             pos_rows.append(
                 f"<tr><td {td}><b>{html.escape(p['name'])}</b></td><td {td}>{p['side']}</td>"
                 f"<td {td}>{html.escape(a['short'])}</td>"
-                + cell(num(p["size"], 0)) + cell(pct(p["avg"])) + cell(pct(p["cur"]))
+                + cell(num(p["size"], 0)) + cell(px(p["avg"])) + cell(px(p["cur"]))
                 + cell(usd(p["value"]))
                 + cell(f"{usd(p['pnl'], True)} ({pct(ppct)})", color(p["pnl"]))
-                + cell("—" if p["d24"] is None else f"{num(p['d24'] * 100, 1, True)} pt",
-                       color(p["d24"])) + "</tr>")
+                + cell(px(p["d24"], True), color(p["d24"])) + "</tr>")
             text_pos.append(f"- {p['name']} {p['side']} [{a['short']}] : {usd(p['value'])}, "
                             f"PnL {usd(p['pnl'], True)}")
     pos = (table(["Candidat", "Côté", "Adr.", "Parts", "Prix moyen", "Prix actuel",
@@ -243,13 +252,15 @@ def build_email(day_label: str, accounts: list, total: dict, cands: list,
         d = m["delta"]
         cand_rows.append(
             f"<tr><td {td}><b>{html.escape(m['name'])}</b>{star}</td>"
-            + cell(pct(m["cur"])) + cell(pct(m["ref"]))
-            + cell("—" if d is None else f"{num(d * 100, 1, True)} pt", color(d))
+            + cell(px(m["cur"])) + cell(px(None if m["cur"] is None else 1 - m["cur"]))
+            + cell(cote(m["cur"])) + cell(px(m["ref"]))
+            + cell(px(d, True), color(d))
             + cell("—" if m["rel"] is None else f"{num(m['rel'] * 100, 1, True)} %", color(d))
             + cell(usd(m["volume24h"]).replace(",00 $", " $")) + "</tr>")
-        text_c.append(f"- {m['name']}{star} : {pct(m['cur'])}"
-                      + ("" if d is None else f" ({num(d * 100, 1, True)} pt)"))
-    cand = table(["Candidat", "Oui", "Il y a 24 h", "Var. pt", "Var. %", "Volume 24 h"],
+        text_c.append(f"- {m['name']}{star} : {px(m['cur'])} (cote {cote(m['cur'])})"
+                      + ("" if d is None else f" ({px(d, True)})"))
+    cand = table(["Candidat", "Oui", "Non", "Cote Oui", "Oui il y a 24 h", "Var. $", "Var. %",
+                  "Volume 24 h"],
                  cand_rows)
 
     warn = "".join(f"<p style='color:#b45309'>⚠️ {html.escape(w)}</p>" for w in warnings)
@@ -259,11 +270,12 @@ def build_email(day_label: str, accounts: list, total: dict, cands: list,
         f"<h3>Synthèse</h3>{synth}"
         f"<h3>Par adresse</h3>{acc}"
         f"<h3>Positions</h3>{pos}"
-        f"<h3>Candidats (≥ {num(DAILY_MIN_PRICE * 100, 0)} % ou détenus ★)</h3>{cand}"
+        f"<h3>Candidats (Oui ≥ {px(DAILY_MIN_PRICE)} ou détenus ★)</h3>{cand}"
         f"<p><a href='{MARKET_URL}'>Ouvrir le marché sur Polymarket</a></p>"
-        "<p style='color:#888;font-size:12px'>Prix « Oui » (Non = 1 − Oui). PnL latent = "
-        "valeur actuelle − coût d'entrée. Variation 24 h des positions = parts × variation "
-        "du prix du côté détenu.</p></div>")
+        "<p style='color:#888;font-size:12px'>Prix des jetons en $ (1 $ si le pari gagne, "
+        "0 sinon) ; Non = 1 − Oui ; cote décimale = 1 / prix. PnL latent = valeur actuelle "
+        "− coût d'entrée. Var. 24 h d'une position = variation du prix du jeton détenu "
+        "(par jeton) ; total = jetons × variation.</p></div>")
     text = "\n".join(
         [subject, *warnings, "",
          f"Valeur totale : {usd(total['equity'])} (cash {cash_txt})",

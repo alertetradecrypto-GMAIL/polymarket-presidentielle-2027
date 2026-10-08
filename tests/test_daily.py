@@ -92,6 +92,9 @@ def test_format():
     assert daily.usd(1234.5) == "1 234,50 $"
     assert daily.usd(-3.2, True) == "−3,20 $"
     assert daily.usd(3.2, True) == "+3,20 $"
+    assert daily.px(0.1234) == "0,123 $" and daily.px(None) == "—"
+    assert daily.px(-0.01, True) == "−0,010 $"
+    assert daily.cote(0.4) == "2,50" and daily.cote(0) == "—"
 
 
 # ---------------------------------------------------------------- run
@@ -121,6 +124,7 @@ def test_run_envoie_une_fois(tmp_path, monkeypatch):
     assert len(sent) == 1
     subject, body = sent[0]
     assert "08/10/2026" in subject and "Marine Le Pen" in body and "Petit<" not in body
+    assert " pt<" not in body and "Cote Oui" in body
     assert (tmp_path / "daily.json").read_text().count("2026-10-08") == 1
 
 

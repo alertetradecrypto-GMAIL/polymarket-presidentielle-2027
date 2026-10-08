@@ -97,19 +97,26 @@ def mark_sent(state: dict, alerts: list, now: int) -> None:
 
 # ---------------------------------------------------------------- email
 
-def _num(x: float, signed: bool = False) -> str:
-    return (f"{x:+.1f}" if signed else f"{x:.1f}").replace(".", ",")
+def _num(x: float, signed: bool = False, d: int = 1) -> str:
+    s = f"{x:+.{d}f}" if signed else f"{x:.{d}f}"
+    return s.replace(".", ",").replace("-", "−")
 
 
-def _pct(p: float) -> str:
-    return f"{_num(p * 100)} %"
+def _px(p: float, signed: bool = False) -> str:
+    """Prix d'un jeton en $ (3 décimales) : 0,123 $."""
+    return f"{_num(p, signed, 3)} $"
+
+
+def _cote(p: float) -> str:
+    """Cote décimale = 1 / prix."""
+    return _num(1 / p, d=2) if p > 0 else "—"
 
 
 def build_email(alerts: list) -> tuple[str, str, str]:
     alerts = sorted(alerts, key=lambda a: abs(a["rel"]), reverse=True)
     top = alerts[0]
     subject = (f"🚨 URGENT — {top['name']} {_num(top['rel'] * 100, True)} % {top['window']} "
-               f"({_num(top['ref'] * 100)} → {_num(top['cur'] * 100)} %)")
+               f"({_px(top['ref'])[:-2]} → {_px(top['cur'])})")
     others = len({a["slug"] for a in alerts}) - 1
     if others:
         subject += f" · +{others} autre{'s' if others > 1 else ''}"
@@ -127,13 +134,14 @@ def build_email(alerts: list) -> tuple[str, str, str]:
             tag = " <i>(rappel)</i>" if a["kind"] == "rappel" else ""
             rows_html.append(
                 f"<tr><td><b>{name}</b></td><td>{a['window']}{tag}</td>"
-                f"<td>{_pct(a['ref'])}</td><td>{_pct(a['cur'])}</td>"
+                f"<td>{_px(a['ref'])} <small>(cote {_cote(a['ref'])})</small></td>"
+                f"<td>{_px(a['cur'])} <small>(cote {_cote(a['cur'])})</small></td>"
                 f"<td style='color:{color}'><b>{arrow} {_num(a['rel'] * 100, True)} %</b></td>"
-                f"<td style='color:{color}'>{_num(a['delta'] * 100, True)} pt</td></tr>")
+                f"<td style='color:{color}'>{_px(a['delta'], True)}</td></tr>")
             lines.append(
                 f"{a['name']} [{a['window']}{', rappel' if a['kind'] == 'rappel' else ''}] "
-                f"{_pct(a['ref'])} → {_pct(a['cur'])} "
-                f"({_num(a['rel'] * 100, True)} %, {_num(a['delta'] * 100, True)} pt)")
+                f"{_px(a['ref'])} → {_px(a['cur'])} (cote {_cote(a['cur'])}) "
+                f"({_num(a['rel'] * 100, True)} %, {_px(a['delta'], True)})")
 
     th = "style='text-align:left;padding:4px 10px;border-bottom:1px solid #ccc'"
     body = (
@@ -141,12 +149,13 @@ def build_email(alerts: list) -> tuple[str, str, str]:
         "<h2 style='color:#dc2626'>🚨 Mouvement fort sur la présidentielle 2027</h2>"
         "<table style='border-collapse:collapse' cellpadding='4'>"
         f"<tr><th {th}>Candidat</th><th {th}>Fenêtre</th><th {th}>Avant</th>"
-        f"<th {th}>Maintenant</th><th {th}>Var. relative</th><th {th}>Var. absolue</th></tr>"
+        f"<th {th}>Maintenant</th><th {th}>Var. relative</th><th {th}>Var. par jeton</th></tr>"
         + "".join(rows_html)
         + "</table>"
         f"<p><a href='{MARKET_URL}'>Ouvrir le marché sur Polymarket</a></p>"
-        "<p style='color:#888;font-size:12px'>Prix « Oui ». Confirmé sur 2 collectes. "
-        "Rappel seulement si le mouvement s'aggrave d'au moins 1 pt (6 h minimum).</p>"
+        "<p style='color:#888;font-size:12px'>Prix du jeton « Oui » en $ (1 $ si victoire) ; "
+        "cote décimale = 1 / prix. Confirmé sur 2 collectes. "
+        "Rappel seulement si le mouvement s'aggrave d'au moins 0,010 $ (6 h minimum).</p>"
         "</div>")
     text = "\n".join(lines) + f"\n\n{MARKET_URL}"
     return subject, body, text

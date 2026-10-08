@@ -163,7 +163,7 @@ def test_run_etat_seulement_si_email_parti(tmp_path, monkeypatch):
 
     sent = []
     assert vol.run(T0 + Q + 60, send=lambda *a, **k: sent.append(a)) == 0  # retentée
-    assert sent and sent[0][0].startswith("🚨 URGENT — Marine Le Pen +30,0 % 24h (10,0 → 13,0 %)")
+    assert sent and sent[0][0].startswith("🚨 URGENT — Marine Le Pen +30,0 % 24h (0,100 → 0,130 $)")
 
 
 def test_email_regroupe():
@@ -176,6 +176,12 @@ def test_email_regroupe():
          "ref": 0.20, "cur": 0.16, "delta": -0.04, "rel": -0.2, "kind": "rappel"},
     ]
     subject, body, text = vol.build_email(a)
-    assert subject == "🚨 URGENT — Le Pen +43,0 % 7j (28,0 → 40,0 %) · +1 autre"
+    assert subject == "🚨 URGENT — Le Pen +43,0 % 7j (0,280 → 0,400 $) · +1 autre"
     assert body.count("<b>Le Pen</b>") == 1 and "(rappel)" in body
-    assert "-4,0 pt" in text
+    assert "0,200 $ → 0,160 $ (cote 6,25)" in text and "−0,040 $" in text
+
+
+def test_formats_jetons():
+    assert vol._px(0.1234) == "0,123 $"
+    assert vol._px(-0.04, True) == "−0,040 $" and vol._px(0.02, True) == "+0,020 $"
+    assert vol._cote(0.25) == "4,00" and vol._cote(0) == "—"
