@@ -1,5 +1,5 @@
 {
-  "updated": 1791461678,
+  "updated": 1791461742,
   "event": {
     "id": "79987",
     "slug": "next-french-presidential-election",
@@ -8,7 +8,7 @@
     "volume": 146863249.374678,
     "volume24h": 574351.986891,
     "volume_usd": 70601783.64,
-    "volume24h_usd": 69363.42
+    "volume24h_usd": 68070.81
   },
   "candidates": [
     {
@@ -28,7 +28,7 @@
       "slug": "marine-le-pen",
       "first_seen": 1791451018,
       "volume_usd": 1257172.95,
-      "volume24h_usd": 18911.47,
+      "volume24h_usd": 18861.47,
       "last_hist": 0.4285,
       "price_24h": 0.4325
     },
@@ -49,7 +49,7 @@
       "slug": "edouard-philippe",
       "first_seen": 1791451018,
       "volume_usd": 573273.15,
-      "volume24h_usd": 5297.47,
+      "volume24h_usd": 4697.47,
       "last_hist": 0.185,
       "price_24h": 0.175
     },
@@ -70,7 +70,7 @@
       "slug": "david-lisnard",
       "first_seen": 1791451018,
       "volume_usd": 1436847.51,
-      "volume24h_usd": 29127.55,
+      "volume24h_usd": 28932.89,
       "last_hist": 0.1325,
       "price_24h": 0.1195
     },
@@ -91,7 +91,7 @@
       "slug": "jean-luc-melenchon",
       "first_seen": 1791451018,
       "volume_usd": 509664.91,
-      "volume24h_usd": 3700.08,
+      "volume24h_usd": 3300.08,
       "last_hist": 0.125,
       "price_24h": 0.125
     },
@@ -364,7 +364,7 @@
       "slug": "francois-ruffin",
       "first_seen": 1791451018,
       "volume_usd": 1890487.44,
-      "volume24h_usd": 944.72,
+      "volume24h_usd": 896.77,
       "last_hist": 0.0015,
       "price_24h": 0.0015
     },
