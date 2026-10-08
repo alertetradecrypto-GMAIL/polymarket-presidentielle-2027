@@ -29,11 +29,15 @@ jobs:
       - name: Collecte des prix
         run: python src/collect.py
 
-      # - name: Contrôle de volatilité   (ajouté à l'étape suivante)
-      #   run: python src/volatility.py
-      #   env: { GMAIL_USER: ..., GMAIL_APP_PASSWORD: ..., ALERT_TO: ... }
+      - name: Contrôle de volatilité
+        run: python src/volatility.py
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ALERT_TO: ${{ secrets.ALERT_TO }}
 
       - name: Commit des données
+        if: ${{ !cancelled() }}   # on sauvegarde données et état même si l'email a échoué
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
