@@ -87,14 +87,13 @@ def compact(points: list, now: int) -> list:
 
 def fetch_new_points(token: str, last_t: int | None, now: int) -> list:
     if last_t is None:
-        # Initialisation : historique complet à l'heure + dernière semaine à 15 min
-        full = []
-        for fid in (BACKFILL_FIDELITY_MIN, 180, 720):
-            full = pm.get_price_history(token, interval="max", fidelity=fid)
-            if full:
-                break
+        # Initialisation. Le CLOB tronque « max » aux 30 derniers jours sous
+        # fidelity=720 : on assemble donc 3 résolutions.
+        full = pm.get_price_history(token, interval="max", fidelity=720)   # 12 h, depuis l'ouverture
+        month = pm.get_price_history(token, interval="1m", fidelity=BACKFILL_FIDELITY_MIN)
         week = pm.get_price_history(token, interval="1w", fidelity=FIDELITY_MIN)
-        return merge_points(merge_points([], full, 3600), week)
+        coarse = merge_points(merge_points([], full, 3600), month, 3600)
+        return merge_points(coarse, week)
     if now - last_t > REFETCH_WEEK_S:
         return pm.get_price_history(token, interval="1w", fidelity=FIDELITY_MIN)
     return pm.get_price_history(

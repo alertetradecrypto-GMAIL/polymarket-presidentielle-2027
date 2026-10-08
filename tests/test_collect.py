@@ -69,6 +69,9 @@ def test_compact_keeps_recent_fine():
 def test_backfill_then_incremental(tmp_path, monkeypatch):
     def hist(token, kw):
         if kw.get("interval") == "max":
+            assert kw["fidelity"] == 720
+            return [(NOW - 200 * 86400 + h * 43200, 0.10) for h in range(10)]
+        if kw.get("interval") == "1m":
             return [(NOW - 10 * 86400 + h * 3600, 0.20) for h in range(24)]
         if kw.get("interval") == "1w":
             return [(NOW - 3600 + i * 900, 0.30) for i in range(4)]
@@ -84,7 +87,7 @@ def test_backfill_then_incremental(tmp_path, monkeypatch):
     assert data["candidates"][0]["token_yes"] == "1111"
 
     h = json.loads((tmp_path / "history" / "marine-le-pen.json").read_text())
-    assert len(h["p"]) == 24 + 4 and h["v"] == [[NOW, 1000.0]]
+    assert len(h["p"]) == 10 + 24 + 4 and h["v"] == [[NOW, 1000.0]]
     assert not (tmp_path / "history" / "candidat-retire.json").read_text().count('"p":[[')
 
     # 2e passage : appel incrémental startTs/endTs
