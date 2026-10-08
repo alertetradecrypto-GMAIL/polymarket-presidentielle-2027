@@ -29,6 +29,17 @@ TRADES_PAGE = 500            # taille max d'une page /trades
 TRADES_MAX_OFFSET = 10000    # offset max accepté par /trades
 VOL_BACKFILL_PER_RUN = 3     # rattrapages complets max par collecte (nouveaux candidats)
 
+# Variations affichées sur le tableau de bord (libellé, durée en s)
+CHANGE_WINDOWS = (("1h", 3600), ("4h", 4 * 3600), ("12h", 12 * 3600), ("24h", 86400))
+
+# Actualités (Google News RSS, sans clé) → docs/data/news.json
+NEWS_FILE = DATA_DIR / "news.json"
+NEWS_RSS_URL = "https://news.google.com/rss/search"
+NEWS_PER_CANDIDATE = 5
+NEWS_MAX_AGE_DAYS = 30       # articles plus anciens ignorés
+NEWS_REFRESH_S = 3600        # rafraîchies au plus une fois par heure
+NEWS_PAUSE_S = 0.5           # pause entre deux requêtes
+
 # Alertes de volatilité (prix « Oui », en probabilité 0-1)
 ALERT_WINDOWS = (
     # (libellé, durée en s, variation relative >, variation absolue ≥)

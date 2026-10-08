@@ -50,7 +50,12 @@
     <section class="panel" aria-label="Candidats">
       <div class="table-head">
         <h2>Candidats</h2>
-        <label class="chk"><input type="checkbox" id="hide-small" checked> Masquer &lt; 1 %</label>
+        <div class="table-tools">
+          <div class="seg" id="unit" aria-label="Unité des variations">
+            <button data-v="pt" title="Variation en points de probabilité">pt</button><button data-v="pct" title="Variation relative">%</button>
+          </div>
+          <label class="chk"><input type="checkbox" id="hide-small" checked> Masquer &lt; 1 %</label>
+        </div>
       </div>
       <div class="table-wrap">
         <table id="table">
@@ -59,17 +64,37 @@
             <th data-k="name">Candidat</th>
             <th data-k="yes" class="num">Oui</th>
             <th data-k="no" class="num">Non</th>
-            <th data-k="d24" class="num">Δ 24 h</th>
-            <th data-k="r24" class="num">Δ 24 h %</th>
+            <th data-k="c1h" class="num">1 h</th>
+            <th data-k="c4h" class="num">4 h</th>
+            <th data-k="c12h" class="num">12 h</th>
+            <th data-k="c24h" class="num">24 h</th>
             <th data-k="vol24" class="num">Vol. 24 h</th>
             <th data-k="vol" class="num">Vol. total</th>
           </tr></thead>
           <tbody></tbody>
         </table>
       </div>
-      <p class="note">Cliquer sur une ligne pour l'afficher ou la retirer du graphique (8 au maximum). Prix Oui = milieu de fourchette ; Non = 100 − Oui.</p>
+      <p class="note">Cliquer sur un nom pour ses 5 dernières actualités ; ailleurs sur la ligne pour l'afficher ou le retirer du graphique (8 au maximum). Prix Oui = milieu de fourchette ; Non = 100 − Oui. Variations du prix Oui sur 1 h, 4 h, 12 h et 24 h, en points ou en %.</p>
     </section>
   </main>
+
+  <dialog id="news" aria-labelledby="news-title">
+    <div class="dlg-head">
+      <div>
+        <h2 id="news-title"></h2>
+        <div class="dlg-sub" id="news-sub"></div>
+      </div>
+      <button class="dlg-x" id="news-close" aria-label="Fermer" autofocus>×</button>
+    </div>
+    <dl class="dlg-chg" id="news-chg"></dl>
+    <h3>Actualités récentes</h3>
+    <ol class="news-list" id="news-list"></ol>
+    <div class="dlg-foot">
+      <button class="btn" id="news-toggle"></button>
+      <a id="news-more" target="_blank" rel="noopener">Plus sur Google News ↗</a>
+    </div>
+    <p class="note" id="news-upd"></p>
+  </dialog>
 
   <footer>Outil de suivi en lecture seule — données publiques Polymarket, collectées toutes les 15 min.</footer>
 </body>

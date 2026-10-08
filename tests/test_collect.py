@@ -119,3 +119,21 @@ def test_price_24h_for_dashboard(tmp_path, monkeypatch):
     c = json.loads((tmp_path / "candidates.json").read_text())["candidates"][0]
     assert c["last_hist"] == 0.24
     assert c["price_24h"] == 0.20           # point à ±30 min de last_t − 24 h
+
+
+def test_price_refs_1h_4h_12h(tmp_path, monkeypatch):
+    last = NOW - 900
+    pts = [(last - 12 * 3600 + 300, 0.10), (last - 4 * 3600 - 2400, 0.30),
+           (last - 3600 - 600, 0.18), (last, 0.24)]
+
+    def hist(token, kw):
+        return pts if kw.get("interval") == "1w" else []
+
+    setup(tmp_path, monkeypatch, hist)
+    collect.run()
+    c = json.loads((tmp_path / "candidates.json").read_text())["candidates"][0]
+    assert c["price_ref"]["1h"] == 0.18      # à 10 min près (tolérance 15 min)
+    assert c["price_ref"]["4h"] is None      # point à 40 min : hors tolérance (30 min)
+    assert c["price_ref"]["12h"] == 0.10
+    assert c["price_ref"]["24h"] is None
+    assert c["price_24h"] is None

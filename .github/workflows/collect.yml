@@ -65,6 +65,12 @@ jobs:
             out/x_alert_*.txt
           retention-days: 14
 
+      - name: Actualités des candidats (1 fois par heure)
+        if: ${{ !cancelled() }}
+        continue-on-error: true   # une panne de la source d'actualités ne bloque rien
+        timeout-minutes: 4
+        run: python src/news.py
+
       - name: Commit des données
         if: ${{ !cancelled() }}   # on sauvegarde données et état même si l'email a échoué
         run: |

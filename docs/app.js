@@ -1,5 +1,6 @@
 /* Tableau de bord Polymarket – Présidentielle 2027 (lecture seule).
- * Données : data/candidates.json + data/history/<slug>.json (collect.py).
+ * Données : data/candidates.json + data/history/<slug>.json (collect.py),
+ *   data/news.json (news.py) : 5 dernières actualités par candidat.
  *   history.p = [[t, prixOui 0-1], …]
  *   history.vol = [[début de tranche, parts, dollars], …] (trades, tranches 15 min / 1 h)
  * Heures affichées en Europe/Paris. Aucune donnée personnelle.
@@ -8,6 +9,7 @@
 
 const LWC = window.LightweightCharts;
 const MAX_SEL = 8;
+const CHG = ["1h", "4h", "12h", "24h"];   // variations du tableau (price_ref de collect.py)
 const REFRESH_MS = 5 * 60 * 1000;
 const TF = {
   "1D":  { win: 86400,      step: 900,   label: "pas 15 min" },
@@ -28,6 +30,9 @@ const state = {
   vol: true,
   hideSmall: true,
   sort: { k: "yes", asc: false },
+  unit: "pt",             // variations en points ou en %
+  news: null,             // news.json (chargé à la première ouverture)
+  newsSlug: null,         // candidat affiché dans la fenêtre d'actualités
 };
 let chart = null;
 let series = [];          // [{slug, s, data}]
@@ -293,16 +298,32 @@ function renderNote() {
 
 // ---------------------------------------------------------------- tableau
 
+/** Variation du prix Oui sur la fenêtre k : en points (pt) et relative (%). */
+function change(c, k) {
+  const ref = c.price_ref ? c.price_ref[k] : k === "24h" ? c.price_24h : null;
+  if (c.last_hist == null || ref == null) return { pt: null, pct: null };
+  const pt = (c.last_hist - ref) * 100;
+  return { pt, pct: ref > 0 ? (pt / (ref * 100)) * 100 : null };
+}
+function fmtChange(ch, unit) {
+  const v = ch[unit];
+  return unit === "pt" ? signed(v, " pt", v != null && Math.abs(v) < 1 ? 2 : 1) : signed(v, " %");
+}
+
 function rows() {
   return state.data.candidates.map((c) => {
-    const d24 = c.last_hist != null && c.price_24h != null ? (c.last_hist - c.price_24h) * 100 : null;
-    return {
+    const r = {
       c, slug: c.slug, name: c.name,
       yes: c.price != null ? c.price * 100 : null,
       no: c.price != null ? 100 - c.price * 100 : null,
-      d24, r24: d24 != null && c.price_24h > 0 ? (d24 / (c.price_24h * 100)) * 100 : null,
       vol24: c.volume24h_usd ?? null, vol: c.volume_usd ?? null,
     };
+    for (const k of CHG) {
+      r.ch = r.ch || {};
+      r.ch[k] = change(c, k);
+      r["c" + k] = r.ch[k][state.unit];
+    }
+    return r;
   });
 }
 
@@ -327,11 +348,10 @@ function renderTable() {
     const tag = !r.c.active || r.c.closed ? `<span class="tag">clos</span>` : "";
     return `<tr data-slug="${esc(r.slug)}" class="${on ? "on" : ""}${!r.c.active ? " closed" : ""}" aria-selected="${on}">
       <td class="c-sel">${dot}</td>
-      <td class="name">${esc(r.name)}${tag}</td>
+      <td class="name"><button class="name-btn" title="Dernières actualités">${esc(r.name)}</button>${tag}</td>
       <td class="num">${pct(r.yes)}</td>
       <td class="num">${pct(r.no)}</td>
-      <td class="num ${cls(r.d24)}">${signed(r.d24, " pt", r.d24 != null && Math.abs(r.d24) < 1 ? 2 : 1)}</td>
-      <td class="num ${cls(r.r24)}">${signed(r.r24, " %")}</td>
+      ${CHG.map((k) => `<td class="num ${cls(r["c" + k])}">${fmtChange(r.ch[k], state.unit)}</td>`).join("")}
       <td class="num">${money(r.vol24)}</td>
       <td class="num">${money(r.vol)}</td>
     </tr>`;
@@ -374,6 +394,60 @@ async function toggle(slug) {
   saveHash();
   renderChart();
   renderTable();
+  if ($("#news").open && state.newsSlug === slug) renderNews();
+}
+
+// ---------------------------------------------------------------- actualités
+
+const relFmt = new Intl.RelativeTimeFormat("fr", { numeric: "auto" });
+function ago(t) {
+  const s = Date.now() / 1000 - t;
+  if (s < 3600) return relFmt.format(-Math.max(1, Math.round(s / 60)), "minute");
+  if (s < 86400) return relFmt.format(-Math.round(s / 3600), "hour");
+  if (s < 7 * 86400) return relFmt.format(-Math.round(s / 86400), "day");
+  return new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short" }).format(new Date(t * 1000));
+}
+const safeUrl = (u) => (/^https?:\/\//i.test(u || "") ? u : "#");
+
+async function openNews(slug) {
+  state.newsSlug = slug;
+  renderNews();
+  const dlg = $("#news");
+  if (!dlg.open) dlg.showModal();
+  if (!state.news) {
+    try { state.news = await getJSON(`data/news.json?t=${Date.now()}`); }
+    catch (e) { console.error(e); state.news = { items: {}, error: true }; }
+    if (state.newsSlug === slug) renderNews();
+  }
+}
+
+function renderNews() {
+  const c = cand(state.newsSlug);
+  if (!c) return;
+  $("#news-title").textContent = c.name;
+  $("#news-sub").innerHTML = `Oui <b>${pct(c.price != null ? c.price * 100 : null)}</b> · Non ${pct(c.price != null ? 100 - c.price * 100 : null)}`;
+  $("#news-chg").innerHTML = CHG.map((k) => {
+    const ch = change(c, k);
+    const v = ch[state.unit];
+    return `<div><dt>${k.replace("h", " h")}</dt><dd class="${cls(v)}">${fmtChange(ch, state.unit)}</dd></div>`;
+  }).join("");
+
+  const list = $("#news-list");
+  const n = state.news;
+  const items = n && n.items ? n.items[c.slug] : undefined;
+  if (!n) list.innerHTML = `<li class="muted">Chargement…</li>`;
+  else if (n.error) list.innerHTML = `<li class="muted">Actualités indisponibles pour le moment.</li>`;
+  else if (items === undefined) list.innerHTML = `<li class="muted">Actualités pas encore collectées pour ce candidat (mise à jour toutes les heures).</li>`;
+  else if (!items.length) list.innerHTML = `<li class="muted">Aucun article ces 30 derniers jours.</li>`;
+  else list.innerHTML = items.map((a) => `<li>
+      <a href="${esc(safeUrl(a.url))}" target="_blank" rel="noopener noreferrer">${esc(a.title)}</a>
+      <span class="meta">${esc(a.source || "")}${a.source ? " · " : ""}<time title="${esc(fmtParis(a.t))}">${esc(ago(a.t))}</time></span>
+    </li>`).join("");
+
+  const on = state.sel.some((x) => x.slug === c.slug);
+  $("#news-toggle").textContent = on ? "Retirer du graphique" : "Afficher sur le graphique";
+  $("#news-more").href = `https://news.google.com/search?q=${encodeURIComponent(`"${c.name}"`)}&hl=fr&gl=FR&ceid=FR:fr`;
+  $("#news-upd").textContent = n && n.updated ? `Actualités mises à jour le ${fmtParis(n.updated)} (Google News).` : "";
 }
 
 function saveHash() {
@@ -381,7 +455,7 @@ function saveHash() {
     c: state.sel.map((x) => x.slug).join(","),
     f: state.focus || "",
     tf: state.tf, side: state.side,
-    ma: [...state.ma].join(","), vol: state.vol ? "1" : "0",
+    ma: [...state.ma].join(","), vol: state.vol ? "1" : "0", u: state.unit,
   });
   history.replaceState(null, "", "#" + h.toString());
 }
@@ -400,6 +474,7 @@ function readHash() {
   if (["yes", "no"].includes(h.get("side"))) state.side = h.get("side");
   if (h.has("ma")) state.ma = new Set(h.get("ma").split(",").map(Number).filter((n) => n === 20 || n === 50));
   if (h.has("vol")) state.vol = h.get("vol") !== "0";
+  if (["pt", "pct"].includes(h.get("u"))) state.unit = h.get("u");
   const f = h.get("f");
   state.focus = state.sel.some((x) => x.slug === f) ? f : state.sel[0]?.slug ?? null;
 }
@@ -408,6 +483,7 @@ function syncControls() {
   document.querySelectorAll("#tf button").forEach((b) => b.classList.toggle("on", b.dataset.v === state.tf));
   document.querySelectorAll("#side button").forEach((b) => b.classList.toggle("on", b.dataset.v === state.side));
   document.querySelectorAll("#ma button").forEach((b) => b.classList.toggle("on", state.ma.has(+b.dataset.v)));
+  document.querySelectorAll("#unit button").forEach((b) => b.classList.toggle("on", b.dataset.v === state.unit));
   $("#vol-toggle").checked = state.vol;
   $("#hide-small").checked = state.hideSmall;
 }
@@ -428,10 +504,21 @@ function bindControls() {
   });
   $("#vol-toggle").addEventListener("change", (e) => { state.vol = e.target.checked; saveHash(); renderChart(true); });
   $("#hide-small").addEventListener("change", (e) => { state.hideSmall = e.target.checked; renderTable(); });
+  $("#unit").addEventListener("click", (e) => {
+    const v = e.target.dataset.v; if (!v) return;
+    state.unit = v; syncControls(); saveHash(); renderTable();
+    if ($("#news").open) renderNews();
+  });
   $("#table tbody").addEventListener("click", (e) => {
     const tr = e.target.closest("tr[data-slug]");
-    if (tr) toggle(tr.dataset.slug);
+    if (!tr) return;
+    if (e.target.closest(".name-btn")) openNews(tr.dataset.slug);
+    else toggle(tr.dataset.slug);
   });
+  const dlg = $("#news");
+  $("#news-close").addEventListener("click", () => dlg.close());
+  dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });   // clic hors de la fenêtre
+  $("#news-toggle").addEventListener("click", () => toggle(state.newsSlug));
   $("#table thead").addEventListener("click", (e) => {
     const k = e.target.dataset.k; if (!k) return;
     state.sort = { k, asc: state.sort.k === k ? !state.sort.asc : k === "name" };
@@ -446,6 +533,8 @@ async function refresh() {
   try { await loadCandidates(); } catch (e) { console.error(e); return; }
   if (state.data.updated === before) return;
   state.hist.clear();
+  state.news = null;
+  if ($("#news").open) openNews(state.newsSlug);
   await loadHistories(state.sel.map((x) => x.slug));
   renderHeader();
   renderTable();

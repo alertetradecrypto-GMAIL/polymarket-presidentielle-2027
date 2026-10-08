@@ -26,6 +26,7 @@ from config import (
     ALERT_REF_TOLERANCE_S,
     BACKFILL_FIDELITY_MIN,
     CANDIDATES_FILE,
+    CHANGE_WINDOWS,
     FIDELITY_MIN,
     HISTORY_DIR,
     OVERLAP_S,
@@ -220,10 +221,15 @@ def update_candidate(c: dict, now: int, allow_backfill: bool = True) -> bool:
     else:
         c["volume_usd"] = c["volume24h_usd"] = None
 
-    # Variation 24 h pour le tableau de bord (même calcul que l'alerte et le récap)
+    # Variations pour le tableau de bord : prix de référence 1 h / 4 h / 12 h / 24 h
+    # avant le dernier point (24 h : même calcul que l'alerte et le récap)
     pts = hist["p"]
     c["last_hist"] = pts[-1][1] if pts else None
-    c["price_24h"] = price_at(pts, pts[-1][0] - 86400) if pts else None
+    c["price_ref"] = {
+        k: price_at(pts, pts[-1][0] - s, min(ALERT_REF_TOLERANCE_S, s // 4)) if pts else None
+        for k, s in CHANGE_WINDOWS
+    }
+    c["price_24h"] = c["price_ref"]["24h"]
 
     write_json(path, hist)
     return backfilled
