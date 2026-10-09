@@ -87,4 +87,10 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except Exception as e:  # visible dans les annotations GitHub
+        import traceback
+        tb = traceback.format_exc().strip().splitlines()[-4:]
+        print("::error::" + " | ".join(tb).replace("\n", " "))
+        raise
