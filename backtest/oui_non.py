@@ -18,6 +18,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 OUT = Path(__file__).resolve().parent / "out"
 STAKE, FRAC = 100.0, 0.2
+STAKE_US, US_DAYS_BEFORE = 1000.0, 205  # mise par candidat, départ J-205 avant le scrutin
+US_ELECTION = dt.date(2024, 11, 5)
 # (libellé, côté, palier, relatif ?)
 RULES = [("Oui +2 pts", "Y", .02, False), ("Non +2 pts", "N", .02, False),
          ("Non +1 pt", "N", .01, False), ("Non +2 % rel.", "N", .02, True),
@@ -56,22 +58,23 @@ def load_fr():
 def load_us():
     ev_dir = ROOT / "backtest" / "events" / "presidential-election-winner-2024"
     ev = json.load(open(ev_dir / "_event.json"))
+    start = US_ELECTION - dt.timedelta(days=US_DAYS_BEFORE)
     end = dt.datetime.fromtimestamp(ev["end"], dt.UTC).date() - dt.timedelta(days=1)
     out = []
     for m in ev["markets"]:
         h = json.load(open(ev_dir / m["file"]))
-        y, n = daily(h["yes"], end=end), daily(h["no"], end=end)
+        y, n = daily(h["yes"], start, end), daily(h["no"], start, end)
         days = sorted(set(y) & set(n))
         out.append(dict(name=m["name"], days=days, Y=[y[d] for d in days], N=[n[d] for d in days],
                         win=float(m["outcome_prices"][0])))
     return f"Présidentielle US 2024 — {out[0]['days'][0]:%d/%m/%Y} → {end:%d/%m/%Y} " \
-           "(Non réel, valeur à la résolution : Trump gagne)", out
+           f"(J-{US_DAYS_BEFORE}, Non réel, valeur à la résolution : Trump gagne)", out
 
 
-def run(c, side, step, rel, keep):
+def run(c, side, step, rel, keep, stake=STAKE):
     px, days = c[side], c["days"]
     p0 = px[0]
-    q0 = STAKE / p0
+    q0 = stake / p0
     q, cash, ref = q0, 0.0, p0
     log = [(str(days[0]), "achat", round(p0, 4), round(q0, 2), 0.0, round(q0, 2))]
     for d, pr in zip(days[1:], px[1:]):
@@ -89,11 +92,12 @@ def run(c, side, step, rel, keep):
 
 def main(src):
     title, C = (load_fr if src == "fr" else load_us)()
+    stake = STAKE_US if src == "us" else STAKE
     names = [c["name"] for c in C]
     S = {}
     for lab, side, step, rel in RULES:
         for keep in KEEPS:
-            R = [run(c, side, step, rel, keep) for c in C]
+            R = [run(c, side, step, rel, keep, stake) for c in C]
             k = f"{lab} – conserver {int(keep * 100)} %"
             cash = sum(r["cash"] for r in R)
             mtm = sum(r["cash"] + r["q"] * r["last"] for r in R)
@@ -109,10 +113,11 @@ def main(src):
             if C[0]["win"] is not None:  # résolu
                 S[k]["final"] = sc[next(c["name"] for c in C if c["win"] == 1)]
     OUT.mkdir(exist_ok=True)
-    json.dump(dict(title=title, data=S), open(OUT / f"oui_non_{src}.json", "w"), ensure_ascii=False)
+    json.dump(dict(title=title, stake=stake, data=S), open(OUT / f"oui_non_{src}.json", "w"), ensure_ascii=False)
     tpl = (Path(__file__).resolve().parent / "oui_non_page.html").read_text()
     (OUT / f"oui_non_{src}.html").write_text(
-        tpl.replace("__TITLE__", title).replace("__DATA__", json.dumps(S, ensure_ascii=False)))
+        tpl.replace("__TITLE__", title).replace("__STAKE__", f"{stake:,.0f}".replace(",", " ")).replace("__STAKE_N__", str(stake))
+        .replace("__DATA__", json.dumps(S, ensure_ascii=False)))
     w = "final" if C[0]["win"] is not None else "mtm"
     for k, s in S.items():
         print(f"{k:32} ventes={s['ventes']:4} encaissé={s['cash']:8.0f} {w}={s.get(w, s['mtm']):8.0f} "

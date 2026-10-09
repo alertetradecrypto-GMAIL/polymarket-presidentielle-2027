@@ -17,14 +17,14 @@ th:first-child,td:first-child{text-align:left}th{color:var(--mute);font-family:v
 select{font:inherit;padding:4px 8px;background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:4px}
 label{font-size:.85rem;color:var(--mute);display:flex;gap:6px;align-items:center}
 </style></head><body><main>
-<header><h1>Backtest Oui contre Non</h1><p>__TITLE__. 100 $ par candidat achetés au 1er jour, vente de 20 % du stock initial à chaque palier franchi par le jeton détenu, jusqu'à la part conservée. Prix = dernier prix du jour.</p></header>
+<header><h1>Backtest Oui contre Non</h1><p>__TITLE__. __STAKE__ $ par candidat achetés au 1er jour, vente de 20 % du stock initial à chaque palier franchi par le jeton détenu, jusqu'à la part conservée. Prix = dernier prix du jour.</p></header>
 <section><h2>Synthèse par stratégie</h2><div class="wrap"><table id="sum"></table></div></section>
 <section><h2>Valeur finale selon le vainqueur</h2><div class="wrap"><table id="sc"></table></div></section>
 <section><h2>Journal des achats et ventes</h2>
 <div class="bar"><label>Stratégie <select id="st"></select></label><label>Candidat <select id="cd"></select></label></div>
 <div class="wrap"><table id="log"></table></div></section>
 </main><script>
-const S=__DATA__,K=Object.keys(S),B=Object.keys(S[K[0]].pos).length*100;
+const S=__DATA__,K=Object.keys(S),B=Object.keys(S[K[0]].pos).length*__STAKE_N__;
 const f=n=>n.toLocaleString('fr-FR',{maximumFractionDigits:0});
 const pl=v=>`<span class="${v>=B?'pos':'neg'}">${f(v)} $</span>`;
 const res='final' in S[K[0]],val=s=>res?s.final:s.mtm;
