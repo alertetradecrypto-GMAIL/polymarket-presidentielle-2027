@@ -6,6 +6,38 @@
       "statut": "Candidate déclarée (TF1, 7 juillet 2026)",
       "x": "https://x.com/MLP_officiel",
       "site": "https://rassemblementnational.fr",
+      "axes": [
+        {
+          "texte": "Finances publiques : 140 Md€ d'économies d'ici 2032, dette ramenée de 121 % à 112 % du PIB.",
+          "date": "2026-10-06",
+          "url": "https://publicsenat.fr/actualites/politique/140-milliards-deuros-deconomies-dici-2032-leffort-radical-propose-par-marine-le-pen-pour-redresser-les-f"
+        },
+        {
+          "texte": "Règle d'or : plafond de déficit inscrit dans la Constitution par référendum dans les 12 mois.",
+          "date": "2026-10-06",
+          "url": "https://publicsenat.fr/actualites/politique/140-milliards-deuros-deconomies-dici-2032-leffort-radical-propose-par-marine-le-pen-pour-redresser-les-f"
+        },
+        {
+          "texte": "Immigration : environ 15 Md€ d'économies dès 2027, 29 Md€ en année pleine.",
+          "date": "2026-10-06",
+          "url": "https://publicsenat.fr/actualites/politique/140-milliards-deuros-deconomies-dici-2032-leffort-radical-propose-par-marine-le-pen-pour-redresser-les-f"
+        },
+        {
+          "texte": "Retraites : correction de mesures jugées injustes et création d'un pilier de capitalisation.",
+          "date": "2026-10-06",
+          "url": "https://publicsenat.fr/actualites/politique/140-milliards-deuros-deconomies-dici-2032-leffort-radical-propose-par-marine-le-pen-pour-redresser-les-f"
+        },
+        {
+          "texte": "Europe : contribution française au budget de l'UE réduite de 9 Md€.",
+          "date": "2026-10-06",
+          "url": "https://publicsenat.fr/actualites/politique/140-milliards-deuros-deconomies-dici-2032-leffort-radical-propose-par-marine-le-pen-pour-redresser-les-f"
+        },
+        {
+          "texte": "État : suppression de la quasi-totalité des agences, EPCI et métropoles.",
+          "date": "2026-10-06",
+          "url": "https://publicsenat.fr/actualites/politique/140-milliards-deuros-deconomies-dici-2032-leffort-radical-propose-par-marine-le-pen-pour-redresser-les-f"
+        }
+      ],
       "crypto": [
         {
           "type": "citation",
@@ -42,13 +74,77 @@
       "statut": "Candidat déclaré (septembre 2024)",
       "x": "https://x.com/EPhilippe_LH",
       "site": "https://horizonsleparti.fr",
+      "axes": [
+        {
+          "texte": "Famille : allocation unique dès le premier enfant et réduction d'impôt pour les familles qui travaillent.",
+          "date": "2026-10",
+          "url": "https://franceinfo.fr/elections/presidentielle/edouard-philippe-veut-aider-les-familles-des-le-premier-enfant-et-via-une-reduction-d-impot_8229028.html"
+        },
+        {
+          "texte": "Retraites : départ à 65 ans et 45 ans de cotisation en moins de dix ans, avec une part de capitalisation.",
+          "date": "2026-10-09",
+          "url": "https://echosplus.com/2026/10/09/edouard-philippe-ce-que-ses-propositions-changeraient-pour-les-salaries-et-les-familles/"
+        },
+        {
+          "texte": "Immigration : immigration légale divisée par deux, dénonciation de l'accord franco-algérien de 1968.",
+          "date": "2026-10-09",
+          "url": "https://echosplus.com/2026/10/09/edouard-philippe-ce-que-ses-propositions-changeraient-pour-les-salaries-et-les-familles/"
+        },
+        {
+          "texte": "Travail : environ deux heures de plus par semaine ; chômage indemnisé 12 mois au lieu de 18.",
+          "date": "2026-10-09",
+          "url": "https://echosplus.com/2026/10/09/edouard-philippe-ce-que-ses-propositions-changeraient-pour-les-salaries-et-les-familles/"
+        },
+        {
+          "texte": "État : deux départs sur trois remplacés dans la fonction publique, une vingtaine d'ordonnances dès l'été 2027.",
+          "date": "2026-10-09",
+          "url": "https://echosplus.com/2026/10/09/edouard-philippe-ce-que-ses-propositions-changeraient-pour-les-salaries-et-les-familles/"
+        },
+        {
+          "texte": "Climat : une politique de « sécurité climatique ».",
+          "date": "2026-09",
+          "url": "https://www.franceinfo.fr/elections/presidentielle/edouard-philippe-souhaite-doter-la-france-d-une-veritable-politique-de-securite-climatique_8197976.html"
+        }
+      ],
       "crypto": []
     },
     "david-lisnard": {
       "parti": "Nouvelle Énergie (a quitté LR)",
       "statut": "Candidat déclaré (31 mars 2026)",
       "x": "https://x.com/davidlisnard",
-      "site": "https://nouvelle-energie.fr",
+      "site": "https://www.unenouvelleenergie.fr",
+      "axes": [
+        {
+          "texte": "État : recentrage sur les fonctions régaliennes, 200 Md€ de dépenses publiques en moins par an en fin de mandat.",
+          "date": "2026-07-03",
+          "url": "https://www.unenouvelleenergie.fr/a-saint-raphael-david-lisnard-lance-sa-campagne-pour-faire-gagner-la-france-qui-fait/"
+        },
+        {
+          "texte": "Salaires : baisse des cotisations patronales pour augmenter le net de 200 à 400 € par mois.",
+          "date": "2026-07-03",
+          "url": "https://www.unenouvelleenergie.fr/a-saint-raphael-david-lisnard-lance-sa-campagne-pour-faire-gagner-la-france-qui-fait/"
+        },
+        {
+          "texte": "Retraites : capitalisation collective obligatoire en plus d'une base par répartition d'environ 1 200 €.",
+          "date": "2026-08-22",
+          "url": "https://www.unenouvelleenergie.fr/questions/quel-candidat-propose-la-retraite-par-capitalisation/"
+        },
+        {
+          "texte": "Immigration : forte baisse des titres de séjour, fin du droit du sol automatique.",
+          "date": "2026-04-16",
+          "url": "https://www.unenouvelleenergie.fr/ce-que-je-veux-construire-cest-une-alternative-et-non-pas-une-simple-alternance/"
+        },
+        {
+          "texte": "Démocratie : référendums élargis à tous les sujets (immigration, école, justice, dépenses).",
+          "date": "2026-06-17",
+          "url": "https://nouvelle-energie-media-prod.s3.fr-par.scw.cloud/media/legacy/2026/06/Discours-de-David-Lisnard-a-Bayeux-17062026.pdf"
+        },
+        {
+          "texte": "Justice : 20 000 places de prison, exécution intégrale des peines, perpétuité réelle.",
+          "date": "2026-08-18",
+          "url": "https://www.unenouvelleenergie.fr/questions/quel-candidat-propose-de-construire-des-places-de-prison/"
+        }
+      ],
       "crypto": [
         {
           "type": "citation",
@@ -63,7 +159,39 @@
       "parti": "La France insoumise",
       "statut": "Candidat déclaré (mai 2026)",
       "x": "https://x.com/JLMelenchon",
-      "site": "https://melenchon.fr",
+      "site": "https://melenchon2027.fr/",
+      "axes": [
+        {
+          "texte": "Bloquer les prix et augmenter les salaires.",
+          "date": "2026-10",
+          "url": "https://melenchon2027.fr/"
+        },
+        {
+          "texte": "Planification écologique.",
+          "date": "2026-10",
+          "url": "https://melenchon2027.fr/"
+        },
+        {
+          "texte": "Passage rapide à une VIe République.",
+          "date": "2026-10",
+          "url": "https://melenchon2027.fr/"
+        },
+        {
+          "texte": "Égalité des droits.",
+          "date": "2026-10",
+          "url": "https://melenchon2027.fr/"
+        },
+        {
+          "texte": "Paix : priorité à la diplomatie.",
+          "date": "2026-10",
+          "url": "https://melenchon2027.fr/"
+        },
+        {
+          "texte": "Programme complet « L'Avenir en commun » annoncé pour le 6 novembre 2026.",
+          "date": "2026-10",
+          "url": "https://melenchon2027.fr/programme/decouvrir/"
+        }
+      ],
       "crypto": [
         {
           "type": "position",
@@ -86,6 +214,38 @@
       "statut": "Non déclaré (décision annoncée pour décembre 2026)",
       "x": "https://x.com/fhollande",
       "site": "https://www.parti-socialiste.fr",
+      "axes": [
+        {
+          "texte": "Retraites : âge légal vers 63 ans dès 2028, durée de cotisation liée à l'espérance de vie.",
+          "date": "2026-09",
+          "url": "https://lcp.fr/actualites/presidentielle-francois-hollande-propose-la-retraite-a-63-ans-et-dira-en-decembre-s-il"
+        },
+        {
+          "texte": "Pensions : revalorisation limitée à 1 % pendant cinq ans, part de capitalisation gérée par les partenaires sociaux.",
+          "date": "2026-09",
+          "url": "https://lcp.fr/actualites/presidentielle-francois-hollande-propose-la-retraite-a-63-ans-et-dira-en-decembre-s-il"
+        },
+        {
+          "texte": "TVA : taux normal porté progressivement de 20 % à 24 %.",
+          "date": "2026-09",
+          "url": "https://lcp.fr/actualites/presidentielle-francois-hollande-propose-la-retraite-a-63-ans-et-dira-en-decembre-s-il"
+        },
+        {
+          "texte": "TVA à 0 % sur l'énergie (carburants compris) et l'alimentation de première nécessité.",
+          "date": "2026-09",
+          "url": "https://lcp.fr/actualites/presidentielle-francois-hollande-propose-la-retraite-a-63-ans-et-dira-en-decembre-s-il"
+        },
+        {
+          "texte": "Salaires : baisse des cotisations salariales, financée par une contribution sur les grosses successions.",
+          "date": "2026-09",
+          "url": "https://lcp.fr/actualites/presidentielle-francois-hollande-propose-la-retraite-a-63-ans-et-dira-en-decembre-s-il"
+        },
+        {
+          "texte": "Alliances : aucune avec La France insoumise.",
+          "date": "2026-09",
+          "url": "https://lcp.fr/actualites/presidentielle-francois-hollande-propose-la-retraite-a-63-ans-et-dira-en-decembre-s-il"
+        }
+      ],
       "crypto": [
         {
           "type": "citation",

@@ -495,20 +495,26 @@ function renderProfil(c) {
   setLink($("#news-x"), p?.x);
   setLink($("#news-site"), p?.site);
 
-  const list = $("#news-crypto");
-  if (!state.profils) { list.innerHTML = `<li class="muted">Chargement…</li>`; return; }
-  if (!p) { list.innerHTML = `<li class="muted">Fiche à venir.</li>`; return; }
-  const items = p.crypto || [];
-  if (!items.length) { list.innerHTML = `<li class="muted">Aucune prise de position publique trouvée.</li>`; return; }
-  list.innerHTML = items.map((q) => {
-    const txt = q.type === "citation" ? `« ${esc(q.texte)} »` : esc(q.texte);
+  const axes = $("#news-axes"), list = $("#news-crypto");
+  const msg = (t) => `<li class="muted">${t}</li>`;
+  if (!state.profils) { axes.innerHTML = list.innerHTML = msg("Chargement…"); return; }
+  if (!p) { axes.innerHTML = list.innerHTML = msg("Fiche à venir."); return; }
+  const meta = (q) => {
     let host = "";
     try { host = new URL(q.url).hostname.replace(/^www\./, ""); } catch (e) { /* lien invalide */ }
-    return `<li>
-      <span class="${q.type === "citation" ? "quote" : ""}">${txt}</span>
-      <span class="meta">${esc(q.date || "")}${q.contexte ? " · " + esc(q.contexte) : ""}${host ? ` · <a href="${esc(safeUrl(q.url))}" target="_blank" rel="noopener noreferrer">${esc(host)} ↗</a>` : ""}</span>
-    </li>`;
-  }).join("");
+    return `<span class="meta">${esc(q.date || "")}${q.contexte ? " · " + esc(q.contexte) : ""}${host ? ` · <a href="${esc(safeUrl(q.url))}" target="_blank" rel="noopener noreferrer">${esc(host)} ↗</a>` : ""}</span>`;
+  };
+  const ax = p.axes || [];
+  axes.innerHTML = ax.length
+    ? ax.map((a) => `<li><span>${esc(a.texte)}</span>${meta(a)}</li>`).join("")
+    : msg("Axes de programme à venir.");
+  const items = p.crypto || [];
+  list.innerHTML = items.length
+    ? items.map((q) => `<li>
+      <span class="${q.type === "citation" ? "quote" : ""}">${q.type === "citation" ? `« ${esc(q.texte)} »` : esc(q.texte)}</span>
+      ${meta(q)}
+    </li>`).join("")
+    : msg("Aucune prise de position publique trouvée.");
 }
 
 function renderNews() {
