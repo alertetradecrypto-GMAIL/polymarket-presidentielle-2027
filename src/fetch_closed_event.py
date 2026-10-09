@@ -17,6 +17,7 @@ from datetime import datetime
 from pathlib import Path
 
 import polymarket as pm
+import requests
 from collect import slugify
 from config import GAMMA_URL
 
@@ -31,15 +32,34 @@ def ts(iso: str | None) -> int | None:
     return int(datetime.fromisoformat(iso.replace("Z", "+00:00")).timestamp())
 
 
+def _chunk(token: str, a: int, b: int, fidelity: int, errs: list) -> list:
+    """Le CLOB renvoie 400 si la plage est trop longue : on coupe en deux jusqu'à 1 jour."""
+    try:
+        return pm.get_price_history(token, start_ts=a, end_ts=b, fidelity=fidelity)
+    except requests.HTTPError as e:
+        if e.response is None or e.response.status_code != 400 or b - a <= 86400:
+            errs.append(f"{a}-{b}")
+            return []
+        mid = (a + b) // 2
+        return _chunk(token, a, mid, fidelity, errs) + _chunk(token, mid, b, fidelity, errs)
+
+
 def history(token: str, start: int, end: int, fidelity: int) -> list[list]:
     pts: dict[int, float] = {}
+    errs: list[str] = []
     t = start
     while t < end:
-        for tt, p in pm.get_price_history(token, start_ts=t, end_ts=min(t + CHUNK_S, end),
-                                          fidelity=fidelity):
+        for tt, p in _chunk(token, t, min(t + CHUNK_S, end), fidelity, errs):
             pts[tt] = p
         t += CHUNK_S
         time.sleep(0.2)
+    if not pts:  # dernier recours : historique complet à la résolution maximale servie
+        try:
+            pts = dict(pm.get_price_history(token, interval="max", fidelity=max(fidelity, 720)))
+        except requests.HTTPError:
+            pass
+    if errs:
+        print(f"::warning::{token[:8]}… {len(errs)} plages sans données")
     return [[k, pts[k]] for k in sorted(pts)]
 
 
