@@ -1,0 +1,179 @@
+{
+ "slug": "presidential-election-winner-2024",
+ "title": "Presidential Election Winner 2024",
+ "start": 1704409080,
+ "end": 1730925610,
+ "fidelity": 60,
+ "markets": [
+  {
+   "name": "Donald Trump",
+   "file": "donald-trump.json",
+   "volume": 1531479284.504353,
+   "outcome_prices": [
+    "1",
+    "0"
+   ],
+   "points": 7357
+  },
+  {
+   "name": "Joe Biden",
+   "file": "joe-biden.json",
+   "volume": 72176112.338298,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7361
+  },
+  {
+   "name": "Nikki Haley",
+   "file": "nikki-haley.json",
+   "volume": 107529158.083605,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7360
+  },
+  {
+   "name": "Gavin Newsom",
+   "file": "gavin-newsom.json",
+   "volume": 54161276.228088,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7360
+  },
+  {
+   "name": "Robert F. Kennedy Jr.",
+   "file": "robert-f-kennedy-jr.json",
+   "volume": 141605110.748029,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7360
+  },
+  {
+   "name": "Ron DeSantis",
+   "file": "ron-desantis.json",
+   "volume": 46309049.202369,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7359
+  },
+  {
+   "name": "Vivek Ramaswamy",
+   "file": "vivek-ramaswamy.json",
+   "volume": 21181731.472915,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7359
+  },
+  {
+   "name": "Kamala Harris",
+   "file": "kamala-harris.json",
+   "volume": 1037039118.18879,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7358
+  },
+  {
+   "name": "Michelle Obama",
+   "file": "michelle-obama.json",
+   "volume": 153382275.618594,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7337
+  },
+  {
+   "name": "Hillary Clinton",
+   "file": "hillary-clinton.json",
+   "volume": 93307167.686999,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7337
+  },
+  {
+   "name": "Chris Christie",
+   "file": "chris-christie.json",
+   "volume": 14192736.345,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7317
+  },
+  {
+   "name": "Elizabeth Warren",
+   "file": "elizabeth-warren.json",
+   "volume": 14714813.728,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7317
+  },
+  {
+   "name": "Bernie Sanders",
+   "file": "bernie-sanders.json",
+   "volume": 9829356.367,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7317
+  },
+  {
+   "name": "AOC",
+   "file": "aoc.json",
+   "volume": 22011560.654836,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7317
+  },
+  {
+   "name": "Other Democrat Politician",
+   "file": "other-democrat-politician.json",
+   "volume": 116558196.386525,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7316
+  },
+  {
+   "name": "Other Republican Politician",
+   "file": "other-republican-politician.json",
+   "volume": 241655099.850067,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7316
+  },
+  {
+   "name": "Kanye",
+   "file": "kanye.json",
+   "volume": 9203011.891998,
+   "outcome_prices": [
+    "0",
+    "1"
+   ],
+   "points": 7316
+  }
+ ]
+}
