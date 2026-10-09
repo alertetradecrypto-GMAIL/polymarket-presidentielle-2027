@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Backtest Oui Non</title>
+<style>
+:root{--bg:#f7f8fa;--panel:#fff;--fg:#1b2230;--mute:#5d6878;--line:#dde2ea;--acc:#3557c9;--pos:#1d8a55;--neg:#c23b3b;--sans:system-ui,sans-serif;--mono:ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11151c;--panel:#181e27;--fg:#e4e8ef;--mute:#9aa5b5;--line:#2a3340;--acc:#7a9cf0;--pos:#5cc48d;--neg:#e07a7a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#11151c;--panel:#181e27;--fg:#e4e8ef;--mute:#9aa5b5;--line:#2a3340;--acc:#7a9cf0;--pos:#5cc48d;--neg:#e07a7a;color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.5}
+main{max-width:1100px;margin:0 auto;padding:24px 16px 48px;display:grid;gap:28px}
+h1{font-size:1.4rem;margin:0}h2{font-size:1.05rem;margin:0 0 8px}p{margin:0;color:var(--mute);max-width:75ch}
+.wrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:6px}
+table{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:.8rem;font-variant-numeric:tabular-nums}
+th,td{padding:5px 9px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}th{color:var(--mute);font-family:var(--sans)}
+.pos{color:var(--pos)}.neg{color:var(--neg)}tr.best td{background:color-mix(in srgb,var(--acc) 12%,transparent)}
+.bar{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:8px}
+select{font:inherit;padding:4px 8px;background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:4px}
+label{font-size:.85rem;color:var(--mute);display:flex;gap:6px;align-items:center}
+</style></head><body><main>
+<header><h1>Backtest Oui contre Non</h1><p>__TITLE__. 100 $ par candidat achetés au 1er jour, vente de 20 % du stock initial à chaque palier franchi par le jeton détenu, jusqu'à la part conservée. Prix = dernier prix du jour.</p></header>
+<section><h2>Synthèse par stratégie</h2><div class="wrap"><table id="sum"></table></div></section>
+<section><h2>Valeur finale selon le vainqueur</h2><div class="wrap"><table id="sc"></table></div></section>
+<section><h2>Journal des achats et ventes</h2>
+<div class="bar"><label>Stratégie <select id="st"></select></label><label>Candidat <select id="cd"></select></label></div>
+<div class="wrap"><table id="log"></table></div></section>
+</main><script>
+const S=__DATA__,K=Object.keys(S),B=Object.keys(S[K[0]].pos).length*100;
+const f=n=>n.toLocaleString('fr-FR',{maximumFractionDigits:0});
+const pl=v=>`<span class="${v>=B?'pos':'neg'}">${f(v)} $</span>`;
+const res='final' in S[K[0]],val=s=>res?s.final:s.mtm;
+const best=K.reduce((a,b)=>val(S[b])>val(S[a])?b:a);
+document.getElementById('sum').innerHTML=`<tr><th>Stratégie</th><th>Ventes</th><th>Encaissé</th><th>Jetons (marché)</th><th>Valeur marché</th>${res?'<th>Valeur résolue</th>':''}<th>Pire cas</th></tr>`+
+K.map(k=>{const s=S[k];return `<tr class="${k===best?'best':''}"><td>${k}</td><td>${s.ventes}</td><td>${f(s.cash)} $</td><td>${f(s.tok)} $</td><td>${pl(s.mtm)}</td>${res?`<td>${pl(s.final)}</td>`:''}<td>${pl(Math.min(...Object.values(s.sc)))}</td></tr>`}).join('');
+const sc=Object.keys(S[K[0]].sc);
+document.getElementById('sc').innerHTML='<tr><th>Stratégie</th>'+sc.map(c=>`<th>${c}</th>`).join('')+'</tr>'+K.map(k=>`<tr class="${k===best?'best':''}"><td>${k}</td>`+sc.map(c=>`<td>${pl(S[k].sc[c])}</td>`).join('')+'</tr>').join('');
+const st=document.getElementById('st'),cd=document.getElementById('cd');
+st.innerHTML=K.map(k=>`<option ${k===best?'selected':''}>${k}</option>`).join('');
+cd.innerHTML='<option>Tous</option>'+Object.keys(S[K[0]].log).map(n=>`<option>${n}</option>`).join('');
+function draw(){const s=S[st.value];let rows=[];for(const[n,l]of Object.entries(s.log))if(cd.value==='Tous'||cd.value===n){l.forEach(r=>rows.push([n,...r]));const[q,p]=s.pos[n];rows.push([n,'fin','solde',p,'',null,q])}
+document.getElementById('log').innerHTML='<tr><th>Candidat</th><th>Date</th><th>Opération</th><th>Prix</th><th>Parts</th><th>Encaissé cumulé</th><th>Jetons restants</th></tr>'+
+rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td class="${r[2]==='vente'?'pos':''}">${r[2]}</td><td>${(+r[3]).toFixed(4)}</td><td>${r[4]===''?'':f(r[4])}</td><td>${r[5]==null?'':f(r[5])+' $'}</td><td>${f(r[6])}</td></tr>`).join('')}
+st.onchange=cd.onchange=draw;draw();
+</script></body></html>
