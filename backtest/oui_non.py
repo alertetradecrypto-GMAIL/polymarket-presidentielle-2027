@@ -20,6 +20,7 @@ OUT = Path(__file__).resolve().parent / "out"
 STAKE, FRAC = 100.0, 0.2
 BUDGET_US, US_DAYS_BEFORE = 1000.0, 205  # budget total réparti également, départ J-205
 US_ELECTION = dt.date(2024, 11, 5)
+EXCLUDE_US = {"Other Democrat Politician", "Other Republican Politician"}
 # (libellé, côté, palier, relatif ?)
 RULES = [("Oui +2 pts", "Y", .02, False), ("Non +2 pts", "N", .02, False),
          ("Non +1 pt", "N", .01, False), ("Non +2 % rel.", "N", .02, True),
@@ -62,6 +63,8 @@ def load_us():
     end = dt.datetime.fromtimestamp(ev["end"], dt.UTC).date() - dt.timedelta(days=1)
     out = []
     for m in ev["markets"]:
+        if m["name"] in EXCLUDE_US:
+            continue
         h = json.load(open(ev_dir / m["file"]))
         y, n = daily(h["yes"], start, end), daily(h["no"], start, end)
         days = sorted(set(y) & set(n))
