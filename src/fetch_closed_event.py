@@ -51,10 +51,12 @@ def main() -> int:
     a = ap.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(message)s")
 
-    events = pm._get(f"{GAMMA_URL}/events", {"slug": a.slug})
+    events = pm._get(f"{GAMMA_URL}/events", {"slug": a.slug, "closed": "true"}) \
+        or pm._get(f"{GAMMA_URL}/events", {"slug": a.slug})
     if not events:
-        log.error("Événement introuvable : %s", a.slug)
+        print(f"::error::Événement introuvable : {a.slug}")
         return 1
+    print(f"::notice::{events[0].get('title')} : {len(events[0].get('markets', []))} marchés")
     ev = events[0]
     out = OUT / a.slug
     out.mkdir(parents=True, exist_ok=True)
@@ -66,6 +68,7 @@ def main() -> int:
         vol = float(m.get("volume") or 0)
         tokens = pm._as_list(m.get("clobTokenIds"))
         if vol < a.min_volume or len(tokens) != 2:
+            print(f"::notice::ignoré {m.get('groupItemTitle')} vol={vol:.0f} tokens={len(tokens)}")
             continue
         name = m.get("groupItemTitle") or m.get("question")
         start = ts(m.get("startDate")) or ev_start
@@ -79,7 +82,7 @@ def main() -> int:
                                 "outcome_prices": pm._as_list(m.get("outcomePrices")),
                                 "points": len(data["yes"])})
     (out / "_event.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1))
-    log.info("%d marchés écrits dans %s", len(meta["markets"]), out)
+    print(f"::notice::{len(meta['markets'])} marchés écrits dans {out.name}")
     return 0 if meta["markets"] else 1
 
 
