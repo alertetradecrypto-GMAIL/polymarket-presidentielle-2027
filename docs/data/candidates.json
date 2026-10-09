@@ -1,5 +1,5 @@
 {
-  "updated": 1791514528,
+  "updated": 1791515388,
   "event": {
     "id": "79987",
     "slug": "next-french-presidential-election",
@@ -7,8 +7,8 @@
     "end_date": "2027-04-19T03:59:00Z",
     "volume": 147495848.68186,
     "volume24h": 893053.128864,
-    "volume_usd": 70685991.9,
-    "volume24h_usd": 111609.42
+    "volume_usd": 70685993.96,
+    "volume24h_usd": 111607.03
   },
   "candidates": [
     {
@@ -27,8 +27,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-marine-le-pen-win-the-2027-french-presidential-election-8hg67PHSk27M.jpg",
       "slug": "marine-le-pen",
       "first_seen": 1791451018,
-      "volume_usd": 1277042.8,
-      "volume24h_usd": 24753.32,
+      "volume_usd": 1277044.86,
+      "volume24h_usd": 24755.38,
       "last_hist": 0.4125,
       "price_ref": {
         "1h": 0.4125,
@@ -193,7 +193,7 @@
       "volume24h_usd": 964.13,
       "last_hist": 0.0155,
       "price_ref": {
-        "1h": 0.016,
+        "1h": 0.0155,
         "4h": 0.0135,
         "12h": 0.0105,
         "24h": 0.0105
@@ -220,7 +220,7 @@
       "volume24h_usd": 4552.82,
       "last_hist": 0.012,
       "price_ref": {
-        "1h": 0.012,
+        "1h": 0.0125,
         "4h": 0.012,
         "12h": 0.0125,
         "24h": 0.013
@@ -232,9 +232,9 @@
       "name": "Dominique de Villepin",
       "condition_id": "0x20fd4cf096367edbd429168764db975b582249a7a3818684d051f445a3efaed1",
       "token_yes": "94391324985187701312427605791553049327097814064787849723991205429060004737042",
-      "price": 0.009,
-      "bid": 0.008,
-      "ask": 0.01,
+      "price": 0.0105,
+      "bid": 0.01,
+      "ask": 0.011,
       "last": 0.009,
       "volume": 2423500.560447,
       "volume24h": 48470.119999999995,
@@ -245,7 +245,7 @@
       "first_seen": 1791451018,
       "volume_usd": 863162.91,
       "volume24h_usd": 355.24,
-      "last_hist": 0.009,
+      "last_hist": 0.0105,
       "price_ref": {
         "1h": 0.0065,
         "4h": 0.0065,
@@ -271,7 +271,7 @@
       "slug": "sarah-knafo",
       "first_seen": 1791451018,
       "volume_usd": 1093670.62,
-      "volume24h_usd": 206.95,
+      "volume24h_usd": 203.54,
       "last_hist": 0.009,
       "price_ref": {
         "1h": 0.009,
@@ -286,9 +286,9 @@
       "name": "Christine Lagarde",
       "condition_id": "0xf273da5c76e0116c0ec63787453b54d74f0c182256dff4ed2f27f08b14048f7c",
       "token_yes": "99240068351455574729467629800805892674088563638353047506523604209057843144195",
-      "price": 0.0075,
+      "price": 0.007,
       "bid": 0.006,
-      "ask": 0.009,
+      "ask": 0.008,
       "last": 0.006,
       "volume": 833704.9635700001,
       "volume24h": 66422.885715,
@@ -299,7 +299,7 @@
       "first_seen": 1791451018,
       "volume_usd": 4711.97,
       "volume24h_usd": 353.02,
-      "last_hist": 0.0075,
+      "last_hist": 0.007,
       "price_ref": {
         "1h": 0.0075,
         "4h": 0.0075,
@@ -487,7 +487,7 @@
       "slug": "olivier-faure",
       "first_seen": 1791451018,
       "volume_usd": 3099071.44,
-      "volume24h_usd": 130.14,
+      "volume24h_usd": 129.1,
       "last_hist": 0.0015,
       "price_ref": {
         "1h": 0.0015,
