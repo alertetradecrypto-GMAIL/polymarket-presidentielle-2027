@@ -90,6 +90,13 @@ def run(c, side, step, rel, keep, stake=STAKE):
     return dict(q=q, cash=cash, last=px[-1], log=log)
 
 
+def settle(c, side):
+    """Prix de règlement du jeton détenu : 1/0 si résolu, sinon dernier prix (valeur au marché)."""
+    if c["win"] is None:
+        return round(c[side][-1], 4)
+    return c["win"] if side == "Y" else 1 - c["win"]
+
+
 def main(src):
     title, C = (load_fr if src == "fr" else load_us)()
     stake = BUDGET_US / len(C) if src == "us" else STAKE
@@ -109,14 +116,15 @@ def main(src):
             S[k] = dict(ventes=sum(len(r["log"]) - 1 for r in R), cash=round(cash, 2),
                         tok=round(mtm - cash, 2), mtm=round(mtm, 2), sc=sc,
                         log={c["name"]: r["log"] for c, r in zip(C, R)},
-                        pos={c["name"]: [round(r["q"], 2), round(r["last"], 4)] for c, r in zip(C, R)})
+                        pos={c["name"]: [round(r["q"], 2), round(r["last"], 4), settle(c, side), round(r["cash"], 2)]
+                             for c, r in zip(C, R)})
             if C[0]["win"] is not None:  # résolu
                 S[k]["final"] = sc[next(c["name"] for c in C if c["win"] == 1)]
     OUT.mkdir(exist_ok=True)
     json.dump(dict(title=title, stake=stake, data=S), open(OUT / f"oui_non_{src}.json", "w"), ensure_ascii=False)
     tpl = (Path(__file__).resolve().parent / "oui_non_page.html").read_text()
     (OUT / f"oui_non_{src}.html").write_text(
-        tpl.replace("__TITLE__", title).replace("__STAKE__", f"{stake * len(C):,.0f}".replace(",", " ") + " $ au total, soit " + f"{stake:.2f}".replace(".", ",")).replace("__STAKE_N__", str(stake))
+        tpl.replace("__TITLE__", title).replace("__STAKE__", f"{stake * len(C):,.0f}".replace(",", " ") + " $ au total, soit " + f"{stake:.2f}".replace(".", ",")).replace("__STAKE_N__", str(stake)).replace("__STAKE_ONE__", str(stake))
         .replace("__DATA__", json.dumps(S, ensure_ascii=False)))
     w = "final" if C[0]["win"] is not None else "mtm"
     for k, s in S.items():
