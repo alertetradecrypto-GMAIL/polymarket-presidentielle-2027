@@ -2,7 +2,10 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+LIB_URL = "https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"
 
 OUT = Path(__file__).parent / "out"
 NAMES = {"marine-le-pen": "Marine Le Pen", "edouard-philippe": "Édouard Philippe",
@@ -12,7 +15,7 @@ SHOWN = "maker_souple_3_yes+no"
 PAGE = """<!doctype html><html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Backtest Polymarket</title>
-<script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+__LIB__
 <style>
 :root{--bg:#fff;--fg:#1b1d22;--mut:#6b7280;--line:#e5e7eb;--pos:#0f7b4d;--neg:#b42318}
 @media (prefers-color-scheme:dark){:root{--bg:#131722;--fg:#e6e8ee;--mut:#9aa1ad;--line:#2a2e39;--pos:#3ccf8e;--neg:#ff6b5e}}
@@ -50,7 +53,7 @@ for (const slug of Object.keys(NAMES)) {
   const box = document.createElement("div");
   box.innerHTML = `<b>${NAMES[slug]}</b><div class="chart"></div>`;
   document.getElementById("charts").appendChild(box);
-  const ch = LightweightCharts.createChart(box.querySelector(".chart"), {autoSize: true,
+  const ch = LightweightCharts.createChart(box.querySelector(".chart"), {autoSize: true, localization: {locale: "fr-FR"},
     layout: {background: {color: "transparent"}, textColor: dark ? "#9aa1ad" : "#6b7280"},
     grid: {vertLines: {visible: false}, horzLines: {color: dark ? "#2a2e39" : "#eef0f3"}},
     rightPriceScale: {borderVisible: false}, timeScale: {borderVisible: false}});
@@ -73,12 +76,29 @@ for (const slug of Object.keys(NAMES)) {
 </script></body></html>"""
 
 
+def lib_tag(local: str | None) -> str:
+    """Librairie intégrée au fichier (l'aperçu de fichier bloque les scripts externes)."""
+    try:
+        if local:
+            code = Path(local).read_text(encoding="utf-8")
+        else:
+            import requests
+            r = requests.get(LIB_URL, timeout=30)
+            r.raise_for_status()
+            code = r.text
+        return "<script>" + code.replace("</script", "<\\/script") + "</script>"
+    except Exception as exc:  # repli : lien externe
+        print(f"Librairie non intégrée ({exc}), lien externe utilisé", file=sys.stderr)
+        return f'<script src="{LIB_URL}"></script>'
+
+
 def main() -> int:
     r = json.loads((OUT / "results.json").read_text(encoding="utf-8"))
     for v in r["variants"].values():
         v.pop("equity", None)
         v["trades"] = {SHOWN: v["trades"].get(SHOWN, [])}
-    html = (PAGE.replace("__DATA__", json.dumps(r, ensure_ascii=False))
+    local = sys.argv[1] if len(sys.argv) > 1 else None
+    html = (PAGE.replace("__LIB__", lib_tag(local)).replace("__DATA__", json.dumps(r, ensure_ascii=False))
             .replace("__NAMES__", json.dumps(NAMES, ensure_ascii=False))
             .replace("__SHOWN__", SHOWN).replace("__GEN__", r["generated"])
             .replace("__SRC__", "API CLOB horaire" if r["source"] == "api" else "historique du dépôt"))
