@@ -69,6 +69,7 @@
             <th data-k="c4h" class="num">4 h</th>
             <th data-k="c12h" class="num">12 h</th>
             <th data-k="c24h" class="num">24 h</th>
+            <th data-k="spread" class="num" title="Écart entre meilleure offre de vente et meilleure offre d'achat (Oui), à la dernière collecte">Spread</th>
             <th data-k="vol24" class="num">Vol. 24 h</th>
             <th data-k="vol" class="num">Vol. total</th>
           </tr></thead>
@@ -92,6 +93,17 @@
       <button class="dlg-x" id="news-close" aria-label="Fermer" autofocus>×</button>
     </div>
     <dl class="dlg-chg" id="news-chg"></dl>
+    <div class="ob-head">
+      <h3>Carnet d'ordres</h3>
+      <div class="seg" id="ob-side" aria-label="Carnet affiché"><button data-v="yes">Oui</button><button data-v="no">Non</button></div>
+    </div>
+    <dl class="ob-sum" id="ob-sum"></dl>
+    <svg class="ob-depth" id="ob-depth" viewBox="0 0 600 120" preserveAspectRatio="none" role="img" aria-label="Profondeur cumulée du carnet"></svg>
+    <table class="ob-book" id="ob-book">
+      <thead><tr><th class="num">Prix</th><th class="num">Parts</th><th class="num">Valeur</th><th class="num">Cumul</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <p class="note" id="ob-upd"></p>
     <h3>Actualités récentes</h3>
     <ol class="news-list" id="news-list"></ol>
     <h3>Programme : axes clés</h3>

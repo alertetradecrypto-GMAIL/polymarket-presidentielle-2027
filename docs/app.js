@@ -371,6 +371,7 @@ function rows() {
       no: c.price != null ? 1 - c.price : null,
       cote: c.price > 0 ? 1 / c.price : null,
       vol24: c.volume24h_usd ?? null, vol: c.volume_usd ?? null,
+      spread: c.bid != null && c.ask != null && c.ask >= c.bid ? c.ask - c.bid : null,
     };
     for (const k of CHG) {
       r.ch = r.ch || {};
@@ -380,6 +381,16 @@ function rows() {
     return r;
   });
 }
+
+/** Spread (ask − bid) : $ par jeton ou points de probabilité, sans signe. */
+function spreadFmt(v) {
+  if (v == null || !isFinite(v)) return "—";
+  if (isPct()) { const p = v * 100; return p.toLocaleString("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + " pt"; }
+  return v.toLocaleString("fr-FR", { minimumFractionDigits: 3, maximumFractionDigits: 3 }) + " $";
+}
+const spreadTitle = (c) => (c.bid == null || c.ask == null ? "" : `Achat ${price(c.bid)} · Vente ${price(c.ask)}`);
+/** Marché peu liquide : spread ≥ 1 point, ou ≥ 10 % du prix médian. */
+const spreadWide = (r) => r.spread != null && (r.spread >= 0.01 || (r.yes > 0 && r.spread / r.yes >= 0.1));
 
 function renderTable() {
   const { k, asc } = state.sort;
@@ -409,6 +420,7 @@ function renderTable() {
       <td class="num">${price(r.no)}</td>
       ${isPct() ? "" : `<td class="num">${cote(r.yes)}</td>`}
       ${CHG.map((k) => `<td class="num ${chgCls(r["c" + k])}" title="${esc(relTitle(r.ch[k]))}">${fmtChange(r.ch[k])}</td>`).join("")}
+      <td class="num${spreadWide(r) ? " warn" : ""}" title="${esc(spreadTitle(r.c))}">${spreadFmt(r.spread)}</td>
       <td class="num">${money(r.vol24)}</td>
       <td class="num">${money(r.vol)}</td>
     </tr>`;
@@ -471,6 +483,7 @@ async function openNews(slug) {
   renderNews();
   const dlg = $("#news");
   if (!dlg.open) dlg.showModal();
+  if (ob.slug !== slug || !ob.timer) obStart(slug);
   const jobs = [];
   if (!state.news) jobs.push(getJSON(`data/news.json?t=${Date.now()}`)
     .then((d) => { state.news = d; })
@@ -604,7 +617,7 @@ function bindControls() {
   $("#disp").addEventListener("click", (e) => {
     const v = e.target.dataset.v; if (!v || v === state.disp) return;
     state.disp = v; syncControls(); saveHash(); renderChart(true); renderTable();
-    if ($("#news").open) renderNews();
+    if ($("#news").open) { renderNews(); renderBook(); }
   });
   $("#table tbody").addEventListener("click", (e) => {
     const tr = e.target.closest("tr[data-slug]");
@@ -616,11 +629,147 @@ function bindControls() {
   $("#news-close").addEventListener("click", () => dlg.close());
   dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });   // clic hors de la fenêtre
   $("#news-toggle").addEventListener("click", () => toggle(state.newsSlug));
+  dlg.addEventListener("close", obStop);
+  $("#ob-side").addEventListener("click", (e) => {
+    const v = e.target.dataset.v; if (!v || v === ob.side) return;
+    ob.side = v; renderBook();
+  });
+  document.addEventListener("visibilitychange", () => { if (!document.hidden && dlg.open) obFetch(); });
   $("#table thead").addEventListener("click", (e) => {
     const k = e.target.dataset.k; if (!k) return;
     state.sort = { k, asc: state.sort.k === k ? !state.sort.asc : k === "name" };
     renderTable();
   });
+}
+
+// ---------------------------------------------------------------- carnet d'ordres
+
+/* Lu en direct depuis l'API publique du CLOB (sans clé), rafraîchi toutes les 10 s
+ * tant que la fenêtre candidat est ouverte et l'onglet visible. Rien n'est stocké.
+ * Carnet Non = miroir du Oui : achat Non à p ⇔ vente Oui à 1 − p (mêmes parts). */
+const OB_URL = "https://clob.polymarket.com/book?token_id=";
+const OB_MS = 10 * 1000;
+const OB_LEVELS = 10;
+const ob = { side: "yes", book: null, slug: null, t: null, err: null, timer: null, ctl: null };
+const nfSize = new Intl.NumberFormat("fr-FR", { notation: "compact", maximumFractionDigits: 1 });
+
+/** Niveaux triés du meilleur au moins bon, avec cumul en parts et en $. */
+function obLevels(raw, best) {
+  const lv = (raw || []).map((o) => ({ p: +o.price, s: +o.size }))
+    .filter((o) => isFinite(o.p) && isFinite(o.s) && o.s > 0)
+    .sort((a, b) => (best === "high" ? b.p - a.p : a.p - b.p));
+  let cs = 0, cv = 0;
+  for (const o of lv) { o.v = o.p * o.s; cs += o.s; cv += o.v; o.cs = cs; o.cv = cv; }
+  return lv;
+}
+/** Carnet du côté affiché (Oui tel quel, Non en miroir). */
+function obSide() {
+  const b = ob.book;
+  if (!b) return null;
+  if (ob.side === "yes") return { bids: obLevels(b.bids, "high"), asks: obLevels(b.asks, "low") };
+  const flip = (l) => (l || []).map((o) => ({ price: 1 - +o.price, size: o.size }));
+  return { bids: obLevels(flip(b.asks), "high"), asks: obLevels(flip(b.bids), "low") };
+}
+
+async function obFetch() {
+  const c = cand(ob.slug);
+  if (!c || !c.token_yes || document.hidden) return;
+  ob.ctl?.abort();
+  ob.ctl = new AbortController();
+  const tm = setTimeout(() => ob.ctl.abort(), 8000);
+  const slug = ob.slug;
+  try {
+    const r = await fetch(OB_URL + encodeURIComponent(c.token_yes), { signal: ob.ctl.signal, cache: "no-store" });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const b = await r.json();
+    if (slug !== ob.slug) return;
+    ob.book = b; ob.err = null; ob.t = Date.now() / 1000;
+  } catch (e) {
+    if (slug !== ob.slug) return;
+    if (e.name !== "AbortError" || !ob.book) ob.err = e.name === "AbortError" ? "délai dépassé" : e.message || "erreur réseau";
+    console.error("carnet", e);
+  } finally { clearTimeout(tm); }
+  renderBook();
+}
+function obStart(slug) {
+  if (ob.slug !== slug) { ob.book = null; ob.err = null; ob.t = null; }
+  ob.slug = slug;
+  clearInterval(ob.timer);
+  renderBook();
+  obFetch();
+  ob.timer = setInterval(obFetch, OB_MS);
+}
+function obStop() {
+  clearInterval(ob.timer); ob.timer = null;
+  ob.ctl?.abort();
+}
+
+function renderBook() {
+  document.querySelectorAll("#ob-side button").forEach((b) => b.classList.toggle("on", b.dataset.v === ob.side));
+  const tb = $("#ob-book tbody"), sum = $("#ob-sum"), svg = $("#ob-depth"), upd = $("#ob-upd");
+  const d = obSide();
+  if (!d) {
+    sum.innerHTML = ""; svg.innerHTML = "";
+    tb.innerHTML = `<tr><td colspan="4" class="muted">${ob.err ? "Carnet indisponible (" + esc(ob.err) + ")." : "Chargement…"}</td></tr>`;
+    upd.textContent = "";
+    return;
+  }
+  const bb = d.bids[0], ba = d.asks[0];
+  const mid = bb && ba ? (bb.p + ba.p) / 2 : null;
+  const spr = bb && ba ? ba.p - bb.p : null;
+  const depth = (lv) => (lv.length ? money(lv[Math.min(lv.length, OB_LEVELS) - 1].cv) : "—");
+  sum.innerHTML = [
+    ["Meilleur achat", bb ? price(bb.p) : "—", "up"],
+    ["Meilleure vente", ba ? price(ba.p) : "—", "down"],
+    ["Médian", price(mid), ""],
+    ["Spread", spreadFmt(spr), ""],
+    [`Profondeur achat (${OB_LEVELS} niv.)`, depth(d.bids), ""],
+    [`Profondeur vente (${OB_LEVELS} niv.)`, depth(d.asks), ""],
+  ].map(([k, v, c]) => `<div><dt>${k}</dt><dd class="${c}">${v}</dd></div>`).join("");
+
+  const bids = d.bids.slice(0, OB_LEVELS), asks = d.asks.slice(0, OB_LEVELS);
+  const maxCum = Math.max(bids.at(-1)?.cs || 0, asks.at(-1)?.cs || 0) || 1;
+  const row = (o, k) => `<tr class="${k}" style="--w:${((o.cs / maxCum) * 100).toFixed(1)}%">
+      <td class="num">${price(o.p)}</td><td class="num">${nfSize.format(o.s)}</td>
+      <td class="num">${money(o.v)}</td><td class="num">${money(o.cv)}</td></tr>`;
+  tb.innerHTML = asks.slice().reverse().map((o) => row(o, "ask")).join("")
+    + `<tr class="ob-mid"><td colspan="4">Spread ${spreadFmt(spr)}${mid != null ? " · médian " + price(mid) : ""}</td></tr>`
+    + bids.map((o) => row(o, "bid")).join("");
+  if (!bids.length && !asks.length) tb.innerHTML = `<tr><td colspan="4" class="muted">Carnet vide.</td></tr>`;
+
+  renderDepth(svg, bids, asks, mid);
+  const tick = ob.book.tick_size ? ` · pas de cotation ${price(+ob.book.tick_size)}` : "";
+  upd.innerHTML = `Carnet ${ob.side === "yes" ? "Oui" : "Non (miroir du Oui)"} en direct, rafraîchi toutes les 10 s · ${ob.t ? fmtParis(ob.t) : ""}${tick}`
+    + (ob.err ? ` · <span class="down">dernier rafraîchissement en échec</span>` : "");
+}
+
+/** Courbe de profondeur cumulée (parts) en SVG : achats à gauche, ventes à droite. */
+function renderDepth(svg, bids, asks, mid) {
+  if (!bids.length && !asks.length) { svg.innerHTML = ""; return; }
+  const W = 600, H = 120, pad = 14;
+  const lo = Math.min(bids.at(-1)?.p ?? asks[0].p, asks[0]?.p ?? Infinity);
+  const hi = Math.max(asks.at(-1)?.p ?? bids[0].p, bids[0]?.p ?? -Infinity);
+  const span = hi - lo || 0.01;
+  const maxC = Math.max(bids.at(-1)?.cs || 0, asks.at(-1)?.cs || 0) || 1;
+  const X = (p) => ((p - lo) / span) * W;
+  const Y = (c) => H - pad - (c / maxC) * (H - 2 * pad);
+  const steps = (lv) => {
+    let d = `M${X(lv[0].p).toFixed(1)},${Y(0)}`, prev = 0;
+    for (const o of lv) d += ` L${X(o.p).toFixed(1)},${Y(prev).toFixed(1)} L${X(o.p).toFixed(1)},${Y(o.cs).toFixed(1)}`, prev = o.cs;
+    return d;
+  };
+  const area = (lv, edge, col) => {
+    if (!lv.length) return "";
+    const line = steps(lv);
+    return `<path d="${line} L${edge},${Y(lv.at(-1).cs).toFixed(1)} L${edge},${Y(0)} Z" fill="${col}" fill-opacity=".18"/>`
+      + `<path d="${line} L${edge},${Y(lv.at(-1).cs).toFixed(1)}" fill="none" stroke="${col}" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`;
+  };
+  const up = css("--up"), down = css("--down"), muted = css("--muted");
+  svg.innerHTML = area(bids, 0, up) + area(asks, W, down)
+    + (mid != null ? `<line x1="${X(mid)}" x2="${X(mid)}" y1="4" y2="${H - pad}" stroke="${muted}" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>` : "")
+    + `<text x="4" y="${H - 2}" fill="${muted}" font-size="10">${esc(price(lo))}</text>`
+    + `<text x="${W - 4}" y="${H - 2}" fill="${muted}" font-size="10" text-anchor="end">${esc(price(hi))}</text>`
+    + `<text x="4" y="12" fill="${muted}" font-size="10">${esc(nfSize.format(maxC))} parts</text>`;
 }
 
 // ---------------------------------------------------------------- rafraîchissement

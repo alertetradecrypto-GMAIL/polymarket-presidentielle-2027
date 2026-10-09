@@ -167,6 +167,28 @@ dialog#news h3 { font-size: 13px; color: var(--text-2); font-weight: 600; margin
 
 footer { max-width: 1280px; margin: 0 auto; padding: 16px; color: var(--muted); font-size: 12px; }
 
+/* Carnet d'ordres (fenêtre candidat) */
+.ob-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; }
+dialog#news .ob-head h3 { margin: 0; }
+.ob-head .seg button { padding: 3px 10px; min-height: 26px; }
+.ob-sum { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 8px 0; }
+.ob-sum div { border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; }
+.ob-sum dt { font-size: 11.5px; color: var(--muted); }
+.ob-sum dd { margin: 0; font-weight: 600; font-size: 13.5px; white-space: nowrap; }
+.ob-depth { display: block; width: 100%; height: 110px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; }
+.ob-book { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.ob-book th { font-weight: 500; color: var(--muted); font-size: 11.5px; padding: 3px 6px; }
+.ob-book td { padding: 2px 6px; }
+.ob-book .num { text-align: right; }
+.ob-book tr.bid, .ob-book tr.ask { background-repeat: no-repeat; background-position: right; background-size: var(--w) 100%; }
+.ob-book tr.bid { background-image: linear-gradient(color-mix(in srgb, var(--up) 16%, transparent), color-mix(in srgb, var(--up) 16%, transparent)); }
+.ob-book tr.ask { background-image: linear-gradient(color-mix(in srgb, var(--down) 16%, transparent), color-mix(in srgb, var(--down) 16%, transparent)); }
+.ob-book tr.bid td:first-child { color: var(--up); }
+.ob-book tr.ask td:first-child { color: var(--down); }
+.ob-book tr.ob-mid td { text-align: center; color: var(--text-2); font-size: 11.5px; padding: 4px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.ob-book .muted { color: var(--muted); text-align: center; padding: 10px; }
+td.warn { color: #e0a33a; }
+
 @media (max-width: 640px) {
   .top { padding: 12px; }
   main { padding: 0 8px; gap: 10px; }
@@ -174,4 +196,5 @@ footer { max-width: 1280px; margin: 0 auto; padding: 16px; color: var(--muted); 
   .step { margin-left: 0; width: 100%; }
   .kpis { gap: 14px; }
   .dlg-chg { grid-template-columns: repeat(2, 1fr); }
+  .ob-sum { grid-template-columns: repeat(2, 1fr); }
 }
