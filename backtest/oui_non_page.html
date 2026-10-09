@@ -37,8 +37,8 @@ document.getElementById('sc').innerHTML='<tr><th>Stratégie</th>'+sc.map(c=>`<th
 const st=document.getElementById('st'),cd=document.getElementById('cd');
 st.innerHTML=K.map(k=>`<option ${k===best?'selected':''}>${k}</option>`).join('');
 cd.innerHTML='<option>Tous</option>'+Object.keys(S[K[0]].log).map(n=>`<option>${n}</option>`).join('');
-function draw(){const s=S[st.value];let rows=[];for(const[n,l]of Object.entries(s.log))if(cd.value==='Tous'||cd.value===n){l.forEach(r=>rows.push([n,...r]));const[q,p,z,c]=s.pos[n],v=c+q*z;rows.push([n,'fin','solde',p,'',null,q]);rows.push([n,res?'résolution':'marché','gain final',z,q,v,null,v-ST])}
-document.getElementById('log').innerHTML='<tr><th>Candidat</th><th>Date</th><th>Opération</th><th>Prix</th><th>Parts</th><th>Encaissé cumulé</th><th>Jetons restants</th><th>Gain net</th></tr>'+
-rows.map(r=>`<tr${r[2]==='gain final'?' class="fin"':''}><td>${r[0]}</td><td>${r[1]}</td><td class="${r[2]==='vente'?'pos':''}">${r[2]}</td><td>${(+r[3]).toFixed(4)}</td><td>${r[4]===''?'':f(r[4])}</td><td>${r[5]==null?'':f(r[5])+' $'}</td><td>${r[6]==null?'':f(r[6])}</td><td>${r[7]==null?'':`<span class="${r[7]>=0?'pos':'neg'}">${r[7]>=0?'+':''}${f(r[7])} $</span>`}</td></tr>`).join('')}
+function draw(){const s=S[st.value];let rows=[];for(const[n,l]of Object.entries(s.log))if(cd.value==='Tous'||cd.value===n){l.forEach(r=>rows.push([n,...r.slice(0,6),null,r[6]]));const[q,p,z,c]=s.pos[n],v=c+q*z;rows.push([n,'fin','solde',p,'',null,q]);rows.push([n,res?'résolution':'marché','gain final',z,q,v,null,v-ST])}
+document.getElementById('log').innerHTML='<tr><th>Candidat</th><th>Date</th><th>Opération</th><th>Prix</th><th>Parts</th><th>Encaissé cumulé</th><th>Jetons restants</th><th>Gain net</th><th>Var. depuis achat</th></tr>'+
+rows.map(r=>`<tr${r[2]==='gain final'?' class="fin"':''}><td>${r[0]}</td><td>${r[1]}</td><td class="${r[2]==='vente'?'pos':''}">${r[2]}</td><td>${(+r[3]).toFixed(4)}</td><td>${r[4]===''?'':f(r[4])}</td><td>${r[5]==null?'':f(r[5])+' $'}</td><td>${r[6]==null?'':f(r[6])}</td><td>${r[7]==null?'':`<span class="${r[7]>=0?'pos':'neg'}">${r[7]>=0?'+':''}${f(r[7])} $</span>`}</td><td>${r[8]==null||r[2]==='achat'?'':(r[8]>=0?'+':'')+(r[8]*100).toFixed(0)+' %'}</td></tr>`).join('')}
 st.onchange=cd.onchange=draw;draw();
 </script></body></html>
