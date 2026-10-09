@@ -1,0 +1,100 @@
+{
+  "updated": "2026-10-09",
+  "profils": {
+    "marine-le-pen": {
+      "parti": "Rassemblement national",
+      "statut": "Candidate déclarée (TF1, 7 juillet 2026)",
+      "x": "https://x.com/MLP_officiel",
+      "site": "https://rassemblementnational.fr",
+      "crypto": [
+        {
+          "type": "citation",
+          "texte": "empêchera l'usage de cryptomonnaies, telles que le Bitcoin, en France",
+          "date": "2016",
+          "contexte": "Engagement du Front national, rappelé par Cryptoast",
+          "url": "https://cryptoast.fr/elections-legislatives-renaissance-rn-lfi-pensent-ils-cryptomonnaies/"
+        },
+        {
+          "type": "position",
+          "texte": "Programme 2022 : encadrer les cryptos pour lutter contre les manipulations de cours et les délits d'initiés, sans interdiction.",
+          "date": "2022-04",
+          "contexte": "Campagne présidentielle 2022",
+          "url": "https://www.moneyvox.fr/placement/actualites/88060/bitcoin-les-divergences-de-macron-et-le-pen-sur-les-cryptomonnaies"
+        },
+        {
+          "type": "citation",
+          "texte": "minage de cryptomonnaies afin de constituer des réserves stratégiques pour EDF",
+          "date": "2025-03-11",
+          "contexte": "Visite de l'EPR de Flamanville, conférence de presse",
+          "url": "https://journalducoin.com/actualites/bitcoin-sujet-crypto-deviendrait-outil-recuperation-politique/"
+        },
+        {
+          "type": "position",
+          "texte": "Soutient une proposition de loi RN pour miner du bitcoin avec l'électricité nucléaire excédentaire d'EDF.",
+          "date": "2025-08",
+          "contexte": "Proposition portée par le député RN Aurélien Lopez-Liguori",
+          "url": "https://cointelegraph.com/news/rassemblement-national-bitcoin-mining-nuclear-power"
+        }
+      ]
+    },
+    "edouard-philippe": {
+      "parti": "Horizons",
+      "statut": "Candidat déclaré (septembre 2024)",
+      "x": "https://x.com/EPhilippe_LH",
+      "site": "https://horizonsleparti.fr",
+      "crypto": []
+    },
+    "david-lisnard": {
+      "parti": "Nouvelle Énergie (a quitté LR)",
+      "statut": "Candidat déclaré (31 mars 2026)",
+      "x": "https://x.com/davidlisnard",
+      "site": "https://nouvelle-energie.fr",
+      "crypto": [
+        {
+          "type": "citation",
+          "texte": "un atout d'attrait supplémentaire et un levier de prospérité pour le commerce local",
+          "date": "2025-01",
+          "contexte": "Post LinkedIn : Cannes forme ses commerçants aux paiements en crypto",
+          "url": "https://cryptoast.fr/historique-cannes-former-commercants-paiements-crypto/"
+        }
+      ]
+    },
+    "jean-luc-melenchon": {
+      "parti": "La France insoumise",
+      "statut": "Candidat déclaré (mai 2026)",
+      "x": "https://x.com/JLMelenchon",
+      "site": "https://melenchon.fr",
+      "crypto": [
+        {
+          "type": "position",
+          "texte": "Compare les cryptos à un casino après l'effondrement de Terra/Luna.",
+          "date": "2022-05",
+          "contexte": "Publications sur X",
+          "url": "https://journalducoin.com/defi/jean-luc-melenchon-marre-bitcoin-casino-cryptos/"
+        },
+        {
+          "type": "position",
+          "texte": "Programme LFI : interdire la spéculation sur les cryptos et les encadrer strictement.",
+          "date": "2024-06",
+          "contexte": "Positions LFI rappelées lors des législatives 2024",
+          "url": "https://cryptoast.fr/elections-legislatives-renaissance-rn-lfi-pensent-ils-cryptomonnaies/"
+        }
+      ]
+    },
+    "francois-hollande": {
+      "parti": "Parti socialiste",
+      "statut": "Non déclaré (décision annoncée pour décembre 2026)",
+      "x": "https://x.com/fhollande",
+      "site": "https://www.parti-socialiste.fr",
+      "crypto": [
+        {
+          "type": "citation",
+          "texte": "N'achetez pas forcément de bitcoins",
+          "date": "2021-03-08",
+          "contexte": "Live Twitch de Samuel Étienne",
+          "url": "https://journalducoin.com/bitcoin/acheter-bitcoin-francois-hollande-et-en-meme-temps/"
+        }
+      ]
+    }
+  }
+}

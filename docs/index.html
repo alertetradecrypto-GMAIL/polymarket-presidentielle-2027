@@ -82,7 +82,11 @@
   <dialog id="news" aria-labelledby="news-title">
     <div class="dlg-head">
       <div>
-        <h2 id="news-title"></h2>
+        <div class="dlg-name">
+          <h2 id="news-title"></h2>
+          <a class="soc" id="news-x" target="_blank" rel="noopener noreferrer" hidden title="Compte X officiel" aria-label="Compte X officiel"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a class="soc" id="news-site" target="_blank" rel="noopener noreferrer" hidden title="Site officiel">Site ↗</a>
+        </div>
         <div class="dlg-sub" id="news-sub"></div>
       </div>
       <button class="dlg-x" id="news-close" aria-label="Fermer" autofocus>×</button>
@@ -90,6 +94,8 @@
     <dl class="dlg-chg" id="news-chg"></dl>
     <h3>Actualités récentes</h3>
     <ol class="news-list" id="news-list"></ol>
+    <h3>Crypto : déclarations publiques</h3>
+    <ul class="news-list crypto-list" id="news-crypto"></ul>
     <div class="dlg-foot">
       <button class="btn" id="news-toggle"></button>
       <a id="news-more" target="_blank" rel="noopener">Plus sur Google News ↗</a>

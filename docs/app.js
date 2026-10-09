@@ -33,6 +33,7 @@ const state = {
   disp: "usd",            // affichage : prix du jeton en $ (usd) ou probabilité en % (pct)
   news: null,             // news.json (chargé à la première ouverture)
   newsSlug: null,         // candidat affiché dans la fenêtre d'actualités
+  profils: null,          // profils.json (liens X / site, déclarations crypto), saisi à la main
 };
 let chart = null;
 let series = [];          // [{slug, s, data}]
@@ -470,17 +471,51 @@ async function openNews(slug) {
   renderNews();
   const dlg = $("#news");
   if (!dlg.open) dlg.showModal();
-  if (!state.news) {
-    try { state.news = await getJSON(`data/news.json?t=${Date.now()}`); }
-    catch (e) { console.error(e); state.news = { items: {}, error: true }; }
+  const jobs = [];
+  if (!state.news) jobs.push(getJSON(`data/news.json?t=${Date.now()}`)
+    .then((d) => { state.news = d; })
+    .catch((e) => { console.error(e); state.news = { items: {}, error: true }; }));
+  if (!state.profils) jobs.push(getJSON(`data/profils.json?t=${Date.now()}`)
+    .then((d) => { state.profils = d; })
+    .catch((e) => { console.error(e); state.profils = { profils: {}, error: true }; }));
+  if (jobs.length) {
+    await Promise.all(jobs);
     if (state.newsSlug === slug) renderNews();
   }
+}
+
+/** Lien X + site à côté du nom, et déclarations crypto sourcées. */
+function renderProfil(c) {
+  const p = state.profils?.profils?.[c.slug];
+  const setLink = (el, url) => {
+    const ok = !!(url && /^https:\/\//i.test(url));
+    el.hidden = !ok;
+    if (ok) el.href = url; else el.removeAttribute("href");
+  };
+  setLink($("#news-x"), p?.x);
+  setLink($("#news-site"), p?.site);
+
+  const list = $("#news-crypto");
+  if (!state.profils) { list.innerHTML = `<li class="muted">Chargement…</li>`; return; }
+  if (!p) { list.innerHTML = `<li class="muted">Fiche à venir.</li>`; return; }
+  const items = p.crypto || [];
+  if (!items.length) { list.innerHTML = `<li class="muted">Aucune prise de position publique trouvée.</li>`; return; }
+  list.innerHTML = items.map((q) => {
+    const txt = q.type === "citation" ? `« ${esc(q.texte)} »` : esc(q.texte);
+    let host = "";
+    try { host = new URL(q.url).hostname.replace(/^www\./, ""); } catch (e) { /* lien invalide */ }
+    return `<li>
+      <span class="${q.type === "citation" ? "quote" : ""}">${txt}</span>
+      <span class="meta">${esc(q.date || "")}${q.contexte ? " · " + esc(q.contexte) : ""}${host ? ` · <a href="${esc(safeUrl(q.url))}" target="_blank" rel="noopener noreferrer">${esc(host)} ↗</a>` : ""}</span>
+    </li>`;
+  }).join("");
 }
 
 function renderNews() {
   const c = cand(state.newsSlug);
   if (!c) return;
   $("#news-title").textContent = c.name;
+  renderProfil(c);
   $("#news-sub").innerHTML = `Oui <b>${price(c.price)}</b>${isPct() ? "" : ` (cote ${cote(c.price)})`} · Non ${price(c.price != null ? 1 - c.price : null)}`;
   $("#news-chg").innerHTML = CHG.map((k) => {
     const ch = change(c, k);

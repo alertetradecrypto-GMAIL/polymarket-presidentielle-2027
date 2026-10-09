@@ -127,6 +127,15 @@ dialog#news {
 dialog#news::backdrop { background: rgba(0, 0, 0, .55); }
 .dlg-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
 .dlg-head h2 { margin: 0; font-size: 18px; }
+.dlg-name { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.soc {
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+  min-width: 26px; height: 26px; padding: 0 6px; border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text); font-size: 12px; font-weight: 600;
+}
+.soc:hover { background: var(--hover); color: var(--accent); }
+.soc[hidden] { display: none; }
+.crypto-list .quote { font-style: italic; color: var(--text); }
 .dlg-sub { color: var(--text-2); font-size: 13px; margin-top: 2px; }
 .dlg-sub b { color: var(--text); }
 .dlg-x {
