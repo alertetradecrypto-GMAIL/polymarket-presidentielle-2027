@@ -1,22 +1,16 @@
 {
   "keys": {
     "david-lisnard|7j|up": {
-      "streak": 93,
-      "seen_t": 1791572902,
+      "streak": 94,
+      "seen_t": 1791574114,
       "alert_t": 1791457012,
       "alert_price": 0.131
     },
     "francois-hollande|7j|down": {
-      "streak": 79,
-      "seen_t": 1791572904,
+      "streak": 80,
+      "seen_t": 1791574116,
       "alert_t": 1791562535,
       "alert_price": 0.023
-    },
-    "edouard-philippe|24h|up": {
-      "streak": 67,
-      "seen_t": 1791572901,
-      "alert_t": 1791542150,
-      "alert_price": 0.235
     }
   }
 }
