@@ -1,28 +1,32 @@
 {
   "keys": {
     "david-lisnard|7j|up": {
-      "streak": 84,
-      "seen_t": 1791561441,
+      "streak": 85,
+      "seen_t": 1791562460,
       "alert_t": 1791457012,
       "alert_price": 0.131
     },
     "francois-hollande|7j|down": {
-      "streak": 70,
-      "seen_t": 1791561443,
-      "alert_t": 1791471708,
-      "alert_price": 0.0345
+      "streak": 71,
+      "seen_t": 1791562463,
+      "alert_t": 1791562535,
+      "alert_price": 0.023
     },
     "edouard-philippe|24h|up": {
-      "streak": 58,
-      "seen_t": 1791561440,
+      "streak": 59,
+      "seen_t": 1791562460,
       "alert_t": 1791542150,
       "alert_price": 0.235
     },
     "gabriel-attal|24h|down": {
-      "streak": 12,
-      "seen_t": 1791561441,
+      "streak": 13,
+      "seen_t": 1791562460,
       "alert_t": 1791546998,
       "alert_price": 0.0185
+    },
+    "francois-hollande|24h|down": {
+      "streak": 1,
+      "seen_t": 1791562463
     }
   }
 }
