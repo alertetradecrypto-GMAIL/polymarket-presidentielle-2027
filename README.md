@@ -25,6 +25,11 @@ Outil de suivi (lecture seule, aucun ordre) du marché Polymarket
   - `src/render.py` : visuels PNG via Playwright ; `src/x_post.py` : publication (tweepy), anti-doublon, une seule tentative
   - **Tout tourne en `DRY_RUN` tant que la variable de dépôt `X_LIVE` ne vaut pas `1`** (Settings → Secrets and variables → Actions → Variables). Test : Actions → tweet → Run workflow (dry_run coché) → PNG et texte dans l'artefact
 
+- `backtest/` (backtest.yml, lancement manuel) : test des stratégies « ordres limites maker » + « valeur théorique
+  issue des sondages » sur 6 mois (Le Pen, Philippe, Mélenchon, Lisnard), écarts 2/3/4 pts, comparaison taker
+  et achat-conservation. Sondages relevés à la main dans `backtest/polls_*.csv`. Résultat : artefact `backtest`
+  (`report.html`, `results.json`). En local : `python backtest/run.py && python backtest/report.py`
+
 Aucune donnée personnelle n'est commitée : les positions ne sont lues qu'en mémoire.
 
 ## Tests

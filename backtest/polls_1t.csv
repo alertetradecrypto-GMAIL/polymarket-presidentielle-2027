@@ -1,0 +1,22 @@
+# Moyenne des hypothèses de chaque sondage (lignes où le candidat figure). Source : Wikipédia EN
+# « Opinion polling for the 2027 French presidential election », relevé du 2026-10-09.
+# rn_who = candidat RN testé (LP = Le Pen, JB = Bardella). Elabe 9-10/07 écarté (valeurs identiques au 26-28/08, doute de saisie).
+pollster,end_date,rn_who,rn,philippe,melenchon
+Harris Interactive,2026-04-22,LP,32.5,19,12
+Harris Interactive,2026-04-30,JB,34.5,19,12.5
+Odoxa,2026-05-21,JB,32,17,16
+Harris Interactive,2026-05-27,LP,31.5,19,14.5
+Harris Interactive,2026-05-27,JB,33.3,15,14.7
+Ifop,2026-05-28,LP,32.5,19,13
+Ifop,2026-05-28,JB,34.1,19.6,13.6
+Ipsos,2026-05-28,LP,31.5,14.25,13.25
+Ipsos,2026-05-28,JB,34.7,15.75,13.25
+OpinionWay,2026-06-11,JB,34,19,14
+Ifop,2026-06-24,JB,36.4,20,13.6
+Ifop,2026-07-08,LP,36,19,15
+Harris Interactive,2026-07-08,LP,35.2,18,16
+OpinionWay,2026-07-09,LP,35,20,14.3
+Verian,2026-07-10,LP,37,17,15
+Harris Interactive,2026-08-19,LP,36,16.7,16.8
+Ifop,2026-08-25,LP,33.7,18.1,17.5
+Elabe,2026-08-28,LP,34.75,17,14.6
