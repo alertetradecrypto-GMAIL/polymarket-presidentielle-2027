@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 OUT = Path(__file__).resolve().parent / "out"
 STAKE, FRAC = 100.0, 0.2
-STAKE_US, US_DAYS_BEFORE = 1000.0, 205  # mise par candidat, départ J-205 avant le scrutin
+BUDGET_US, US_DAYS_BEFORE = 1000.0, 205  # budget total réparti également, départ J-205
 US_ELECTION = dt.date(2024, 11, 5)
 # (libellé, côté, palier, relatif ?)
 RULES = [("Oui +2 pts", "Y", .02, False), ("Non +2 pts", "N", .02, False),
@@ -92,7 +92,7 @@ def run(c, side, step, rel, keep, stake=STAKE):
 
 def main(src):
     title, C = (load_fr if src == "fr" else load_us)()
-    stake = STAKE_US if src == "us" else STAKE
+    stake = BUDGET_US / len(C) if src == "us" else STAKE
     names = [c["name"] for c in C]
     S = {}
     for lab, side, step, rel in RULES:
@@ -116,7 +116,7 @@ def main(src):
     json.dump(dict(title=title, stake=stake, data=S), open(OUT / f"oui_non_{src}.json", "w"), ensure_ascii=False)
     tpl = (Path(__file__).resolve().parent / "oui_non_page.html").read_text()
     (OUT / f"oui_non_{src}.html").write_text(
-        tpl.replace("__TITLE__", title).replace("__STAKE__", f"{stake:,.0f}".replace(",", " ")).replace("__STAKE_N__", str(stake))
+        tpl.replace("__TITLE__", title).replace("__STAKE__", f"{stake * len(C):,.0f}".replace(",", " ") + " $ au total, soit " + f"{stake:.2f}".replace(".", ",")).replace("__STAKE_N__", str(stake))
         .replace("__DATA__", json.dumps(S, ensure_ascii=False)))
     w = "final" if C[0]["win"] is not None else "mtm"
     for k, s in S.items():
