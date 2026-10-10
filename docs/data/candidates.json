@@ -1,5 +1,5 @@
 {
-  "updated": 1791647013,
+  "updated": 1791647788,
   "event": {
     "id": "79987",
     "slug": "next-french-presidential-election",
@@ -7,8 +7,8 @@
     "end_date": "2027-04-19T03:59:00Z",
     "volume": 148375819.416019,
     "volume24h": 443762.25356499996,
-    "volume_usd": 70771212.16,
-    "volume24h_usd": 32425.87
+    "volume_usd": 70771271.04,
+    "volume24h_usd": 30434.76
   },
   "candidates": [
     {
@@ -28,7 +28,7 @@
       "slug": "marine-le-pen",
       "first_seen": 1791451018,
       "volume_usd": 1294437.47,
-      "volume24h_usd": 7513.52,
+      "volume24h_usd": 7509.52,
       "last_hist": 0.4025,
       "price_ref": {
         "1h": 0.4025,
@@ -100,7 +100,7 @@
       "price": 0.115,
       "bid": 0.11,
       "ask": 0.12,
-      "last": 0.11,
+      "last": 0.12,
       "volume": 2033263.0054170003,
       "volume24h": 15484.809833,
       "active": true,
@@ -108,8 +108,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-jean-luc-mlenchon-win-the-2027-french-presidential-election-kyK2EfUTxlqg.jpg",
       "slug": "jean-luc-melenchon",
       "first_seen": 1791451018,
-      "volume_usd": 541515.99,
-      "volume24h_usd": 3009.03,
+      "volume_usd": 541525.99,
+      "volume24h_usd": 3019.03,
       "last_hist": 0.115,
       "price_ref": {
         "1h": 0.115,
@@ -136,7 +136,7 @@
       "slug": "francois-hollande",
       "first_seen": 1791451018,
       "volume_usd": 692373.35,
-      "volume24h_usd": 1519.39,
+      "volume24h_usd": 1282.26,
       "last_hist": 0.0325,
       "price_ref": {
         "1h": 0.0325,
@@ -216,8 +216,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-raphal-glucksmann-win-the-2027-french-presidential-election-OAJpSeiNqI5S.jpg",
       "slug": "raphael-glucksmann",
       "first_seen": 1791451018,
-      "volume_usd": 596274.55,
-      "volume24h_usd": 2693.72,
+      "volume_usd": 596284.55,
+      "volume24h_usd": 910.31,
       "last_hist": 0.0105,
       "price_ref": {
         "1h": 0.0105,
@@ -243,8 +243,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-sarah-knafo-win-the-2027-french-presidential-election-1QHAwXTtYRYA.jpg",
       "slug": "sarah-knafo",
       "first_seen": 1791451018,
-      "volume_usd": 1094378.61,
-      "volume24h_usd": 303.5,
+      "volume_usd": 1094380.11,
+      "volume24h_usd": 303.54,
       "last_hist": 0.0095,
       "price_ref": {
         "1h": 0.0095,
@@ -382,7 +382,7 @@
       "volume24h_usd": 114.71,
       "last_hist": 0.0025,
       "price_ref": {
-        "1h": 0.0015,
+        "1h": 0.0035,
         "4h": 0.0015,
         "12h": 0.0015,
         "24h": 0.0015
@@ -405,8 +405,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-sbastien-lecornu-win-the-2027-french-presidential-election-wEbFCHrHQF2A.jpg",
       "slug": "sebastien-lecornu",
       "first_seen": 1791451018,
-      "volume_usd": 609819.59,
-      "volume24h_usd": 74.07,
+      "volume_usd": 609824.26,
+      "volume24h_usd": 78.74,
       "last_hist": 0.0025,
       "price_ref": {
         "1h": 0.0025,
@@ -415,6 +415,33 @@
         "24h": 0.0025
       },
       "price_24h": 0.0025
+    },
+    {
+      "id": "679033",
+      "name": "Olivier Faure",
+      "condition_id": "0xbac8d3ca6cc7297022850562d9d66669d5e0a112767337f8a5955417f1984b54",
+      "token_yes": "20081811713638516406596868811232083490459643675005428825503148986030861838715",
+      "price": 0.002,
+      "bid": null,
+      "ask": 0.002,
+      "last": 0.002,
+      "volume": 6422707.293354999,
+      "volume24h": 28982.223,
+      "active": true,
+      "closed": false,
+      "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-olivier-faure-win-the-2027-french-presidential-election-n3UJRxnR1Qov.jpg",
+      "slug": "olivier-faure",
+      "first_seen": 1791451018,
+      "volume_usd": 3100393.39,
+      "volume24h_usd": 353.21,
+      "last_hist": 0.001,
+      "price_ref": {
+        "1h": 0.0005,
+        "4h": 0.0015,
+        "12h": 0.0015,
+        "24h": 0.0015
+      },
+      "price_24h": 0.0015
     },
     {
       "id": "679058",
@@ -459,8 +486,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-franois-ruffin-win-the-2027-french-presidential-election-DuvyAm67PfEk.jpg",
       "slug": "francois-ruffin",
       "first_seen": 1791451018,
-      "volume_usd": 1891520.85,
-      "volume24h_usd": 438.01,
+      "volume_usd": 1891520.95,
+      "volume24h_usd": 438.11,
       "last_hist": 0.0015,
       "price_ref": {
         "1h": 0.0015,
@@ -486,8 +513,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-marine-tondelier-win-the-2027-french-presidential-election-e1tj7K-8OPlp.jpg",
       "slug": "marine-tondelier",
       "first_seen": 1791451018,
-      "volume_usd": 2346179.35,
-      "volume24h_usd": 273.0,
+      "volume_usd": 2346200.27,
+      "volume24h_usd": 283.92,
       "last_hist": 0.0015,
       "price_ref": {
         "1h": 0.0015,
@@ -513,8 +540,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-karim-bouamrane-win-the-2027-french-presidential-election-tVOEjfoE74m4.jpg",
       "slug": "karim-bouamrane",
       "first_seen": 1791451018,
-      "volume_usd": 74023.65,
-      "volume24h_usd": 75.67,
+      "volume_usd": 74030.34,
+      "volume24h_usd": 82.36,
       "last_hist": 0.0015,
       "price_ref": {
         "1h": 0.0015,
@@ -604,33 +631,6 @@
         "24h": 0.0005
       },
       "price_24h": 0.0005
-    },
-    {
-      "id": "679033",
-      "name": "Olivier Faure",
-      "condition_id": "0xbac8d3ca6cc7297022850562d9d66669d5e0a112767337f8a5955417f1984b54",
-      "token_yes": "20081811713638516406596868811232083490459643675005428825503148986030861838715",
-      "price": 0.001,
-      "bid": null,
-      "ask": 0.001,
-      "last": 0.001,
-      "volume": 6422707.293354999,
-      "volume24h": 28982.223,
-      "active": true,
-      "closed": false,
-      "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-olivier-faure-win-the-2027-french-presidential-election-n3UJRxnR1Qov.jpg",
-      "slug": "olivier-faure",
-      "first_seen": 1791451018,
-      "volume_usd": 3100388.39,
-      "volume24h_usd": 348.21,
-      "last_hist": 0.0005,
-      "price_ref": {
-        "1h": 0.0005,
-        "4h": 0.0015,
-        "12h": 0.0015,
-        "24h": 0.0015
-      },
-      "price_24h": 0.0015
     },
     {
       "id": "679036",
@@ -865,7 +865,7 @@
       "slug": "jean-castex",
       "first_seen": 1791451018,
       "volume_usd": 718432.06,
-      "volume24h_usd": 8.65,
+      "volume24h_usd": 4.66,
       "last_hist": 0.001,
       "price_ref": {
         "1h": 0.001,
