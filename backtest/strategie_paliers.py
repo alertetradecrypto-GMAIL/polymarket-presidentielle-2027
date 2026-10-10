@@ -260,6 +260,7 @@ def main(perte_max=PERTE_MAX):
         "Pire cas minimal, gros paliers": (safe_alloc[2], safe_alloc[3]),
         "Réglage Nick (250/100/350/300 $)": (NICK, NICK_ALLOC),
         "Réglage Nick, Mélenchon à +3 pts / 20 %": (NICK[:2] + [NICK_ME3] + NICK[3:], NICK_ALLOC),
+        "Réglage Nick, Mélenchon conservé en entier": (NICK[:2] + [HOLD] + NICK[3:], NICK_ALLOC),
         "Même répartition, tout conserver": ([HOLD] * 4, NICK_ALLOC),
     }
 
