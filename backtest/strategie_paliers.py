@@ -55,6 +55,8 @@ US_NAMES = dict(Trump="Donald Trump", Biden="Joe Biden", RFK="Robert F. Kennedy 
 STEPS = [("pts", s) for s in (.02, .03, .05, .08, .10, .15)] + [("rel", s) for s in (.10, .20, .30, .50)]
 FRACS, KEEPS = (.10, .20, .25), (0.0, .20, .40)
 GRID = list(itertools.product(STEPS, FRACS, KEEPS))
+# Échelle fine : petits paliers réguliers, petite fraction vendue à chaque palier → nombreuses ventes
+LADDER = list(itertools.product([("pts", s) for s in (.02, .03, .04, .05)], (.05, .10), (0.0, .20, .40)))
 BASE = {"N": (("pts", .02), .20, .40), "Y": (("pts", .02), .20, .20)}  # règle actuelle de Nick
 HOLD = (("pts", 9.0), .20, 1.0)  # tout conserver
 
@@ -139,7 +141,7 @@ def main(perte_max=PERTE_MAX):
             tok = y if side == "Y" else 1 - y
             tok[:, 0] = pe
             settle = float((win == k) if side == "Y" else (win != k))
-            for prm in GRID + [BASE[side], HOLD]:
+            for prm in GRID + LADDER + [BASE[side], HOLD]:
                 cash, q, n = run(tok, pe, prm)
                 R[k].setdefault(prm, np.zeros((len(SCEN), N_VAR)))[si] = cash + q * settle
                 NS[k].setdefault(prm, np.zeros((len(SCEN), N_VAR)))[si] = n
@@ -150,16 +152,17 @@ def main(perte_max=PERTE_MAX):
         # espérance /$ (probas de Nick), valeur moyenne si Le Pen gagne /$ (additive → contrainte exacte)
         return float(probs @ m), float(m[LPi])
 
-    # Tableau par position : top 5 par espérance + règle actuelle + tout conserver
+    # Tableau par position : top 5 de l'échelle fine + meilleur gros palier + règle actuelle + tout conserver
     tables = {}
     for k, name, side, pe, _ in POS:
-        rows = sorted(GRID, key=lambda p: -stats(k, p)[0])
-        pick = rows[:5] + [BASE[side], HOLD]
+        rows = sorted(LADDER, key=lambda p: -stats(k, p)[0])
+        pick = rows[:5] + [max(GRID, key=lambda p: stats(k, p)[0]), BASE[side], HOLD]
         tables[name] = [dict(regle=label(p), e=round(250 * (stats(k, p)[0] - 1), 1),
                              em=round(250 * (float(pmkt @ R[k][p].mean(axis=1)) - 1), 1),
                              lp=round(250 * (stats(k, p)[1] - 1), 1),
                              ventes=round(float(NS[k][p].mean()), 1),
-                             tag="actuelle" if p == BASE[side] else "conserver" if p == HOLD else "")
+                             tag="actuelle" if p == BASE[side] else "conserver" if p == HOLD
+                             else "gros palier" if p not in LADDER else "")
                         for p in pick]
 
     # Frontière (espérance, valeur si Le Pen gagne) par position
@@ -175,20 +178,24 @@ def main(perte_max=PERTE_MAX):
         m = R[k][p].mean(axis=1)
         return np.round(np.concatenate([[probs @ m], es(R[k][p][act])]) - 1, 5)
 
-    def frontier(k):
+    def frontier(k, grid):
         pts, seen = [], set()
-        for p in GRID + [HOLD]:
+        for p in grid:
             v = vec(k, p)
             if tuple(v) not in seen:
                 seen.add(tuple(v))
                 pts.append((p, v))
         return [a for a in pts if not any((b[1] >= a[1]).all() and (b[1] > a[1]).any() for b in pts)]
 
-    F = [frontier(k) for k, *_ in POS]
-    V = [np.array([v for _, v in f]) for f in F]  # (n_i, 1 + nb scénarios)
+    def build(grid):
+        F = [frontier(k, grid) for k, *_ in POS]
+        return F, [np.array([v for _, v in f]) for f in F]  # (n_i, 1 + nb scénarios)
+
+    FV_all, FV_lad = build(GRID + [HOLD]), build(LADDER)
     allocs = [a for a in itertools.product(STAKES, repeat=4) if sum(a) == BUDGET]
 
-    def optimise(alloc_list, keep_front=False, limit=perte_max):
+    def optimise(alloc_list, keep_front=False, limit=perte_max, FV=None):
+        F, V = FV or FV_all
         best, safest, front = None, None, {}
         n1, n3 = len(F[1]), len(F[3])
         for a in alloc_list:
@@ -221,7 +228,9 @@ def main(perte_max=PERTE_MAX):
     best_fix, _, safe_fix = optimise([(250, 250, 250, 250)])
     best_alloc, front_all, safe_alloc = optimise(allocs, keep_front=True)
     best_eq, _, _ = optimise(allocs, limit=PERTE_EQ)
-    print(f"contrainte : pire scénario ≥ -{perte_max:.0f} $ | frontières {[len(f) for f in F]} × répartitions {len(allocs)}")
+    lad_fix, _, _ = optimise([(250, 250, 250, 250)], limit=1e9, FV=FV_lad)
+    lad_eq, front_lad, _ = optimise(allocs, keep_front=True, limit=PERTE_EQ, FV=FV_lad)
+    print(f"contrainte : pire scénario ≥ -{perte_max:.0f} $ | répartitions {len(allocs)}")
 
     def profile(prms, alloc):
         out = []
@@ -241,11 +250,31 @@ def main(perte_max=PERTE_MAX):
     strategies = {
         "Ta règle actuelle (250 $ × 4)": ([BASE[s] for _, _, s, *_ in POS], [250] * 4),
         "Tout conserver (250 $ × 4)": ([HOLD] * 4, [250] * 4),
-        "Meilleures règles, 250 $ × 4": (best_fix[2], [250] * 4),
-        f"Optimale, répartition libre (pire cas ≤ {perte_max:.0f} $)": (best_alloc[2], best_alloc[3]),
-        f"Équilibrée, répartition libre (pire cas ≤ {PERTE_EQ:.0f} $)": (best_eq[2], best_eq[3]),
-        "Pire cas minimal, répartition libre": (safe_alloc[2], safe_alloc[3]),
+        f"Équilibrée précédente, gros paliers (pire cas ≤ {PERTE_EQ:.0f} $)": (best_eq[2], best_eq[3]),
+        "Échelle fine, 250 $ × 4": (lad_fix[2], [250] * 4),
+        f"Échelle fine, répartition libre (pire cas ≤ {PERTE_EQ:.0f} $)": (lad_eq[2], lad_eq[3]),
+        "Pire cas minimal, gros paliers": (safe_alloc[2], safe_alloc[3]),
     }
+
+    # Lisnard : part de la montée capturée (pic puis retour) contre ce qui est sacrifié s'il gagne
+    ki = [k for k, *_ in POS].index("LI")
+    s_pic = next(i for i, sc in enumerate(SCEN) if sc[2]["LI"] == "Harris")
+    s_win = next(i for i, sc in enumerate(SCEN) if sc[3] == "LI")
+    hold_win = float(R["LI"][HOLD][s_win].mean())
+    P = variants(Z, {"Harris"}, np.random.default_rng(SEED + 1))  # pic potentiel (vente totale au plus haut)
+    y_pk = expit(logit(POS[ki][4]) + P["Harris"] - P["Harris"][:, :1]).max(axis=1)
+    pic = float((y_pk / POS[ki][3]).mean())
+    lis = []
+    for prm in sorted(LADDER, key=lambda p: -stats("LI", p)[0])[:8] + [lad_eq[2][ki], best_eq[2][ki], BASE["Y"], HOLD]:
+        cap, win = float(R["LI"][prm][s_pic].mean()), float(R["LI"][prm][s_win].mean())
+        row = dict(regle=label(prm), cap=round(250 * (cap - 1)), cap_pct=round(100 * (cap - 1) / (pic - 1)),
+                   win=round(250 * (win - 1)), sac=round(250 * (hold_win - win)),
+                   sac_pct=round(100 * (hold_win - win) / (hold_win - 1)), ventes=round(float(NS["LI"][prm][s_pic].mean()), 1),
+                   tag="échelle retenue" if prm == lad_eq[2][ki] else "gros palier" if prm == best_eq[2][ki]
+                   else "actuelle" if prm == BASE["Y"] else "conserver" if prm == HOLD else "")
+        if row not in lis:
+            lis.append(row)
+    lis_pic = round(250 * (pic - 1))
     res = {n: dict(regles={name: label(p) for (_, name, *_x), p in zip(POS, prms)},
                    alloc={name: a for (_, name, *_x), a in zip(POS, alloc)}, **profile(prms, alloc))
            for n, (prms, alloc) in strategies.items()}
@@ -255,12 +284,17 @@ def main(perte_max=PERTE_MAX):
         if E > bestE:
             env.append([round(L, 1), round(E, 1)])
             bestE = E
+    env_lad, bestE = [], -1e9
+    for L, E in sorted(front_lad.items(), key=lambda x: -x[0]):
+        if E > bestE:
+            env_lad.append([round(L, 1), round(E, 1)])
+            bestE = E
     data = dict(J=J, perte_max=perte_max, perte_eq=PERTE_EQ, n_var=N_VAR, es_q=ES_Q,
                 scen=[dict(n=s[0], p=s[1], pm=pm, map={name: s[2][k] for k, name, *_x in POS},
                      win=next((name for k, name, *_x in POS if k == s[3]), None))
                       for s, pm in zip(SCEN, MARCHE)],
                 pos=[dict(name=n, side=sd, pe=pe) for _, n, sd, pe, _ in POS],
-                tables=tables, res=res, frontier=env)
+                tables=tables, res=res, frontier=env, frontier_lad=env_lad, lis=lis, lis_pic=lis_pic)
     OUT.mkdir(exist_ok=True)
     json.dump(data, open(OUT / "strategie_paliers.json", "w"), ensure_ascii=False)
     tpl = (HERE / "strategie_paliers_page.html").read_text()
@@ -270,6 +304,10 @@ def main(perte_max=PERTE_MAX):
         print(f"\n{name} (gain moyen pondéré / si Le Pen gagne, pour 250 $)")
         for r in rows:
             print(f"  {r['regle']:42} E {r['e']:+7.1f}  Emkt {r['em']:+7.1f}  LP {r['lp']:+7.1f}  ventes {r['ventes']:4.1f} {r['tag']}")
+    print(f"\nLisnard — vente totale au pic (Harris) : +{lis_pic} $ ; tout conserver s'il gagne : +{round(250 * (hold_win - 1))} $")
+    for x in lis:
+        print(f"  {x['regle']:42} pic capturé {x['cap']:+6} $ ({x['cap_pct']:3} %)  s'il gagne {x['win']:+6} $ "
+              f"(sacrifié {x['sac']:5} $, {x['sac_pct']} %)  ventes {x['ventes']} {x['tag']}")
     for n, r in res.items():
         print(f"\n== {n} — espérance Nick {r['E']:+.0f} $ / marché {r['Em']:+.0f} $ — pire cas {r['pire']:+.0f} $ — {r['alloc']}")
         for name, rg in r["regles"].items():
