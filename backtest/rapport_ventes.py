@@ -20,7 +20,10 @@ from strategie_paliers import (ES_Q, HOLD, MARCHE, N_VAR, OUT, POS, SCEN, SEED, 
                                us_paths, variants)
 
 FR_J185 = dt.date(2027, 4, 11) - dt.timedelta(days=185)  # J-185 avant le 1er tour 2027
-ALLOC = [250, 100, 350, 300]  # Le Pen Non, Philippe Oui, Mélenchon Non, Lisnard Oui
+# Ordres réels au 10 oct. 2026 (190 $ gardés en réserve) : mises et prix d'entrée effectifs
+ALLOC = [250.25, 100.70, 351.50, 100.80]  # Le Pen Non 422 @0,593 · Philippe Oui 530 @0,19 · Mélenchon Non 350 @0,88 + 50 @0,87 · Lisnard Oui 800 @0,126
+POS = [("LP", "Le Pen", "N", 0.593, 0.407), ("PH", "Philippe", "Y", 0.19, 0.19),
+       ("ME", "Mélenchon", "N", 0.879, 0.121), ("LI", "Lisnard", "Y", 0.126, 0.126)]
 
 
 def P(step, frac, keep):

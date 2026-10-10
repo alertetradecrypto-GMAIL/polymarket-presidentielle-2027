@@ -67,9 +67,9 @@ ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; max-width: 72ch }
 
 <div class="wrap">
   <header>
-    <div class="lbl">Polymarket · Présidentielle 2027 · backtest du 10 octobre 2026</div>
+    <div class="lbl">Polymarket · Présidentielle 2027 · backtest du 10 octobre 2026 · mis à jour avec les ordres réels</div>
     <h1>Faut-il vendre par paliers ?</h1>
-    <p class="lead">Quatre positions, 1 000 $ au total, six façons de prendre ses bénéfices. Chaque variante est rejouée sur les vraies courbes de l'élection américaine de 2024, projetées sur les candidats français. Ce rapport montre ce que chacune rapporte et, vente par vente, ce qu'elle aurait fait.</p>
+    <p class="lead">Quatre positions, 803 $ engagés (190 $ gardés en réserve), six façons de prendre ses bénéfices. Chaque variante est rejouée sur les vraies courbes de l'élection américaine de 2024, projetées sur les candidats français. Ce rapport montre ce que chacune rapporte et, vente par vente, ce qu'elle aurait fait.</p>
   </header>
 
   <section>
@@ -79,7 +79,7 @@ ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; max-width: 72ch }
 
   <section>
     <h2>Le résultat en un tableau</h2>
-    <p>Gain ou perte moyen sur 1 000 $, à la date du vote. « Espérance » pondère les scénarios ; « pire cas » est la moyenne des 20 % de trajectoires les plus défavorables dans le pire scénario.</p>
+    <p>Gain ou perte moyen sur les 803 $ engagés, à la date du vote. « Espérance » pondère les scénarios ; « pire cas » est la moyenne des 20 % de trajectoires les plus défavorables dans le pire scénario.</p>
     <div class="scroll"><table id="synth"></table></div>
     <div class="callout" id="verdict"></div>
   </section>
@@ -101,7 +101,7 @@ ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; max-width: 72ch }
   <section class="foot">
     <h2 style="font-size:1.1rem;color:var(--ink)">Comment c'est calculé</h2>
     <ul>
-      <li>Prix d'entrée : Le Pen Non 0,592 · Philippe Oui 0,225 · Mélenchon Non 0,875 · Lisnard Oui 0,126. Un jeton paie 1 $ s'il gagne, 0 $ sinon.</li>
+      <li>Prix d'entrée (ordres posés le 10 oct.) : Le Pen Non 0,593 (422 jetons, 250 $) · Philippe Oui 0,19 (530 jetons, 101 $) · Mélenchon Non 0,879 en moyenne (400 jetons, 352 $) · Lisnard Oui 0,126 (800 jetons, 101 $). Philippe suppose que l'ordre à 0,19 est exécuté (prix actuel ≈ 0,225). Un jeton paie 1 $ s'il gagne, 0 $ sinon.</li>
       <li>Les courbes US 2024 (de J-185 au vote) sont projetées en décalant la cote de chaque candidat français depuis son prix de départ. Les dates affichées sont l'équivalent français, du 8 octobre 2026 au 11 avril 2027.</li>
       <li>Chaque palier est un ordre de vente à cours limité posé à l'avance : il s'exécute au prix du palier quand le cours l'atteint. Les « % » vendus sont calculés sur le stock de départ.</li>
       <li>Moyenne et 10e centile : 200 variantes de chaque trajectoire, obtenues en remélangeant ses variations journalières par blocs de 10 jours.</li>
