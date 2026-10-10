@@ -59,6 +59,10 @@ GRID = list(itertools.product(STEPS, FRACS, KEEPS))
 LADDER = list(itertools.product([("pts", s) for s in (.02, .03, .04, .05)], (.05, .10), (0.0, .20, .40)))
 BASE = {"N": (("pts", .02), .20, .40), "Y": (("pts", .02), .20, .20)}  # règle actuelle de Nick
 HOLD = (("pts", 9.0), .20, 1.0)  # tout conserver
+# Réglage de Nick (10 oct.) : LP, PH, ME (as écrit), LI — et variante ME à +3 pts
+NICK = [(("pts", .03), .05, .35), (("pts", .03), .05, .35), (("pts", .15), .10, .20), (("pts", .15), .20, .20)]
+NICK_ME3 = (("pts", .03), .20, .20)
+NICK_ALLOC = [250, 100, 350, 300]
 
 logit = lambda p: np.log(p / (1 - p))
 expit = lambda z: 1 / (1 + np.exp(-z))
@@ -141,7 +145,7 @@ def main(perte_max=PERTE_MAX):
             tok = y if side == "Y" else 1 - y
             tok[:, 0] = pe
             settle = float((win == k) if side == "Y" else (win != k))
-            for prm in GRID + LADDER + [BASE[side], HOLD]:
+            for prm in GRID + LADDER + NICK + [NICK_ME3, BASE[side], HOLD]:
                 cash, q, n = run(tok, pe, prm)
                 R[k].setdefault(prm, np.zeros((len(SCEN), N_VAR)))[si] = cash + q * settle
                 NS[k].setdefault(prm, np.zeros((len(SCEN), N_VAR)))[si] = n
@@ -254,6 +258,9 @@ def main(perte_max=PERTE_MAX):
         "Échelle fine, 250 $ × 4": (lad_fix[2], [250] * 4),
         f"Échelle fine, répartition libre (pire cas ≤ {PERTE_EQ:.0f} $)": (lad_eq[2], lad_eq[3]),
         "Pire cas minimal, gros paliers": (safe_alloc[2], safe_alloc[3]),
+        "Réglage Nick (250/100/350/300 $)": (NICK, NICK_ALLOC),
+        "Réglage Nick, Mélenchon à +3 pts / 20 %": (NICK[:2] + [NICK_ME3] + NICK[3:], NICK_ALLOC),
+        "Même répartition, tout conserver": ([HOLD] * 4, NICK_ALLOC),
     }
 
     # Lisnard : part de la montée capturée (pic puis retour) contre ce qui est sacrifié s'il gagne
