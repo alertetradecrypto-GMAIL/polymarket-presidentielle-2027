@@ -8,7 +8,8 @@ Deux temps, pour n'installer Chromium que s'il y a vraiment un tweet à faire :
 
 Règles X (state/x_alerts.json) :
 - au plus 1 tweet toutes les 6 h par candidat et par sens (24 h et 7 j confondus) ;
-- au plus 3 tweets d'alerte par jour (jour de Paris), 3 candidats max par tweet ;
+- au plus 3 tweets par jour (jour de Paris), alertes et changements de Top 5
+  (x_top5.py) confondus ; 3 candidats max par tweet ;
 - une tentative consomme le créneau, même en échec : aucune nouvelle tentative
   au passage suivant (pas de boucle).
 Hors DRY_RUN=0, rien n'est publié et l'état n'est pas modifié.
@@ -66,11 +67,17 @@ def select(alerts: list, state: dict, now: int) -> list:
     return rows
 
 
-def record(state: dict, rows: list, now: int) -> dict:
+def count_one(state: dict, now: int) -> dict:
+    """Compte un tweet dans le plafond du jour (partagé avec x_top5.py)."""
     today = _today(now)
     if state.get("day") != today:
         state["day"], state["count"] = today, 0
     state["count"] = state.get("count", 0) + 1
+    return state
+
+
+def record(state: dict, rows: list, now: int) -> dict:
+    count_one(state, now)
     last = {k: t for k, t in state.get("last", {}).items() if now - t < 7 * 86400}
     for a in rows:
         last[f"{a['slug']}|{a['sens']}"] = now

@@ -55,6 +55,26 @@ jobs:
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
 
+      # Tweet de classement : seulement si l'ordre du Top 5 a changé (confirmé sur
+      # 2 collectes, 2 h mini entre deux tweets, plafond de 3/jour avec les alertes).
+      - name: Contrôle du Top 5
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: python src/x_top5.py check
+
+      - name: Tweet de classement
+        if: ${{ !cancelled() && hashFiles('out/x_top5.json') != '' }}
+        continue-on-error: true
+        run: |
+          pip install "tweepy>=4.14,<5"
+          python src/x_top5.py post
+        env:
+          DRY_RUN: ${{ vars.X_LIVE == '1' && '0' || '1' }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+
       - name: Visuel d'alerte en artefact
         if: ${{ !cancelled() && hashFiles('out/x_alert_*.png') != '' }}
         uses: actions/upload-artifact@v4

@@ -223,3 +223,73 @@ def test_visuels_bilingues():
     b = render.alert_html([alert("a", window="7j")], when)
     for s in ("Mouvement fort", "Strong move", "Avant", "Before", "7j · 7d", "15:30"):
         assert s in b
+
+
+# ---------------------------------------------------------------- Top 5
+
+import x_top5 as xt  # noqa: E402
+
+T5 = ["a", "b", "c", "d", "e"]
+
+
+def test_top5_etat_initial_puis_inchange():
+    go, st, _ = xt.decide(T5, {}, {}, 1_000_000)
+    assert not go and st == {}                       # référence posée par le tweet quotidien
+    st = {"published": T5}
+    go, st, why = xt.decide(T5, st, {}, 1_000_900)
+    assert not go and "inchangé" in why
+
+
+def test_top5_confirmation_ecart_et_plafond():
+    now = ts(2026, 10, 10, 12)
+    st = {"published": T5, "t": now - 3 * H}
+    new = ["b", "a", "c", "d", "e"]
+    go, st, _ = xt.decide(new, st, {}, now)
+    assert not go and st["seen"] == 1                          # 1re observation
+    go, st2, _ = xt.decide(new, st, {}, now + 900)
+    assert go                                                   # confirmé sur 2 collectes
+    go, _, why = xt.decide(new, {**st, "t": now - H}, {}, now + 900)
+    assert not go and "2 h" in why
+    full = xa.count_one(xa.count_one(xa.count_one({}, now), now), now)
+    go, _, why = xt.decide(new, st, full, now + 900)
+    assert not go and "plafond" in why
+    go, st3, _ = xt.decide(T5, st, {}, now + 900)              # retour à l'ordre publié
+    assert not go and st3["seen"] == 0
+
+
+def test_top5_texte():
+    rows = [{"slug": s, "name": f"Candidat Prénom-Composé {s.upper()}", "cur": 0.3 - i / 20}
+            for i, s in enumerate(["b", "a", "c", "d", "f"])]
+    text = xt.fit_text(rows, T5)
+    assert "1. " in text and "▲1" in text and "▼1" in text and "🆕" in text
+    assert text.splitlines()[-1] == "#Presidentielle2027 #Polymarket"
+    x_post.check_text(text)
+
+
+def test_top5_check_et_post(tmp_path, monkeypatch):
+    monkeypatch.setenv("DRY_RUN", "0")
+    now = ts(2026, 10, 10, 12, 1)
+    _daily_data(tmp_path, monkeypatch, now)
+    monkeypatch.setattr(xt, "CANDIDATES_FILE", xd.CANDIDATES_FILE)
+    monkeypatch.setattr(xt, "HISTORY_DIR", xd.HISTORY_DIR)
+    xt.X_TOP5_STATE.parent.mkdir(parents=True, exist_ok=True)
+    xt.X_TOP5_STATE.write_text(json.dumps({"published": ["beta", "alpha", "gamma"], "t": 0}))
+    xt.check(now)
+    assert not xt.PENDING_FILE.exists()
+    xt.check(now + 60)
+    assert xt.PENDING_FILE.exists()
+    sent = []
+    assert xt.post(now + 120, publish=lambda t, i, now: sent.append(t) or "1") == 0
+    assert "1. Alpha 33.0% ▲1" in sent[0] and "2. Beta 18.0% ▼1" in sent[0]
+    assert json.loads(xt.X_TOP5_STATE.read_text())["published"] == ["alpha", "beta", "gamma"]
+    assert json.loads(xa.X_ALERTS_STATE.read_text())["count"] == 1
+
+
+def test_quotidien_saute_si_top5_inchange(tmp_path, monkeypatch):
+    monkeypatch.setenv("DRY_RUN", "0")
+    now = ts(2026, 10, 8, 15, 31)
+    _daily_data(tmp_path, monkeypatch, now)
+    xt.X_TOP5_STATE.parent.mkdir(parents=True, exist_ok=True)
+    xt.X_TOP5_STATE.write_text(json.dumps({"published": ["alpha", "beta", "gamma"]}))
+    assert xd.run(now, publish=lambda *a, **k: pytest.fail("publié"), to_png=fake_png) == 0
+    assert json.loads(xd.X_DAILY_STATE.read_text())["last_attempt"] == "2026-10-08"

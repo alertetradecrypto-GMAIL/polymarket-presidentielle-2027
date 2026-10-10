@@ -2,7 +2,8 @@
 
 Lancé par tweet.yml à 13:30 et 14:30 UTC : le script ne publie qu'entre 15h30
 et 17h59 à Paris, une seule fois par jour (state/x_daily.json ne contient que la
-date de la dernière tentative). `--force` ignore ces deux règles.
+date de la dernière tentative). Sauté si le Top 5 n'a pas changé depuis le dernier
+Top 5 publié (state/x_top5.json, voir x_top5.py). `--force` ignore ces trois règles.
 Hors DRY_RUN=0, rien n'est publié et l'état n'est pas modifié.
 """
 from __future__ import annotations
@@ -17,6 +18,7 @@ from zoneinfo import ZoneInfo
 
 import render
 import x_post
+import x_top5
 from collect import read_json, write_json
 from config import CANDIDATES_FILE, DAILY_MIN_PRICE, HISTORY_DIR, ROOT, STATE_DIR, TIMEZONE
 from daily import candidate_moves
@@ -80,13 +82,22 @@ def run(now: int | None = None, force: bool = False, publish=x_post.publish,
         log.error("Aucun candidat à afficher")
         return 1
 
+    dry = x_post.is_dry_run()
+    top5 = x_top5.slugs(rows[:x_top5.X_TOP5_N])
+    top5_state = read_json(x_top5.X_TOP5_STATE, None) or {}
+    if not force and top5_state.get("published") == top5:
+        log.info("Pas de tweet : Top 5 inchangé depuis le dernier publié")
+        if ok and not dry:
+            state["last_attempt"] = info
+            write_json(X_DAILY_STATE, state, pretty=True)
+        return 0
+
     local = datetime.fromtimestamp(now, TZ)
     text = build_text(rows)
     stem = OUT_DIR / f"x_daily_{local:%Y%m%d}"
     image = to_png(render.daily_html(rows, local), stem.with_suffix(".png"))
     Path(stem.with_suffix(".txt")).write_text(text + "\n", encoding="utf-8")
 
-    dry = x_post.is_dry_run()
     rc = 0
     try:
         result = publish(text, image, now=now)
@@ -97,6 +108,8 @@ def run(now: int | None = None, force: bool = False, publish=x_post.publish,
     if ok and not dry:
         state["last_attempt"] = info
         write_json(X_DAILY_STATE, state, pretty=True)
+    if not dry:
+        write_json(x_top5.X_TOP5_STATE, x_top5.mark_published(top5_state, top5, now), pretty=True)
     return rc
 
 
