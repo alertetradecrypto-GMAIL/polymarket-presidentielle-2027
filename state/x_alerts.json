@@ -1,9 +1,10 @@
 {
-  "day": "2026-10-09",
-  "count": 3,
+  "day": "2026-10-10",
+  "count": 1,
   "last": {
     "francois-hollande|down": 1791471736,
     "edouard-philippe|up": 1791542175,
-    "gabriel-attal|down": 1791501216
+    "gabriel-attal|down": 1791501216,
+    "david-lisnard|up": 1791655792
   }
 }
