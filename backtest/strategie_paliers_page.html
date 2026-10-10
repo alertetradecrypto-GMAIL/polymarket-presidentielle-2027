@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stratégie de paliers</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#fcfcfb;--card:#fff;--t1:#0b0b0b;--t2:#52514e;--t3:#8a8984;--line:#e6e5e1;--grid:#efeeea;--hl:#eef4fc;
+--s1:#2a78d6;--s2:#eb6834;--good:#008300;--bad:#e34948}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1a19;--card:#222221;--t1:#f0efec;--t2:#c3c2b7;--t3:#8f8e86;--line:#353533;--grid:#2c2c2a;--hl:#1f2a38;
+--s1:#3987e5;--s2:#d95926;--good:#3fae3f;--bad:#e66767}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t1);font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:1180px;margin:0 auto;padding:20px 16px 40px}h1{font-size:20px;margin:0 0 4px}h2{font-size:15px;margin:0 0 10px}
+.sub{color:var(--t2);margin:0 0 16px}.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:16px}
+.wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+th{color:var(--t2);font-weight:500;white-space:nowrap}td{white-space:nowrap}td.l{white-space:normal;min-width:280px}th:first-child,td:first-child,td.l{text-align:left}td.n{white-space:nowrap}
+tr.hl td{background:var(--hl)}.pos{color:var(--good)}.neg{color:var(--bad)}.mut{color:var(--t3);font-size:12px}
+.tag{font-size:11px;padding:1px 7px;border-radius:9px;border:1px solid var(--line);color:var(--t2);white-space:nowrap}
+.cv{position:relative;height:340px}.note{color:var(--t2);font-size:12.5px;margin:8px 0 0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(520px,100%),1fr));gap:16px}.grid2>div{min-width:0}
+ul{margin:6px 0 0;padding-left:18px}li{margin:3px 0}
+</style></head><body><main>
+<h1>Stratégie de paliers — 4 positions projetées sur les trajectoires US 2024</h1>
+<p class="sub" id="sub"></p>
+
+<section class="card"><h2>Stratégies comparées (1 000 $)</h2><div class="wrap"><table id="st"></table></div>
+<p class="note" id="stnote"></p></section>
+
+<section class="card"><h2>Espérance contre pire cas</h2><div class="cv"><canvas id="ch" aria-label="Meilleure espérance selon la perte tolérée dans le pire scénario"></canvas></div>
+<p class="note">Courbe : meilleure espérance (probas de Nick) atteignable pour chaque niveau de pire cas, en choisissant règles et répartition. Points : les stratégies du tableau.</p></section>
+
+<section class="card"><h2>Hypothèses : scénarios et trajectoires US</h2><div class="wrap"><table id="sc"></table></div>
+<p class="note">« HarrisWin » = montée de Harris jusqu'à son pic, puis fin de la courbe de Trump (→ 1). Projection : décalage en cote depuis J-185. Chaque scénario est rejoué sur <span id="nv"></span> variantes (permutation des variations journalières par blocs de 10 jours, même permutation pour les 4 candidats).</p></section>
+
+<section class="card"><h2>Meilleurs réglages par position (250 $)</h2><div class="grid2" id="pt"></div>
+<p class="note">E = gain moyen pondéré par les probas de Nick ; E marché = idem avec les prix actuels ; « si Le Pen gagne » = gain moyen dans ce scénario ; ventes = nombre moyen de ventes.</p></section>
+</main><script>
+const D=__DATA__,css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const f=x=>(Math.round(x)||0).toLocaleString('fr-FR'),sg=x=>{x=Math.round(x)||0;return `<span class="${x>0?'pos':x<0?'neg':''}">${x>0?'+':''}${f(x)} $</span>`},pc=x=>Math.round(x*1000)/10+' %';
+document.getElementById('sub').textContent=`Positions de Nick à J-${D.J} (Le Pen Non 0,592 · Philippe Oui 0,225 · Mélenchon Non 0,875 · Lisnard Oui 0,126), prix projetés sur l'élection US 2024. Pire cas = scénario le plus défavorable, moyenne des ${D.es_q*100} % pires variantes. Lecture seule, un seul précédent : repère, pas prévision.`;
+document.getElementById('nv').textContent=D.n_var;
+const K=Object.keys(D.res),act=D.scen.map((s,i)=>s.p>0?i:-1).filter(i=>i>=0);
+const best=K.find(k=>k.startsWith('Équilibrée'));
+document.getElementById('st').innerHTML='<tr><th>Stratégie</th><th>Répartition et règles</th><th>Espérance (Nick)</th><th>Espérance (marché)</th><th>Pire cas</th>'+D.scen.map(s=>`<th>${s.n}<div class="mut">${pc(s.p)} · marché ${pc(s.pm)}</div></th>`).join('')+'</tr>'+
+K.map(k=>{const r=D.res[k];return`<tr${k===best?' class="hl"':''}><td>${k}${k===best?' <span class="tag">recommandée</span>':''}</td><td class="l">${Object.keys(r.regles).map(n=>`<div class="n"><b>${n}</b> ${r.alloc[n]} $ — ${r.regles[n]}</div>`).join('')}</td><td>${sg(r.E)}</td><td>${sg(r.Em)}</td><td>${sg(r.pire)}</td>`+
+r.rows.map(x=>`<td>${sg(x.reel)}<div class="mut">P10 ${f(x.p10)}</div></td>`).join('')+'</tr>'}).join('');
+document.getElementById('stnote').textContent='Colonnes scénarios : gain sur la trajectoire US réelle, et 10e centile des variantes. Espérance : moyenne des variantes pondérée par les probabilités.';
+document.getElementById('sc').innerHTML='<tr><th>Scénario</th><th>Proba Nick</th><th>Proba marché</th>'+D.pos.map(p=>`<th>${p.name} (${p.side==='Y'?'Oui':'Non'})</th>`).join('')+'</tr>'+
+D.scen.map(s=>`<tr><td>${s.n}</td><td>${pc(s.p)}</td><td>${pc(s.pm)}</td>`+D.pos.map(p=>`<td>${s.map[p.name]}${s.win===p.name?' <span class="tag">gagne</span>':''}</td>`).join('')+'</tr>').join('');
+document.getElementById('pt').innerHTML=Object.entries(D.tables).map(([n,rows])=>`<div><h2>${n}</h2><div class="wrap"><table><tr><th>Réglage</th><th>E</th><th>E marché</th><th>si Le Pen gagne</th><th>ventes</th></tr>`+
+rows.map(r=>`<tr${r.tag?' class="hl"':''}><td class="l" style="min-width:0">${r.regle}${r.tag==='actuelle'?' <span class="tag">ta règle</span>':''}</td><td>${sg(r.e)}</td><td>${sg(r.em)}</td><td>${sg(r.lp)}</td><td>${r.ventes.toString().replace('.',',')}</td></tr>`).join('')+'</table></div></div>').join('');
+let ch;function draw(){const t=css('--t2'),g=css('--grid');if(ch)ch.destroy();
+ch=new Chart(document.getElementById('ch'),{type:'scatter',data:{datasets:[
+{type:'line',label:'Meilleure espérance possible',data:D.frontier.map(([x,y])=>({x,y})),borderColor:css('--s1'),backgroundColor:css('--s1'),borderWidth:2,pointRadius:0,tension:0},
+{label:'Stratégies',data:K.map(k=>({x:D.res[k].pire,y:D.res[k].E,k})),backgroundColor:css('--s2'),borderColor:css('--card'),borderWidth:2,pointRadius:6,pointHoverRadius:8}]},
+options:{responsive:true,maintainAspectRatio:false,animation:false,
+scales:{x:{title:{display:true,text:'pire cas ($)',color:t},ticks:{color:t},grid:{color:g}},y:{title:{display:true,text:'espérance selon tes probas ($)',color:t},ticks:{color:t},grid:{color:g}}},
+plugins:{legend:{labels:{color:css('--t1')}},tooltip:{callbacks:{label:i=>i.raw.k?` ${i.raw.k} : pire ${f(i.raw.x)} $, espérance ${f(i.raw.y)} $`:` pire ${f(i.raw.x)} $ → espérance ${f(i.raw.y)} $`}}}}})}
+draw();matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+</script></body></html>
