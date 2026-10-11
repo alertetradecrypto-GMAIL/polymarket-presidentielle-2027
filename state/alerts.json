@@ -1,20 +1,14 @@
 {
   "keys": {
     "edouard-philippe|7j|up": {
-      "streak": 18,
-      "seen_t": 1791755119,
+      "streak": 19,
+      "seen_t": 1791756433,
       "alert_t": 1791738555,
       "alert_price": 0.245
     },
-    "raphael-glucksmann|24h|up": {
-      "streak": 8,
-      "seen_t": 1791755123,
-      "alert_t": 1791748733,
-      "alert_price": 0.0265
-    },
     "david-lisnard|7j|up": {
-      "streak": 7,
-      "seen_t": 1791755120,
+      "streak": 8,
+      "seen_t": 1791756436,
       "alert_t": 1791749589,
       "alert_price": 0.1405
     }
