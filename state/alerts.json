@@ -1,16 +1,10 @@
 {
   "keys": {
     "gabriel-attal|24h|down": {
-      "streak": 4,
-      "seen_t": 1791729920,
+      "streak": 5,
+      "seen_t": 1791730821,
       "alert_t": 1791727818,
       "alert_price": 0.0165
-    },
-    "david-lisnard|7j|up": {
-      "streak": 2,
-      "seen_t": 1791729920,
-      "alert_t": 1791729965,
-      "alert_price": 0.1425
     }
   }
 }
