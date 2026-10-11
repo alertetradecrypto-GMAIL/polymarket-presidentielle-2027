@@ -1,14 +1,10 @@
 {
   "keys": {
     "edouard-philippe|7j|up": {
-      "streak": 8,
-      "seen_t": 1791744979,
+      "streak": 9,
+      "seen_t": 1791745879,
       "alert_t": 1791738555,
       "alert_price": 0.245
-    },
-    "david-lisnard|7j|up": {
-      "streak": 1,
-      "seen_t": 1791744979
     }
   }
 }
