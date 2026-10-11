@@ -198,3 +198,36 @@ td.warn { color: #e0a33a; }
   .dlg-chg { grid-template-columns: repeat(2, 1fr); }
   .ob-sum { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* Onglets (Graphique / Trades) */
+.tabs { display: flex; gap: 4px; margin-top: 6px; }
+.tabs a {
+  padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text-2); font-size: 13px;
+}
+.tabs a:hover { background: var(--hover); color: var(--text); text-decoration: none; }
+.tabs a[aria-current="page"] { background: var(--sel); color: var(--text); font-weight: 600; }
+
+/* Page Trades */
+.filters label { display: inline-flex; align-items: center; gap: 6px; color: var(--text-2); font-size: 13px; }
+.filters label.grow { flex: 1 1 220px; }
+.filters label.grow input { flex: 1; min-width: 0; }
+.filters select, .filters input {
+  background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px;
+  font: inherit; font-size: 13px; padding: 4px 8px; min-height: 30px;
+}
+.filters input[type="number"] { width: 80px; }
+#trades tbody tr { cursor: default; }
+#trades tr.big td { font-weight: 650; }
+#trades tr.big td.amt { color: var(--accent); }
+#trades .who { display: flex; align-items: center; gap: 6px; }
+#trades .who .muted, td.muted { color: var(--muted); }
+td.muted { text-align: center; padding: 14px; }
+#trades code { font-size: 12.5px; }
+.flt {
+  background: none; border: 1px solid var(--border); border-radius: 4px; color: var(--muted);
+  cursor: pointer; font-size: 12px; line-height: 1; padding: 2px 5px;
+}
+.flt:hover { color: var(--text); background: var(--hover); }
+.more { display: flex; justify-content: center; margin-top: 10px; }
+.more [hidden] { display: none; }

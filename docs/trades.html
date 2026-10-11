@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trades · Présidentielle 2027</title>
+  <meta name="description" content="Tous les trades du marché Polymarket « Next French Presidential Election » : candidat, sens, prix, montant, adresse.">
+  <meta name="color-scheme" content="dark light">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23131722'/%3E%3Cpath d='M5 22l7-8 5 5 10-11' fill='none' stroke='%233987e5' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="trades.js" defer></script>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <h1>Présidentielle 2027</h1>
+      <nav class="tabs" aria-label="Pages"><a href="./">Graphique</a><a href="trades.html" aria-current="page">Trades</a></nav>
+    </div>
+    <dl class="kpis">
+      <div><dt>Trades</dt><dd id="k-n">—</dd></div>
+      <div><dt>Volume</dt><dd id="k-usd">—</dd></div>
+      <div><dt>Adresses</dt><dd id="k-w">—</dd></div>
+      <div><dt>Plus gros</dt><dd id="k-max">—</dd></div>
+    </dl>
+  </header>
+
+  <main>
+    <section class="panel" aria-label="Filtres">
+      <div class="toolbar filters">
+        <label>Jour <select id="f-day"></select></label>
+        <label>Candidat <select id="f-cand"><option value="">Tous</option></select></label>
+        <div class="seg" id="f-out" aria-label="Issue"><button data-v="">Tous</button><button data-v="Yes">Oui</button><button data-v="No">Non</button></div>
+        <div class="seg" id="f-side" aria-label="Sens"><button data-v="">Tous</button><button data-v="BUY">Achats</button><button data-v="SELL">Ventes</button></div>
+        <label>Montant ≥ <input id="f-min" type="number" min="0" step="1" inputmode="decimal"> $</label>
+        <label class="grow">Adresse / pseudo <input id="f-who" type="search" placeholder="0x… ou pseudo" autocomplete="off" spellcheck="false"></label>
+        <button class="btn" id="f-reset" type="button">Réinitialiser</button>
+      </div>
+      <p class="note" id="status"></p>
+    </section>
+
+    <section class="panel" aria-label="Par candidat">
+      <div class="table-head"><h2>Par candidat</h2></div>
+      <div class="table-wrap">
+        <table id="sum">
+          <thead><tr>
+            <th data-k="name">Candidat</th>
+            <th data-k="usd" class="num">Volume</th>
+            <th data-k="n" class="num">Trades</th>
+            <th data-k="w" class="num">Adresses</th>
+            <th data-k="netYes" class="num" title="Achats − ventes du jeton Oui, en $">Net Oui</th>
+            <th data-k="netNo" class="num" title="Achats − ventes du jeton Non, en $">Net Non</th>
+            <th data-k="max" class="num">Plus gros</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note">Selon les filtres ci-dessus. Cliquer sur une ligne pour filtrer ce candidat.</p>
+    </section>
+
+    <section class="panel" aria-label="Trades">
+      <div class="table-head">
+        <h2>Trades</h2>
+        <div class="table-tools"><span class="note" id="count"></span></div>
+      </div>
+      <div class="table-wrap">
+        <table id="trades">
+          <thead><tr>
+            <th data-k="t">Heure</th>
+            <th data-k="cand">Candidat</th>
+            <th>Issue</th>
+            <th>Sens</th>
+            <th data-k="price" class="num">Prix</th>
+            <th data-k="size" class="num">Parts</th>
+            <th data-k="usd" class="num">Montant</th>
+            <th>Adresse</th>
+            <th aria-label="Transaction"></th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="more"><button class="btn" id="more" type="button" hidden>Afficher plus</button></div>
+      <p class="note">Côté taker (définition du volume Polymarket), heure de Paris. Prix du jeton en $ (1 $ si victoire). Lignes en gras : ≥ 1 000 $. Adresse : clic = profil Polymarket, ⌕ = filtrer sur cette adresse. Les petits allers-retours de farming (≈ 1 $) sont masqués par le filtre de montant par défaut (5 $).</p>
+    </section>
+  </main>
+
+  <footer>Outil de suivi en lecture seule — données publiques Polymarket, collectées toutes les 15 min.</footer>
+</body>
+</html>
