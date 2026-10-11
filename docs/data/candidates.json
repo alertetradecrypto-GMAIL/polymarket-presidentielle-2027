@@ -1,5 +1,5 @@
 {
-  "updated": 1791737740,
+  "updated": 1791738536,
   "event": {
     "id": "79987",
     "slug": "next-french-presidential-election",
@@ -7,8 +7,8 @@
     "end_date": "2027-04-19T03:59:00Z",
     "volume": 149118451.630957,
     "volume24h": 738367.357898,
-    "volume_usd": 70891131.25,
-    "volume24h_usd": 118140.19
+    "volume_usd": 70892491.61,
+    "volume24h_usd": 119272.4
   },
   "candidates": [
     {
@@ -27,8 +27,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-marine-le-pen-win-the-2027-french-presidential-election-8hg67PHSk27M.jpg",
       "slug": "marine-le-pen",
       "first_seen": 1791451018,
-      "volume_usd": 1313357.96,
-      "volume24h_usd": 18761.83,
+      "volume_usd": 1313465.82,
+      "volume24h_usd": 18869.69,
       "last_hist": 0.3985,
       "price_ref": {
         "1h": 0.4025,
@@ -54,8 +54,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-douard-philippe-win-the-2027-french-presidential-election-ypj2C7J2t8lv.jpg",
       "slug": "edouard-philippe",
       "first_seen": 1791451018,
-      "volume_usd": 616719.66,
-      "volume24h_usd": 18077.61,
+      "volume_usd": 617516.7,
+      "volume24h_usd": 18874.65,
       "last_hist": 0.245,
       "price_ref": {
         "1h": 0.205,
@@ -81,16 +81,16 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-david-lisnard-win-the-2027-french-presidential-election-uo8Ugx7dHm3Y.jpg",
       "slug": "david-lisnard",
       "first_seen": 1791451018,
-      "volume_usd": 1534213.84,
-      "volume24h_usd": 60086.65,
+      "volume_usd": 1534223.43,
+      "volume24h_usd": 59875.14,
       "last_hist": 0.1355,
       "price_ref": {
-        "1h": 0.1375,
+        "1h": 0.136,
         "4h": 0.1355,
-        "12h": 0.1345,
-        "24h": 0.1355
+        "12h": 0.1455,
+        "24h": 0.136
       },
-      "price_24h": 0.1355
+      "price_24h": 0.136
     },
     {
       "id": "679030",
@@ -108,13 +108,13 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-jean-luc-mlenchon-win-the-2027-french-presidential-election-kyK2EfUTxlqg.jpg",
       "slug": "jean-luc-melenchon",
       "first_seen": 1791451018,
-      "volume_usd": 553783.73,
-      "volume24h_usd": 12257.74,
+      "volume_usd": 554000.61,
+      "volume24h_usd": 12474.62,
       "last_hist": 0.115,
       "price_ref": {
         "1h": 0.115,
         "4h": 0.115,
-        "12h": 0.115,
+        "12h": 0.105,
         "24h": 0.115
       },
       "price_24h": 0.115
@@ -135,8 +135,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-franois-hollande-win-the-2027-french-presidential-election-wWI72FbXSO_e.jpg",
       "slug": "francois-hollande",
       "first_seen": 1791451018,
-      "volume_usd": 695929.26,
-      "volume24h_usd": 3548.83,
+      "volume_usd": 695959.44,
+      "volume24h_usd": 3579.01,
       "last_hist": 0.0305,
       "price_ref": {
         "1h": 0.0335,
@@ -147,41 +147,14 @@
       "price_24h": 0.0325
     },
     {
-      "id": "679029",
-      "name": "Raphaël Glucksmann",
-      "condition_id": "0xcfc6e088b78e695e831e094f7aa1197c16b2436e5984b12fb9286361804b8e1b",
-      "token_yes": "97531408855841405410232789703119036119573635076996943730887685044477538494161",
-      "price": 0.022,
-      "bid": 0.02,
-      "ask": 0.024,
-      "last": 0.025,
-      "volume": 2225173.0431150002,
-      "volume24h": 66078.431189,
-      "active": true,
-      "closed": false,
-      "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-raphal-glucksmann-win-the-2027-french-presidential-election-OAJpSeiNqI5S.jpg",
-      "slug": "raphael-glucksmann",
-      "first_seen": 1791451018,
-      "volume_usd": 597740.57,
-      "volume24h_usd": 1454.92,
-      "last_hist": 0.022,
-      "price_ref": {
-        "1h": 0.0145,
-        "4h": 0.015,
-        "12h": 0.0165,
-        "24h": 0.0105
-      },
-      "price_24h": 0.0105
-    },
-    {
       "id": "679026",
       "name": "Gabriel Attal",
       "condition_id": "0x6189539ff1b08bc4052607d89921663ca0de0f0cd70b79c9993d7f9f3211ec3e",
       "token_yes": "39040993339692011893931540077322383339631602451525460031216774971808386681386",
-      "price": 0.0155,
-      "bid": 0.015,
-      "ask": 0.016,
-      "last": 0.015,
+      "price": 0.0235,
+      "bid": 0.02,
+      "ask": 0.027,
+      "last": 0.02,
       "volume": 2911885.8407229995,
       "volume24h": 23129.122577000002,
       "active": true,
@@ -189,9 +162,9 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-gabriel-attal-win-the-2027-french-presidential-election-Fj68gcFk9pJ1.jpg",
       "slug": "gabriel-attal",
       "first_seen": 1791451018,
-      "volume_usd": 1094046.91,
-      "volume24h_usd": 578.86,
-      "last_hist": 0.0155,
+      "volume_usd": 1094193.46,
+      "volume24h_usd": 725.41,
+      "last_hist": 0.021,
       "price_ref": {
         "1h": 0.0165,
         "4h": 0.0165,
@@ -199,6 +172,33 @@
         "24h": 0.0275
       },
       "price_24h": 0.0275
+    },
+    {
+      "id": "679029",
+      "name": "Raphaël Glucksmann",
+      "condition_id": "0xcfc6e088b78e695e831e094f7aa1197c16b2436e5984b12fb9286361804b8e1b",
+      "token_yes": "97531408855841405410232789703119036119573635076996943730887685044477538494161",
+      "price": 0.0205,
+      "bid": 0.019,
+      "ask": 0.022,
+      "last": 0.02,
+      "volume": 2225173.0431150002,
+      "volume24h": 66078.431189,
+      "active": true,
+      "closed": false,
+      "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-raphal-glucksmann-win-the-2027-french-presidential-election-OAJpSeiNqI5S.jpg",
+      "slug": "raphael-glucksmann",
+      "first_seen": 1791451018,
+      "volume_usd": 597783.14,
+      "volume24h_usd": 1497.49,
+      "last_hist": 0.02,
+      "price_ref": {
+        "1h": 0.0145,
+        "4h": 0.015,
+        "12h": 0.0165,
+        "24h": 0.0105
+      },
+      "price_24h": 0.0105
     },
     {
       "id": "679027",
@@ -216,8 +216,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-bruno-retailleau-win-the-2027-french-presidential-election-4RHQ4aMwDVyD.jpg",
       "slug": "bruno-retailleau",
       "first_seen": 1791451018,
-      "volume_usd": 969126.95,
-      "volume24h_usd": 225.97,
+      "volume_usd": 969129.93,
+      "volume24h_usd": 228.95,
       "last_hist": 0.0115,
       "price_ref": {
         "1h": 0.0115,
@@ -243,8 +243,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-sarah-knafo-win-the-2027-french-presidential-election-1QHAwXTtYRYA.jpg",
       "slug": "sarah-knafo",
       "first_seen": 1791451018,
-      "volume_usd": 1094754.44,
-      "volume24h_usd": 372.73,
+      "volume_usd": 1094755.08,
+      "volume24h_usd": 373.37,
       "last_hist": 0.0095,
       "price_ref": {
         "1h": 0.0095,
@@ -262,7 +262,7 @@
       "price": 0.008,
       "bid": 0.006,
       "ask": 0.01,
-      "last": 0.007,
+      "last": 0.006,
       "volume": 872128.146695,
       "volume24h": 20817.213125,
       "active": true,
@@ -270,13 +270,13 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/lag-24884a7875.png",
       "slug": "christine-lagarde",
       "first_seen": 1791451018,
-      "volume_usd": 5416.05,
-      "volume24h_usd": 295.6,
+      "volume_usd": 5417.68,
+      "volume24h_usd": 297.23,
       "last_hist": 0.008,
       "price_ref": {
         "1h": 0.0085,
         "4h": 0.0085,
-        "12h": 0.0125,
+        "12h": 0.013,
         "24h": 0.006
       },
       "price_24h": 0.006
@@ -297,13 +297,13 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-dominique-de-villepin-win-the-2027-french-presidential-election-56Ww0YEdkQZK.jpg",
       "slug": "dominique-de-villepin",
       "first_seen": 1791451018,
-      "volume_usd": 863952.73,
-      "volume24h_usd": 250.13,
+      "volume_usd": 863953.64,
+      "volume24h_usd": 246.39,
       "last_hist": 0.006,
       "price_ref": {
         "1h": 0.0065,
         "4h": 0.0065,
-        "12h": 0.01,
+        "12h": 0.0105,
         "24h": 0.0065
       },
       "price_24h": 0.0065
@@ -324,8 +324,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-jordan-bardella-win-the-2027-french-presidential-election-h78hm6KqJGHZ.jpg",
       "slug": "jordan-bardella",
       "first_seen": 1791451018,
-      "volume_usd": 698410.56,
-      "volume24h_usd": 553.07,
+      "volume_usd": 698411.47,
+      "volume24h_usd": 553.98,
       "last_hist": 0.0055,
       "price_ref": {
         "1h": 0.0055,
@@ -340,9 +340,9 @@
       "name": "Éric Zemmour",
       "condition_id": "0x290b3a5826b17e48ae7166b188767d95df5a9ed0b69fda116d98d0d27d753281",
       "token_yes": "51126599157451146230415396920771455069752975116525743821340393650626382714261",
-      "price": 0.0055,
+      "price": 0.0045,
       "bid": 0.004,
-      "ask": 0.007,
+      "ask": 0.005,
       "last": 0.004,
       "volume": 2824424.334401999,
       "volume24h": 7448.135241,
@@ -351,9 +351,9 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-ric-zemmour-win-the-2027-french-presidential-election-Tdu7Nb9S2y9Q.jpg",
       "slug": "eric-zemmour",
       "first_seen": 1791451018,
-      "volume_usd": 423191.72,
-      "volume24h_usd": 120.52,
-      "last_hist": 0.0055,
+      "volume_usd": 423192.44,
+      "volume24h_usd": 118.84,
+      "last_hist": 0.0045,
       "price_ref": {
         "1h": 0.0055,
         "4h": 0.0055,
@@ -378,8 +378,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-sbastien-lecornu-win-the-2027-french-presidential-election-wEbFCHrHQF2A.jpg",
       "slug": "sebastien-lecornu",
       "first_seen": 1791451018,
-      "volume_usd": 609960.8,
-      "volume24h_usd": 136.54,
+      "volume_usd": 609961.16,
+      "volume24h_usd": 136.9,
       "last_hist": 0.0025,
       "price_ref": {
         "1h": 0.0025,
@@ -459,8 +459,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-franois-ruffin-win-the-2027-french-presidential-election-DuvyAm67PfEk.jpg",
       "slug": "francois-ruffin",
       "first_seen": 1791451018,
-      "volume_usd": 1891986.34,
-      "volume24h_usd": 465.39,
+      "volume_usd": 1891987.52,
+      "volume24h_usd": 466.57,
       "last_hist": 0.0015,
       "price_ref": {
         "1h": 0.0015,
@@ -486,8 +486,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-marine-tondelier-win-the-2027-french-presidential-election-e1tj7K-8OPlp.jpg",
       "slug": "marine-tondelier",
       "first_seen": 1791451018,
-      "volume_usd": 2346709.1,
-      "volume24h_usd": 477.25,
+      "volume_usd": 2346709.28,
+      "volume24h_usd": 477.43,
       "last_hist": 0.0015,
       "price_ref": {
         "1h": 0.0015,
@@ -513,8 +513,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-karim-bouamrane-win-the-2027-french-presidential-election-tVOEjfoE74m4.jpg",
       "slug": "karim-bouamrane",
       "first_seen": 1791451018,
-      "volume_usd": 74209.3,
-      "volume24h_usd": 178.96,
+      "volume_usd": 74209.48,
+      "volume24h_usd": 179.14,
       "last_hist": 0.0015,
       "price_ref": {
         "1h": 0.0015,
@@ -623,14 +623,14 @@
       "first_seen": 1791451018,
       "volume_usd": 3100474.9,
       "volume24h_usd": 81.51,
-      "last_hist": 0.0005,
+      "last_hist": 0.001,
       "price_ref": {
         "1h": 0.001,
         "4h": 0.001,
         "12h": 0.001,
-        "24h": 0.001
+        "24h": 0.0015
       },
-      "price_24h": 0.001
+      "price_24h": 0.0015
     },
     {
       "id": "679035",
@@ -681,7 +681,7 @@
       "price_ref": {
         "1h": 0.001,
         "4h": 0.001,
-        "12h": 0.0005,
+        "12h": 0.0015,
         "24h": 0.0005
       },
       "price_24h": 0.0005
