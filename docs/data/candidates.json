@@ -1,5 +1,5 @@
 {
-  "updated": 1791748614,
+  "updated": 1791749446,
   "event": {
     "id": "79987",
     "slug": "next-french-presidential-election",
@@ -7,8 +7,8 @@
     "end_date": "2027-04-19T03:59:00Z",
     "volume": 149222107.920399,
     "volume24h": 752183.89547,
-    "volume_usd": 70909500.74,
-    "volume24h_usd": 126622.3
+    "volume_usd": 70910115.59,
+    "volume24h_usd": 126417.82
   },
   "candidates": [
     {
@@ -27,8 +27,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-marine-le-pen-win-the-2027-french-presidential-election-8hg67PHSk27M.jpg",
       "slug": "marine-le-pen",
       "first_seen": 1791451018,
-      "volume_usd": 1318143.02,
-      "volume24h_usd": 23004.57,
+      "volume_usd": 1318626.02,
+      "volume24h_usd": 23363.4,
       "last_hist": 0.3925,
       "price_ref": {
         "1h": 0.39,
@@ -46,7 +46,7 @@
       "price": 0.245,
       "bid": 0.24,
       "ask": 0.25,
-      "last": 0.24,
+      "last": 0.25,
       "volume": 2178916.165907,
       "volume24h": 75840.64521000002,
       "active": true,
@@ -54,8 +54,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-douard-philippe-win-the-2027-french-presidential-election-ypj2C7J2t8lv.jpg",
       "slug": "edouard-philippe",
       "first_seen": 1791451018,
-      "volume_usd": 623181.8,
-      "volume24h_usd": 23013.49,
+      "volume_usd": 623191.8,
+      "volume24h_usd": 22959.69,
       "last_hist": 0.245,
       "price_ref": {
         "1h": 0.245,
@@ -70,9 +70,9 @@
       "name": "David Lisnard",
       "condition_id": "0xce610556ec78cfd7894f4169d91fe70e31c2fb49f927fffd7fe7d06530f88d56",
       "token_yes": "55404192439775628931124671719520886657525387168536821457706619003199189099864",
-      "price": 0.14,
-      "bid": 0.137,
-      "ask": 0.143,
+      "price": 0.141,
+      "bid": 0.14,
+      "ask": 0.142,
       "last": 0.142,
       "volume": 4631908.79045,
       "volume24h": 192442.26519,
@@ -81,16 +81,16 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-david-lisnard-win-the-2027-french-presidential-election-uo8Ugx7dHm3Y.jpg",
       "slug": "david-lisnard",
       "first_seen": 1791451018,
-      "volume_usd": 1537334.03,
-      "volume24h_usd": 57266.61,
+      "volume_usd": 1537355.79,
+      "volume24h_usd": 56700.08,
       "last_hist": 0.1405,
       "price_ref": {
-        "1h": 0.1385,
-        "4h": 0.1375,
-        "12h": 0.1475,
-        "24h": 0.151
+        "1h": 0.1365,
+        "4h": 0.136,
+        "12h": 0.1325,
+        "24h": 0.1505
       },
-      "price_24h": 0.151
+      "price_24h": 0.1505
     },
     {
       "id": "679030",
@@ -108,8 +108,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-jean-luc-mlenchon-win-the-2027-french-presidential-election-kyK2EfUTxlqg.jpg",
       "slug": "jean-luc-melenchon",
       "first_seen": 1791451018,
-      "volume_usd": 555186.32,
-      "volume24h_usd": 12893.97,
+      "volume_usd": 555251.13,
+      "volume24h_usd": 12926.88,
       "last_hist": 0.105,
       "price_ref": {
         "1h": 0.105,
@@ -136,7 +136,7 @@
       "slug": "francois-hollande",
       "first_seen": 1791451018,
       "volume_usd": 696087.3,
-      "volume24h_usd": 3696.44,
+      "volume24h_usd": 3693.56,
       "last_hist": 0.0285,
       "price_ref": {
         "1h": 0.0285,
@@ -163,7 +163,7 @@
       "slug": "raphael-glucksmann",
       "first_seen": 1791451018,
       "volume_usd": 598479.57,
-      "volume24h_usd": 1759.0,
+      "volume24h_usd": 1757.92,
       "last_hist": 0.0265,
       "price_ref": {
         "1h": 0.0275,
@@ -190,7 +190,7 @@
       "slug": "gabriel-attal",
       "first_seen": 1791451018,
       "volume_usd": 1095461.99,
-      "volume24h_usd": 1924.1,
+      "volume24h_usd": 1922.03,
       "last_hist": 0.0205,
       "price_ref": {
         "1h": 0.0205,
@@ -216,8 +216,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-bruno-retailleau-win-the-2027-french-presidential-election-4RHQ4aMwDVyD.jpg",
       "slug": "bruno-retailleau",
       "first_seen": 1791451018,
-      "volume_usd": 969151.5,
-      "volume24h_usd": 246.81,
+      "volume_usd": 969157.0,
+      "volume24h_usd": 251.32,
       "last_hist": 0.0115,
       "price_ref": {
         "1h": 0.0115,
@@ -244,7 +244,7 @@
       "slug": "sarah-knafo",
       "first_seen": 1791451018,
       "volume_usd": 1094761.03,
-      "volume24h_usd": 371.84,
+      "volume24h_usd": 371.03,
       "last_hist": 0.0095,
       "price_ref": {
         "1h": 0.0095,
@@ -270,11 +270,11 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/lag-24884a7875.png",
       "slug": "christine-lagarde",
       "first_seen": 1791451018,
-      "volume_usd": 5429.97,
-      "volume24h_usd": 308.77,
+      "volume_usd": 5432.97,
+      "volume24h_usd": 311.32,
       "last_hist": 0.007,
       "price_ref": {
-        "1h": 0.008,
+        "1h": 0.0075,
         "4h": 0.0085,
         "12h": 0.01,
         "24h": 0.0055
@@ -298,7 +298,7 @@
       "slug": "dominique-de-villepin",
       "first_seen": 1791451018,
       "volume_usd": 863968.27,
-      "volume24h_usd": 252.0,
+      "volume24h_usd": 251.46,
       "last_hist": 0.0065,
       "price_ref": {
         "1h": 0.0065,
@@ -324,8 +324,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-jordan-bardella-win-the-2027-french-presidential-election-h78hm6KqJGHZ.jpg",
       "slug": "jordan-bardella",
       "first_seen": 1791451018,
-      "volume_usd": 698421.27,
-      "volume24h_usd": 156.63,
+      "volume_usd": 698423.77,
+      "volume24h_usd": 158.68,
       "last_hist": 0.0055,
       "price_ref": {
         "1h": 0.0055,
@@ -351,8 +351,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-ric-zemmour-win-the-2027-french-presidential-election-Tdu7Nb9S2y9Q.jpg",
       "slug": "eric-zemmour",
       "first_seen": 1791451018,
-      "volume_usd": 423205.19,
-      "volume24h_usd": 128.38,
+      "volume_usd": 423207.19,
+      "volume24h_usd": 130.02,
       "last_hist": 0.0045,
       "price_ref": {
         "1h": 0.0045,
@@ -378,8 +378,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-sbastien-lecornu-win-the-2027-french-presidential-election-wEbFCHrHQF2A.jpg",
       "slug": "sebastien-lecornu",
       "first_seen": 1791451018,
-      "volume_usd": 609965.54,
-      "volume24h_usd": 134.22,
+      "volume_usd": 609966.54,
+      "volume24h_usd": 134.64,
       "last_hist": 0.0025,
       "price_ref": {
         "1h": 0.0025,
@@ -459,8 +459,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-franois-ruffin-win-the-2027-french-presidential-election-DuvyAm67PfEk.jpg",
       "slug": "francois-ruffin",
       "first_seen": 1791451018,
-      "volume_usd": 1892030.09,
-      "volume24h_usd": 445.18,
+      "volume_usd": 1892030.59,
+      "volume24h_usd": 445.39,
       "last_hist": 0.0015,
       "price_ref": {
         "1h": 0.0015,
@@ -486,8 +486,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-marine-tondelier-win-the-2027-french-presidential-election-e1tj7K-8OPlp.jpg",
       "slug": "marine-tondelier",
       "first_seen": 1791451018,
-      "volume_usd": 2346787.52,
-      "volume24h_usd": 540.55,
+      "volume_usd": 2346799.01,
+      "volume24h_usd": 551.75,
       "last_hist": 0.0015,
       "price_ref": {
         "1h": 0.0015,
@@ -513,8 +513,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-karim-bouamrane-win-the-2027-french-presidential-election-tVOEjfoE74m4.jpg",
       "slug": "karim-bouamrane",
       "first_seen": 1791451018,
-      "volume_usd": 74240.01,
-      "volume24h_usd": 201.53,
+      "volume_usd": 74249.3,
+      "volume24h_usd": 210.53,
       "last_hist": 0.0015,
       "price_ref": {
         "1h": 0.0015,
@@ -649,7 +649,7 @@
       "slug": "segolene-royal",
       "first_seen": 1791451018,
       "volume_usd": 2811284.36,
-      "volume24h_usd": 137.69,
+      "volume24h_usd": 137.6,
       "last_hist": 0.0005,
       "price_ref": {
         "1h": 0.0005,
