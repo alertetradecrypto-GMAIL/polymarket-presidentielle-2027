@@ -1,14 +1,14 @@
 {
   "keys": {
     "david-lisnard|24h|up": {
-      "streak": 6,
-      "seen_t": 1791701959,
+      "streak": 7,
+      "seen_t": 1791703096,
       "alert_t": 1791696498,
       "alert_price": 0.1455
     },
     "jean-luc-melenchon|24h|down": {
-      "streak": 6,
-      "seen_t": 1791701961,
+      "streak": 7,
+      "seen_t": 1791703099,
       "alert_t": 1791696498,
       "alert_price": 0.105
     }
