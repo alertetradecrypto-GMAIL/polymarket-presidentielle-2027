@@ -1,8 +1,10 @@
 {
   "keys": {
     "gabriel-attal|24h|up": {
-      "streak": 1,
-      "seen_t": 1791715458
+      "streak": 2,
+      "seen_t": 1791716238,
+      "alert_t": 1791716288,
+      "alert_price": 0.0235
     }
   }
 }
