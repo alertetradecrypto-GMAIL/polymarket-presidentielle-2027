@@ -1,8 +1,18 @@
 {
   "keys": {
     "raphael-glucksmann|24h|up": {
+      "streak": 2,
+      "seen_t": 1791737724,
+      "alert_t": 1791737763,
+      "alert_price": 0.022
+    },
+    "edouard-philippe|7j|up": {
       "streak": 1,
-      "seen_t": 1791736227
+      "seen_t": 1791737720
+    },
+    "gabriel-attal|24h|down": {
+      "streak": 1,
+      "seen_t": 1791737720
     }
   }
 }
