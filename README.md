@@ -19,6 +19,12 @@ Outil de suivi (lecture seule, aucun ordre) du marché Polymarket
   (en points ou en %, triables) ; clic sur un nom → fenêtre avec ses variations et ses 5 dernières actualités ; l'état de la vue est dans l'URL
 - Alerte email « URGENT » : variation 24 h (> 15 % et ≥ 1 pt) ou 7 j (> 30 % et ≥ 2 pts), confirmée sur 2 collectes, sans répétition tant que le mouvement ne s'aggrave pas
 - `src/daily.py` (daily.yml) : récap email à 8h00 heure de Paris — valeur (positions de ce marché + cash pUSD/USDC.e), PnL par position et par adresse, variation 24 h des candidats ≥ 2 % ou détenus. Lancement manuel : Actions → daily → Run workflow (envoi immédiat)
+- `src/trades.py` (étape de collect.yml) : journal de tous les trades du marché (côté taker, adresse complète,
+  pseudo, transaction) → `docs/data/trades/AAAA-MM-JJ.json` (jour de Paris) + `index.json`. Historique depuis
+  l'ouverture rattrapé par morceaux (4 candidats et 5 min max par passage, reprise automatique)
+- `src/trades_daily.py` (daily.yml, après le récap) : email « TRADE JOURNALIER POLYMARKET » — trades de la veille,
+  résumé par candidat, 20 plus gros ordres (trades ≥ 5 $), CSV complet en pièce jointe.
+  `--day AAAA-MM-JJ` pour un autre jour
 - Publication X (@MarketSentinelX), sans lien ni donnée de portefeuille :
   - `src/x_daily.py` (tweet.yml) : tweet quotidien à 15h30 heure de Paris, visuel bilingue des candidats ≥ 2 % + top 3 en texte
   - `src/x_alerts.py` (étape de collect.yml) : tweet « Mouvement fort / Strong move » sur les alertes 24 h / 7 j, 1 tweet max par candidat et par sens toutes les 6 h, 3 par jour maximum

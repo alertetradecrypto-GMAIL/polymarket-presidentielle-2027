@@ -46,6 +46,14 @@ jobs:
           POLY_ADDR_3: ${{ secrets.POLY_ADDR_3 }}
           POLYGON_RPC_URL: ${{ secrets.POLYGON_RPC_URL }}   # facultatif
 
+      - name: Email des trades de la veille
+        if: ${{ !cancelled() }}
+        run: python src/trades_daily.py ${{ inputs.force && '--force' || '' }}
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ALERT_TO: ${{ secrets.ALERT_TO }}
+
       - name: Commit de l'état
         if: ${{ !cancelled() }}
         run: |

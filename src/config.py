@@ -29,6 +29,17 @@ TRADES_PAGE = 500            # taille max d'une page /trades
 TRADES_MAX_OFFSET = 10000    # offset max accepté par /trades
 VOL_BACKFILL_PER_RUN = 3     # rattrapages complets max par collecte (nouveaux candidats)
 
+# Journal des trades (adresses complètes, données publiques on-chain)
+TRADES_DIR = DATA_DIR / "trades"                 # un fichier par jour de Paris
+TRADES_INDEX_FILE = TRADES_DIR / "index.json"    # jours disponibles : nb trades, volume $
+TRADES_STATE_FILE = STATE_DIR / "trades.json"    # dernière collecte par candidat
+TRADES_BACKFILL_PER_RUN = 4  # candidats rattrapés depuis l'ouverture par collecte
+TRADES_TIME_BUDGET_S = 300   # plus de nouveau rattrapage au-delà de 5 min d'exécution
+TRADES_MIN_USD = 5.0         # résumés et email : trades plus petits ignorés (bruit)
+TRADES_TOP_N = 20            # gros ordres listés dans l'email
+TRADES_DAILY_STATE_FILE = STATE_DIR / "trades_daily.json"
+TRADES_EMAIL_SUBJECT = "TRADE JOURNALIER POLYMARKET"
+
 # Variations affichées sur le tableau de bord (libellé, durée en s)
 CHANGE_WINDOWS = (("1h", 3600), ("4h", 4 * 3600), ("12h", 12 * 3600), ("24h", 86400))
 

@@ -18,7 +18,9 @@ def _env(name: str) -> str:
     return value
 
 
-def send(subject: str, html: str, text: str | None = None, *, urgent: bool = False) -> None:
+def send(subject: str, html: str, text: str | None = None, *, urgent: bool = False,
+         attachments: list[tuple[str, bytes, str, str]] | None = None) -> None:
+    """attachments : [(nom, contenu, maintype, subtype)]."""
     user = _env("GMAIL_USER")
     password = _env("GMAIL_APP_PASSWORD").replace(" ", "")
     to = [a.strip() for a in _env("ALERT_TO").split(",") if a.strip()]
@@ -34,6 +36,8 @@ def send(subject: str, html: str, text: str | None = None, *, urgent: bool = Fal
         msg["Importance"] = "high"
     msg.set_content(text or "Ouvrez cet email dans un client compatible HTML.")
     msg.add_alternative(html, subtype="html")
+    for name, data, maintype, subtype in attachments or []:
+        msg.add_attachment(data, maintype=maintype, subtype=subtype, filename=name)
 
     with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=ssl.create_default_context(),
                           timeout=30) as smtp:

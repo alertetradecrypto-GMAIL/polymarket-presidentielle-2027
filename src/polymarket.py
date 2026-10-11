@@ -173,11 +173,17 @@ def get_trades(condition_id: str, *, start: int | None = None, end: int | None =
 
 
 def iter_trades(condition_id: str, start: int | None, end: int):
-    """Tous les trades entre start et end (inclus), par fenêtres glissantes.
+    """Comme iter_trade_rows, réduit à (t, parts, prix)."""
+    for r in iter_trade_rows(condition_id, start, end):
+        yield int(r["timestamp"]), float(r["size"]), float(r["price"])
+
+
+def iter_trade_rows(condition_id: str, start: int | None, end: int):
+    """Tous les trades bruts entre start et end (inclus), par fenêtres glissantes.
 
     L'API plafonne l'offset à 10 000 : quand une fenêtre est pleine, on écarte
     la seconde la plus ancienne (peut-être incomplète) et on repart avec
-    end = cette seconde. Ni doublon ni trou. Renvoie (t, parts, prix).
+    end = cette seconde. Ni doublon ni trou.
     """
     window_end = int(end)
     while True:
@@ -191,15 +197,14 @@ def iter_trades(condition_id: str, start: int | None, end: int):
                 full = True
                 break
             offset += TRADES_PAGE
-        trades = [(int(r["timestamp"]), float(r["size"]), float(r["price"]))
-                  for r in rows if "timestamp" in r and "size" in r and "price" in r]
+        trades = [r for r in rows if "timestamp" in r and "size" in r and "price" in r]
         if not full:
             yield from trades
             return
-        oldest = min(t for t, _, _ in trades)
+        oldest = min(int(r["timestamp"]) for r in trades)
         if oldest >= window_end:
             raise RuntimeError(f"plus de {TRADES_MAX_OFFSET} trades dans la même seconde")
-        yield from (x for x in trades if x[0] > oldest)
+        yield from (r for r in trades if int(r["timestamp"]) > oldest)
         window_end = oldest
 
 
