@@ -1,6 +1,6 @@
 {
   "day": "2026-10-12",
-  "count": 1,
+  "count": 2,
   "last": {
     "francois-hollande|down": 1791471736,
     "edouard-philippe|up": 1791542175,
@@ -8,6 +8,7 @@
     "david-lisnard|up": 1791719248,
     "jean-luc-melenchon|down": 1791696523,
     "gabriel-attal|up": 1791716320,
-    "raphael-glucksmann|up": 1791759603
+    "raphael-glucksmann|up": 1791759603,
+    "raphael-glucksmann|down": 1791832297
   }
 }
