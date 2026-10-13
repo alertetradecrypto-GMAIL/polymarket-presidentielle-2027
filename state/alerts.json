@@ -1,14 +1,14 @@
 {
   "keys": {
     "raphael-glucksmann|24h|down": {
-      "streak": 18,
-      "seen_t": 1791852983,
+      "streak": 19,
+      "seen_t": 1791854182,
       "alert_t": 1791832276,
       "alert_price": 0.0145
     },
     "francois-hollande|7j|down": {
-      "streak": 14,
-      "seen_t": 1791852982,
+      "streak": 15,
+      "seen_t": 1791854182,
       "alert_t": 1791837167,
       "alert_price": 0.0305
     }
