@@ -231,3 +231,24 @@ td.muted { text-align: center; padding: 14px; }
 .flt:hover { color: var(--text); background: var(--hover); }
 .more { display: flex; justify-content: center; margin-top: 10px; }
 .more [hidden] { display: none; }
+
+/* ---------- Portefeuille ---------- */
+.pf-intro { margin: 0 0 10px; }
+.pf-form .pf-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.pf-form input {
+  background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px;
+  font: inherit; font-size: 13px; padding: 6px 8px; min-height: 32px; min-width: 0;
+}
+.pf-form input[name="label"] { flex: 0 0 80px; }
+.pf-form input[name="addr"] { flex: 1; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.pf-form-foot { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.pf-form-foot .note { margin: 0; color: var(--down); }
+.pf-table { width: 100%; border-collapse: collapse; font-size: 13px; white-space: nowrap; }
+.pf-table th { text-align: left; font-weight: 500; color: var(--muted); font-size: 11.5px; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+.pf-table td { padding: 7px 8px; border-bottom: 1px solid var(--grid); }
+.pf-table .num { text-align: right; }
+.pf-table tr.pf-total td { border-top: 1px solid var(--border); font-weight: 600; }
+.pf-addr { font-size: 12px; color: var(--muted); margin-left: 4px; }
+.pf-side { font-weight: 600; font-size: 12px; }
+.pf-chart { height: 280px; }
+#cur button:disabled { opacity: .4; cursor: default; }

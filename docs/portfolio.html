@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portefeuille · Présidentielle 2027</title>
+  <meta name="description" content="Valeur du portefeuille Polymarket en temps réel, lue depuis le navigateur. Aucune adresse n'est stockée sur le serveur.">
+  <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="dark light">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23131722'/%3E%3Cpath d='M5 22l7-8 5 5 10-11' fill='none' stroke='%233987e5' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lightweight-charts@5.2.1/dist/lightweight-charts.standalone.production.js" defer></script>
+  <script src="portfolio.js" defer></script>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <h1>Présidentielle 2027</h1>
+      <nav class="tabs" aria-label="Pages"><a href="./">Graphique</a><a href="trades.html">Trades</a><a href="portfolio.html" aria-current="page">Portefeuille</a></nav>
+    </div>
+    <dl class="kpis">
+      <div><dt>Valeur totale</dt><dd id="k-eq">—</dd></div>
+      <div><dt>PnL latent</dt><dd id="k-pnl">—</dd></div>
+      <div><dt>Variation 24 h</dt><dd id="k-24">—</dd></div>
+      <div><dt>Mise à jour</dt><dd id="k-upd">—</dd></div>
+    </dl>
+  </header>
+
+  <main>
+    <section class="panel" id="setup" hidden aria-label="Adresses">
+      <div class="table-head"><h2>Vos adresses Polymarket</h2></div>
+      <p class="note pf-intro">Les adresses restent dans ce navigateur (stockage local). Elles ne sont jamais envoyées au dépôt GitHub, seulement aux API publiques de Polymarket et de Polygon pour lire les soldes.</p>
+      <form id="addr-form" class="pf-form" autocomplete="off">
+        <div id="addr-rows"></div>
+        <div class="pf-form-foot">
+          <button class="btn" type="submit">Enregistrer</button>
+          <button class="btn" type="button" id="addr-cancel">Annuler</button>
+          <span class="note" id="addr-err" role="alert"></span>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel" id="main-panel" hidden aria-label="Résumé">
+      <div class="toolbar">
+        <div class="seg" id="cur" aria-label="Devise">
+          <button data-v="USD">USD</button><button data-v="CHF">CHF</button><button data-v="EUR">EUR</button>
+        </div>
+        <button class="btn" type="button" id="refresh">Actualiser</button>
+        <button class="btn" type="button" id="edit-addr">Adresses</button>
+        <button class="btn" type="button" id="forget">Oublier</button>
+        <span class="step" id="status"></span>
+      </div>
+      <div class="table-wrap">
+        <table class="pf-table" id="acc-table">
+          <thead><tr><th>Adresse</th><th class="num">Positions</th><th class="num">Cash</th><th class="num">Total</th><th class="num">PnL latent</th><th class="num">24 h</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note" id="warn"></p>
+    </section>
+
+    <section class="panel" id="pos-panel" hidden aria-label="Positions">
+      <div class="table-head"><h2>Positions</h2><span class="note" id="pos-count"></span></div>
+      <div class="table-wrap">
+        <table class="pf-table" id="pos-table">
+          <thead><tr><th>Candidat</th><th>Côté</th><th>Adr.</th><th class="num">Parts</th><th class="num">Prix moy.</th><th class="num">Prix actuel</th><th class="num">Δ 24 h</th><th class="num">Valeur</th><th class="num">PnL</th><th class="num">PnL %</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" id="hist-panel" hidden aria-label="Historique">
+      <div class="table-head"><h2>Historique de la valeur</h2><span class="note">Un point par visite (au plus toutes les 15 min), gardé dans ce navigateur.</span></div>
+      <div id="pf-chart" class="pf-chart"></div>
+      <p class="note" id="hist-empty">L'historique se construit au fil de vos visites.</p>
+    </section>
+  </main>
+</body>
+</html>
