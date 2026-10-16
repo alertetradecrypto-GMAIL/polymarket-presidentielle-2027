@@ -2,17 +2,11 @@
   "published": [
     "marine-le-pen",
     "edouard-philippe",
-    "jean-luc-melenchon",
-    "david-lisnard",
-    "raphael-glucksmann"
-  ],
-  "t": 1792174879,
-  "cand": [
-    "marine-le-pen",
-    "edouard-philippe",
     "david-lisnard",
     "jean-luc-melenchon",
     "raphael-glucksmann"
   ],
-  "seen": 1
+  "t": 1792195165,
+  "cand": null,
+  "seen": 0
 }
