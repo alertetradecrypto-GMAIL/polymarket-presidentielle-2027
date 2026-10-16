@@ -1,8 +1,10 @@
 {
   "keys": {
     "francois-hollande|24h|down": {
-      "streak": 1,
-      "seen_t": 1792121124
+      "streak": 2,
+      "seen_t": 1792123177,
+      "alert_t": 1792123220,
+      "alert_price": 0.0175
     }
   }
 }
