@@ -1,14 +1,14 @@
 {
-  "updated": 1792191944,
+  "updated": 1792193726,
   "event": {
     "id": "79987",
     "slug": "next-french-presidential-election",
     "title": "Next French Presidential Election",
     "end_date": "2027-04-19T03:59:00Z",
-    "volume": 152236490.55947298,
-    "volume24h": 586404.178396,
-    "volume_usd": 71367270.11,
-    "volume24h_usd": 72172.3
+    "volume": 152251556.159473,
+    "volume24h": 599593.431599,
+    "volume_usd": 71388573.41,
+    "volume24h_usd": 93447.68
   },
   "candidates": [
     {
@@ -20,8 +20,8 @@
       "bid": 0.457,
       "ask": 0.458,
       "last": 0.458,
-      "volume": 3966203.732388,
-      "volume24h": 46615.458928,
+      "volume": 3966203.7323880005,
+      "volume24h": 46586.861881,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-marine-le-pen-win-the-2027-french-presidential-election-8hg67PHSk27M.jpg",
@@ -32,7 +32,7 @@
       "last_hist": 0.4575,
       "price_ref": {
         "1h": 0.4575,
-        "4h": 0.4585,
+        "4h": 0.4595,
         "12h": 0.4625,
         "24h": 0.4735
       },
@@ -47,8 +47,8 @@
       "bid": 0.17,
       "ask": 0.18,
       "last": 0.18,
-      "volume": 2280857.2974599996,
-      "volume24h": 29558.409103,
+      "volume": 2280857.29746,
+      "volume24h": 29558.409103000005,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-edouard-philippe-0cd29bea14.jpg",
@@ -64,6 +64,33 @@
         "24h": 0.195
       },
       "price_24h": 0.195
+    },
+    {
+      "id": "679022",
+      "name": "David Lisnard",
+      "condition_id": "0xce610556ec78cfd7894f4169d91fe70e31c2fb49f927fffd7fe7d06530f88d56",
+      "token_yes": "55404192439775628931124671719520886657525387168536821457706619003199189099864",
+      "price": 0.1165,
+      "bid": 0.115,
+      "ask": 0.118,
+      "last": 0.118,
+      "volume": 4925672.4583910005,
+      "volume24h": 46989.216529,
+      "active": true,
+      "closed": false,
+      "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-david-lisnard-04e491dec1.jpg",
+      "slug": "david-lisnard",
+      "first_seen": 1791451018,
+      "volume_usd": 1644085.54,
+      "volume24h_usd": 34097.36,
+      "last_hist": 0.1165,
+      "price_ref": {
+        "1h": 0.1135,
+        "4h": 0.1135,
+        "12h": 0.1155,
+        "24h": 0.118
+      },
+      "price_24h": 0.118
     },
     {
       "id": "679030",
@@ -82,7 +109,7 @@
       "slug": "jean-luc-melenchon",
       "first_seen": 1791451018,
       "volume_usd": 584530.81,
-      "volume24h_usd": 5474.42,
+      "volume24h_usd": 5465.62,
       "last_hist": 0.115,
       "price_ref": {
         "1h": 0.115,
@@ -91,33 +118,6 @@
         "24h": 0.115
       },
       "price_24h": 0.115
-    },
-    {
-      "id": "679022",
-      "name": "David Lisnard",
-      "condition_id": "0xce610556ec78cfd7894f4169d91fe70e31c2fb49f927fffd7fe7d06530f88d56",
-      "token_yes": "55404192439775628931124671719520886657525387168536821457706619003199189099864",
-      "price": 0.1135,
-      "bid": 0.113,
-      "ask": 0.114,
-      "last": 0.114,
-      "volume": 4910608.828391,
-      "volume24h": 31925.586529,
-      "active": true,
-      "closed": false,
-      "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-david-lisnard-04e491dec1.jpg",
-      "slug": "david-lisnard",
-      "first_seen": 1791451018,
-      "volume_usd": 1622790.95,
-      "volume24h_usd": 12811.58,
-      "last_hist": 0.1135,
-      "price_ref": {
-        "1h": 0.1135,
-        "4h": 0.1135,
-        "12h": 0.1155,
-        "24h": 0.118
-      },
-      "price_24h": 0.118
     },
     {
       "id": "679029",
@@ -129,7 +129,7 @@
       "ask": 0.035,
       "last": 0.035,
       "volume": 2627679.9191360003,
-      "volume24h": 180544.071239,
+      "volume24h": 180544.07123899995,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-raphael-glucksmann-c0032d60f6.jpg",
@@ -140,11 +140,11 @@
       "last_hist": 0.0345,
       "price_ref": {
         "1h": 0.0345,
-        "4h": 0.0355,
-        "12h": 0.0295,
-        "24h": 0.0215
+        "4h": 0.0345,
+        "12h": 0.0405,
+        "24h": 0.022
       },
-      "price_24h": 0.0215
+      "price_24h": 0.022
     },
     {
       "id": "679028",
@@ -155,8 +155,8 @@
       "bid": 0.022,
       "ask": 0.023,
       "last": 0.023,
-      "volume": 2519546.230882999,
-      "volume24h": 21856.455519,
+      "volume": 2519546.2308829995,
+      "volume24h": 20020.735519,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-francois-hollande-0a70931c82.jpg",
@@ -169,9 +169,9 @@
         "1h": 0.0225,
         "4h": 0.0225,
         "12h": 0.0185,
-        "24h": 0.0165
+        "24h": 0.017
       },
-      "price_24h": 0.0165
+      "price_24h": 0.017
     },
     {
       "id": "679026",
@@ -194,8 +194,8 @@
       "last_hist": 0.0165,
       "price_ref": {
         "1h": 0.0165,
-        "4h": 0.0225,
-        "12h": 0.0145,
+        "4h": 0.0215,
+        "12h": 0.0135,
         "24h": 0.0155
       },
       "price_24h": 0.0155
@@ -209,7 +209,7 @@
       "bid": 0.008,
       "ask": 0.009,
       "last": 0.009,
-      "volume": 2955498.505137,
+      "volume": 2955498.5051369993,
       "volume24h": 2699.9098,
       "active": true,
       "closed": false,
@@ -236,8 +236,8 @@
       "bid": 0.008,
       "ask": 0.009,
       "last": 0.008,
-      "volume": 2621225.0585419997,
-      "volume24h": 16261.669999999998,
+      "volume": 2621225.0585420006,
+      "volume24h": 16257.84475,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-sarah-knafo-d8d46e9729.jpg",
@@ -317,7 +317,7 @@
       "bid": 0.004,
       "ask": 0.006,
       "last": 0.005,
-      "volume": 2595483.793486999,
+      "volume": 2595483.7934869993,
       "volume24h": 30152.989999999998,
       "active": true,
       "closed": false,
@@ -330,7 +330,7 @@
       "price_ref": {
         "1h": 0.005,
         "4h": 0.005,
-        "12h": 0.0045,
+        "12h": 0.0035,
         "24h": 0.0065
       },
       "price_24h": 0.0065
@@ -352,12 +352,12 @@
       "slug": "eric-zemmour",
       "first_seen": 1791451018,
       "volume_usd": 424399.36,
-      "volume24h_usd": 517.35,
+      "volume24h_usd": 516.35,
       "last_hist": 0.0045,
       "price_ref": {
         "1h": 0.0045,
         "4h": 0.0055,
-        "12h": 0.0045,
+        "12h": 0.004,
         "24h": 0.005
       },
       "price_24h": 0.005
@@ -372,14 +372,14 @@
       "ask": 0.003,
       "last": 0.002,
       "volume": 2155539.87016,
-      "volume24h": 13850.811499999996,
+      "volume24h": 13847.888999999997,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-sebastien-lecornu-5cef549ec3.jpg",
       "slug": "sebastien-lecornu",
       "first_seen": 1791451018,
       "volume_usd": 613003.36,
-      "volume24h_usd": 49.1,
+      "volume24h_usd": 47.63,
       "last_hist": 0.0025,
       "price_ref": {
         "1h": 0.0025,
@@ -425,15 +425,15 @@
       "bid": 0.001,
       "ask": 0.002,
       "last": 0.001,
-      "volume": 4808079.4416269995,
-      "volume24h": 16484.144,
+      "volume": 4808081.411626999,
+      "volume24h": 16480.832,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-francois-ruffin-4a2df7c855.jpg",
       "slug": "francois-ruffin",
       "first_seen": 1791451018,
-      "volume_usd": 1905034.98,
-      "volume24h_usd": 2651.74,
+      "volume_usd": 1905037.09,
+      "volume24h_usd": 2652.89,
       "last_hist": 0.0015,
       "price_ref": {
         "1h": 0.0015,
@@ -459,8 +459,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-jean-castex-win-the-2027-french-presidential-election-uawg4cwg9tFP.jpg",
       "slug": "jean-castex",
       "first_seen": 1791451018,
-      "volume_usd": 739285.58,
-      "volume24h_usd": 1292.86,
+      "volume_usd": 739292.18,
+      "volume24h_usd": 1296.3,
       "last_hist": 0.0015,
       "price_ref": {
         "1h": 0.0015,
@@ -479,7 +479,7 @@
       "bid": 0.001,
       "ask": 0.002,
       "last": 0.001,
-      "volume": 1310499.812283,
+      "volume": 1310499.8122830002,
       "volume24h": 14087.5,
       "active": true,
       "closed": false,
@@ -560,7 +560,7 @@
       "bid": null,
       "ask": 0.002,
       "last": 0.001,
-      "volume": 4599039.074946998,
+      "volume": 4599039.074946999,
       "volume24h": 16808.741,
       "active": true,
       "closed": false,
@@ -568,7 +568,7 @@
       "slug": "marine-tondelier",
       "first_seen": 1791451018,
       "volume_usd": 2362708.14,
-      "volume24h_usd": 2951.89,
+      "volume24h_usd": 2948.17,
       "last_hist": 0.001,
       "price_ref": {
         "1h": 0.001,
@@ -614,7 +614,7 @@
       "bid": null,
       "ask": 0.001,
       "last": 0.001,
-      "volume": 6433185.114354999,
+      "volume": 6433185.114355,
       "volume24h": 33.87,
       "active": true,
       "closed": false,
