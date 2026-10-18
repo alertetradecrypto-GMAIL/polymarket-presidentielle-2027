@@ -1,14 +1,10 @@
 {
   "keys": {
     "jean-luc-melenchon|24h|down": {
-      "streak": 3,
-      "seen_t": 1792347262,
+      "streak": 4,
+      "seen_t": 1792349241,
       "alert_t": 1792345753,
       "alert_price": 0.095
-    },
-    "raphael-glucksmann|7j|up": {
-      "streak": 1,
-      "seen_t": 1792347262
     }
   }
 }
