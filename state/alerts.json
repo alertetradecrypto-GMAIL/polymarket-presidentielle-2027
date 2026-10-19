@@ -1,14 +1,16 @@
 {
   "keys": {
     "raphael-glucksmann|7j|up": {
-      "streak": 22,
-      "seen_t": 1792435761,
+      "streak": 23,
+      "seen_t": 1792437982,
       "alert_t": 1792410463,
       "alert_price": 0.0535
     },
     "raphael-glucksmann|24h|up": {
-      "streak": 1,
-      "seen_t": 1792435761
+      "streak": 2,
+      "seen_t": 1792437982,
+      "alert_t": 1792438058,
+      "alert_price": 0.0525
     }
   }
 }
