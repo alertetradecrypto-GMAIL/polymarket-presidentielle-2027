@@ -1,14 +1,14 @@
 {
-  "updated": 1792388449,
+  "updated": 1792390375,
   "event": {
     "id": "79987",
     "slug": "next-french-presidential-election",
     "title": "Next French Presidential Election",
     "end_date": "2027-04-19T03:59:00Z",
-    "volume": 153358231.08197,
-    "volume24h": 791963.17528,
-    "volume_usd": 71507442.14,
-    "volume24h_usd": 75987.64
+    "volume": 153358329.491295,
+    "volume24h": 791031.788985,
+    "volume_usd": 71507490.61,
+    "volume24h_usd": 75886.48
   },
   "candidates": [
     {
@@ -19,16 +19,16 @@
       "price": 0.4825,
       "bid": 0.482,
       "ask": 0.483,
-      "last": 0.483,
-      "volume": 4056820.4733209996,
-      "volume24h": 49617.222383,
+      "last": 0.482,
+      "volume": 4056826.684502,
+      "volume24h": 49623.433564,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-marine-le-pen-win-the-2027-french-presidential-election-8hg67PHSk27M.jpg",
       "slug": "marine-le-pen",
       "first_seen": 1791451018,
-      "volume_usd": 1565188.84,
-      "volume24h_usd": 24116.35,
+      "volume_usd": 1565216.51,
+      "volume24h_usd": 24144.02,
       "last_hist": 0.4825,
       "price_ref": {
         "1h": 0.4825,
@@ -47,7 +47,7 @@
       "bid": 0.19,
       "ask": 0.2,
       "last": 0.19,
-      "volume": 2366430.4366760007,
+      "volume": 2366430.436676001,
       "volume24h": 81384.227727,
       "active": true,
       "closed": false,
@@ -75,7 +75,7 @@
       "ask": 0.118,
       "last": 0.118,
       "volume": 5008705.9300069995,
-      "volume24h": 51762.244592,
+      "volume24h": 51762.24459200001,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-david-lisnard-04e491dec1.jpg",
@@ -101,7 +101,7 @@
       "bid": 0.09,
       "ask": 0.1,
       "last": 0.1,
-      "volume": 2303118.6137150005,
+      "volume": 2303118.613715,
       "volume24h": 41030.743222,
       "active": true,
       "closed": false,
@@ -128,23 +128,23 @@
       "bid": 0.043,
       "ask": 0.044,
       "last": 0.044,
-      "volume": 2713251.369955,
-      "volume24h": 45688.49804200001,
+      "volume": 2713251.3699550005,
+      "volume24h": 41986.658042,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-raphael-glucksmann-c0032d60f6.jpg",
       "slug": "raphael-glucksmann",
       "first_seen": 1791451018,
-      "volume_usd": 622332.37,
-      "volume24h_usd": 1907.53,
+      "volume_usd": 622340.27,
+      "volume24h_usd": 1770.76,
       "last_hist": 0.0435,
       "price_ref": {
         "1h": 0.0435,
         "4h": 0.0435,
         "12h": 0.0425,
-        "24h": 0.043
+        "24h": 0.041
       },
-      "price_24h": 0.043
+      "price_24h": 0.041
     },
     {
       "id": "679028",
@@ -168,7 +168,7 @@
       "price_ref": {
         "1h": 0.0155,
         "4h": 0.0155,
-        "12h": 0.0155,
+        "12h": 0.0145,
         "24h": 0.0225
       },
       "price_24h": 0.0225
@@ -182,7 +182,7 @@
       "bid": 0.011,
       "ask": 0.012,
       "last": 0.012,
-      "volume": 3121775.171861,
+      "volume": 3121775.1718610004,
       "volume24h": 43115.717872,
       "active": true,
       "closed": false,
@@ -195,7 +195,7 @@
       "price_ref": {
         "1h": 0.0115,
         "4h": 0.0115,
-        "12h": 0.012,
+        "12h": 0.0115,
         "24h": 0.0175
       },
       "price_24h": 0.0175
@@ -210,14 +210,14 @@
       "ask": 0.009,
       "last": 0.008,
       "volume": 2675648.658321,
-      "volume24h": 45644.03975,
+      "volume24h": 45644.039749999996,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-sarah-knafo-d8d46e9729.jpg",
       "slug": "sarah-knafo",
       "first_seen": 1791451018,
-      "volume_usd": 1107070.84,
-      "volume24h_usd": 10536.54,
+      "volume_usd": 1107071.84,
+      "volume24h_usd": 10537.54,
       "last_hist": 0.0085,
       "price_ref": {
         "1h": 0.0085,
@@ -236,7 +236,7 @@
       "bid": 0.007,
       "ask": 0.008,
       "last": 0.008,
-      "volume": 3016763.495137,
+      "volume": 3016763.4951369995,
       "volume24h": 39929.0,
       "active": true,
       "closed": false,
@@ -249,7 +249,7 @@
       "price_ref": {
         "1h": 0.0075,
         "4h": 0.0075,
-        "12h": 0.008,
+        "12h": 0.0075,
         "24h": 0.0075
       },
       "price_24h": 0.0075
@@ -276,7 +276,7 @@
       "price_ref": {
         "1h": 0.0065,
         "4h": 0.0065,
-        "12h": 0.0055,
+        "12h": 0.0045,
         "24h": 0.0065
       },
       "price_24h": 0.0065
@@ -317,7 +317,7 @@
       "bid": 0.005,
       "ask": 0.006,
       "last": 0.005,
-      "volume": 2822694.0497590005,
+      "volume": 2822694.049759,
       "volume24h": 45942.58,
       "active": true,
       "closed": false,
@@ -344,20 +344,20 @@
       "bid": 0.005,
       "ask": 0.006,
       "last": 0.005,
-      "volume": 2647966.447621,
-      "volume24h": 42361.17999999999,
+      "volume": 2648010.266421,
+      "volume24h": 42373.139599999995,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-dominique-de-villepin-00e1cdb48c.jpg",
       "slug": "dominique-de-villepin",
       "first_seen": 1791451018,
-      "volume_usd": 864975.33,
-      "volume24h_usd": 252.22,
+      "volume_usd": 864987.23,
+      "volume24h_usd": 264.12,
       "last_hist": 0.0055,
       "price_ref": {
         "1h": 0.0055,
         "4h": 0.0055,
-        "12h": 0.005,
+        "12h": 0.0045,
         "24h": 0.0045
       },
       "price_24h": 0.0045
@@ -425,8 +425,8 @@
       "bid": null,
       "ask": 0.002,
       "last": 0.001,
-      "volume": 6180903.269839002,
-      "volume24h": 17608.732,
+      "volume": 6180903.269839001,
+      "volume24h": 17607.411,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-xavier-bertrand-win-the-2027-french-presidential-election-2_GjihYeGPib.jpg",
@@ -438,7 +438,7 @@
       "price_ref": {
         "1h": 0.001,
         "4h": 0.001,
-        "12h": 0.001,
+        "12h": 0.0015,
         "24h": 0.0015
       },
       "price_24h": 0.0015
@@ -479,7 +479,7 @@
       "bid": null,
       "ask": 0.002,
       "last": 0.001,
-      "volume": 4841637.680627,
+      "volume": 4841637.680626999,
       "volume24h": 7333.323,
       "active": true,
       "closed": false,
@@ -492,7 +492,7 @@
       "price_ref": {
         "1h": 0.001,
         "4h": 0.001,
-        "12h": 0.001,
+        "12h": 0.0015,
         "24h": 0.0015
       },
       "price_24h": 0.0015
@@ -506,7 +506,7 @@
       "bid": null,
       "ask": 0.002,
       "last": 0.001,
-      "volume": 4614996.859947,
+      "volume": 4614996.859947001,
       "volume24h": 11719.608,
       "active": true,
       "closed": false,
@@ -560,7 +560,7 @@
       "bid": null,
       "ask": 0.001,
       "last": 0.001,
-      "volume": 6433314.624355,
+      "volume": 6433314.624355001,
       "volume24h": 36.32,
       "active": true,
       "closed": false,
@@ -830,15 +830,15 @@
       "bid": null,
       "ask": 0.002,
       "last": 0.001,
-      "volume": 2037403.6258839995,
-      "volume24h": 17158.087,
+      "volume": 2037403.6258839997,
+      "volume24h": 17154.126,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-jean-castex-win-the-2027-french-presidential-election-uawg4cwg9tFP.jpg",
       "slug": "jean-castex",
       "first_seen": 1791451018,
       "volume_usd": 742468.66,
-      "volume24h_usd": 134.5,
+      "volume24h_usd": 130.54,
       "last_hist": 0.001,
       "price_ref": {
         "1h": 0.001,
@@ -939,14 +939,14 @@
       "ask": 0.001,
       "last": 0.001,
       "volume": 5187831.143262999,
-      "volume24h": 1000.0,
+      "volume24h": 0.0,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-manuel-bompard-win-the-2027-french-presidential-election-Bhn3BqB_ZNmx.jpg",
       "slug": "manuel-bompard",
       "first_seen": 1791451018,
       "volume_usd": 2761510.65,
-      "volume24h_usd": 1.0,
+      "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
         "1h": 0.0005,
