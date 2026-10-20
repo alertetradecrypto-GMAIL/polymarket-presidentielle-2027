@@ -1,10 +1,22 @@
 {
   "keys": {
     "raphael-glucksmann|7j|up": {
-      "streak": 55,
-      "seen_t": 1792505784,
+      "streak": 56,
+      "seen_t": 1792508603,
       "alert_t": 1792410463,
       "alert_price": 0.0535
+    },
+    "natacha-polony|24h|down": {
+      "streak": 1,
+      "seen_t": 1792508604
+    },
+    "anasse-kazib|24h|down": {
+      "streak": 1,
+      "seen_t": 1792508599
+    },
+    "sylvain-durif|24h|down": {
+      "streak": 1,
+      "seen_t": 1792508602
     }
   }
 }
