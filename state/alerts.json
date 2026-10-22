@@ -1,14 +1,20 @@
 {
   "keys": {
     "raphael-glucksmann|7j|up": {
-      "streak": 133,
-      "seen_t": 1792674929,
+      "streak": 134,
+      "seen_t": 1792679238,
       "alert_t": 1792410463,
       "alert_price": 0.0535
     },
     "raphael-glucksmann|24h|down": {
+      "streak": 2,
+      "seen_t": 1792679238,
+      "alert_t": 1792679282,
+      "alert_price": 0.0395
+    },
+    "david-lisnard|24h|up": {
       "streak": 1,
-      "seen_t": 1792674929
+      "seen_t": 1792679235
     }
   }
 }
