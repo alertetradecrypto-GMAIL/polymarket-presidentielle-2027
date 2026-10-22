@@ -1,14 +1,14 @@
 {
-  "updated": 1792632518,
+  "updated": 1792634726,
   "event": {
     "id": "79987",
     "slug": "next-french-presidential-election",
     "title": "Next French Presidential Election",
     "end_date": "2027-04-19T03:59:00Z",
-    "volume": 154757259.839242,
-    "volume24h": 458921.174045,
-    "volume_usd": 71744133.42,
-    "volume24h_usd": 66890.17
+    "volume": 154757268.169242,
+    "volume24h": 453063.866756,
+    "volume_usd": 71744147.56,
+    "volume24h_usd": 65938.26
   },
   "candidates": [
     {
@@ -21,19 +21,19 @@
       "ask": 0.465,
       "last": 0.465,
       "volume": 4215624.234532001,
-      "volume24h": 62036.74668300001,
+      "volume24h": 61763.03606500001,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-marine-le-pen-win-the-2027-french-presidential-election-8hg67PHSk27M.jpg",
       "slug": "marine-le-pen",
       "first_seen": 1791451018,
-      "volume_usd": 1640837.87,
-      "volume24h_usd": 29091.82,
+      "volume_usd": 1640842.88,
+      "volume24h_usd": 28951.39,
       "last_hist": 0.4645,
       "price_ref": {
-        "1h": null,
+        "1h": 0.4645,
         "4h": 0.464,
-        "12h": 0.4645,
+        "12h": 0.4635,
         "24h": 0.4645
       },
       "price_24h": 0.4645
@@ -48,17 +48,17 @@
       "ask": 0.19,
       "last": 0.18,
       "volume": 2449544.1239180006,
-      "volume24h": 14278.399512,
+      "volume24h": 14277.180000999999,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-edouard-philippe-0cd29bea14.jpg",
       "slug": "edouard-philippe",
       "first_seen": 1791451018,
       "volume_usd": 694869.41,
-      "volume24h_usd": 2595.09,
+      "volume24h_usd": 2594.09,
       "last_hist": 0.185,
       "price_ref": {
-        "1h": null,
+        "1h": 0.185,
         "4h": 0.185,
         "12h": 0.185,
         "24h": 0.185
@@ -75,7 +75,7 @@
       "ask": 0.128,
       "last": 0.124,
       "volume": 5210623.915573,
-      "volume24h": 54230.95203699999,
+      "volume24h": 54196.76400199998,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-david-lisnard-04e491dec1.jpg",
@@ -85,7 +85,7 @@
       "volume24h_usd": 11890.87,
       "last_hist": 0.125,
       "price_ref": {
-        "1h": null,
+        "1h": 0.125,
         "4h": 0.1265,
         "12h": 0.1165,
         "24h": 0.1165
@@ -102,7 +102,7 @@
       "ask": 0.11,
       "last": 0.1,
       "volume": 2416118.329636,
-      "volume24h": 26879.543830999995,
+      "volume24h": 26879.543831,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-jean-luc-melenchon-57ef66203b.jpg",
@@ -112,7 +112,7 @@
       "volume24h_usd": 3526.26,
       "last_hist": 0.105,
       "price_ref": {
-        "1h": null,
+        "1h": 0.105,
         "4h": 0.105,
         "12h": 0.105,
         "24h": 0.105
@@ -128,18 +128,18 @@
       "bid": 0.043,
       "ask": 0.045,
       "last": 0.045,
-      "volume": 2932350.8070970005,
-      "volume24h": 19883.296583,
+      "volume": 2932358.8570970003,
+      "volume24h": 19891.346583,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-raphael-glucksmann-c0032d60f6.jpg",
       "slug": "raphael-glucksmann",
       "first_seen": 1791451018,
-      "volume_usd": 638966.35,
-      "volume24h_usd": 3692.54,
+      "volume_usd": 638974.05,
+      "volume24h_usd": 3700.24,
       "last_hist": 0.044,
       "price_ref": {
-        "1h": null,
+        "1h": 0.044,
         "4h": 0.0485,
         "12h": 0.0495,
         "24h": 0.0495
@@ -156,7 +156,7 @@
       "ask": 0.017,
       "last": 0.017,
       "volume": 2623450.6260970007,
-      "volume24h": 18634.150714,
+      "volume24h": 17243.660714,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-francois-hollande-0a70931c82.jpg",
@@ -166,12 +166,12 @@
       "volume24h_usd": 443.8,
       "last_hist": 0.0165,
       "price_ref": {
-        "1h": null,
-        "4h": 0.0165,
+        "1h": 0.0165,
+        "4h": 0.017,
         "12h": 0.0215,
-        "24h": 0.0205
+        "24h": 0.022
       },
-      "price_24h": 0.0205
+      "price_24h": 0.022
     },
     {
       "id": "679026",
@@ -182,8 +182,8 @@
       "bid": 0.008,
       "ask": 0.012,
       "last": 0.011,
-      "volume": 3193734.0786430007,
-      "volume24h": 44117.983785,
+      "volume": 3193734.078643,
+      "volume24h": 43567.983785,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-gabriel-attal-27cf6bbb32.jpg",
@@ -193,7 +193,7 @@
       "volume24h_usd": 4463.56,
       "last_hist": 0.01,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0105,
         "4h": 0.0085,
         "12h": 0.0115,
         "24h": 0.0115
@@ -209,18 +209,18 @@
       "bid": 0.008,
       "ask": 0.009,
       "last": 0.008,
-      "volume": 2717032.798114,
-      "volume24h": 16864.035987,
+      "volume": 2717033.0781139997,
+      "volume24h": 16292.906862,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-sarah-knafo-d8d46e9729.jpg",
       "slug": "sarah-knafo",
       "first_seen": 1791451018,
-      "volume_usd": 1107967.9,
-      "volume24h_usd": 318.72,
+      "volume_usd": 1107968.18,
+      "volume24h_usd": 308.98,
       "last_hist": 0.0085,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0085,
         "4h": 0.0085,
         "12h": 0.0085,
         "24h": 0.0085
@@ -237,7 +237,7 @@
       "ask": 0.007,
       "last": 0.007,
       "volume": 3128516.0455389996,
-      "volume24h": 9530.849593,
+      "volume24h": 8980.849593,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-ric-zemmour-win-the-2027-french-presidential-election-Tdu7Nb9S2y9Q.jpg",
@@ -247,7 +247,7 @@
       "volume24h_usd": 108.07,
       "last_hist": 0.0065,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0065,
         "4h": 0.0065,
         "12h": 0.0065,
         "24h": 0.007
@@ -264,7 +264,7 @@
       "ask": 0.007,
       "last": 0.007,
       "volume": 3066104.167518,
-      "volume24h": 15932.546,
+      "volume24h": 15316.826,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-bruno-retailleau-2510fff2f8.jpg",
@@ -274,12 +274,12 @@
       "volume24h_usd": 1915.95,
       "last_hist": 0.0065,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0065,
         "4h": 0.0065,
-        "12h": 0.006,
-        "24h": 0.005
+        "12h": 0.0055,
+        "24h": 0.0045
       },
-      "price_24h": 0.005
+      "price_24h": 0.0045
     },
     {
       "id": "679060",
@@ -291,7 +291,7 @@
       "ask": 0.007,
       "last": 0.006,
       "volume": 1114507.9594349999,
-      "volume24h": 15201.671429,
+      "volume24h": 14651.671429,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-christine-lagarde-49c7cad8fe.jpg",
@@ -301,7 +301,7 @@
       "volume24h_usd": 88.34,
       "last_hist": 0.0065,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0065,
         "4h": 0.0065,
         "12h": 0.0065,
         "24h": 0.0065
@@ -318,7 +318,7 @@
       "ask": 0.006,
       "last": 0.005,
       "volume": 2870539.3409840004,
-      "volume24h": 21602.218891,
+      "volume24h": 21052.218891000004,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-jordan-bardella-7f0e440b56.jpg",
@@ -328,9 +328,9 @@
       "volume24h_usd": 144.53,
       "last_hist": 0.0055,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0055,
         "4h": 0.0055,
-        "12h": 0.007,
+        "12h": 0.0065,
         "24h": 0.0055
       },
       "price_24h": 0.0055
@@ -345,7 +345,7 @@
       "ask": 0.006,
       "last": 0.005,
       "volume": 2696623.429421,
-      "volume24h": 15516.93,
+      "volume24h": 14738.03,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-dominique-de-villepin-00e1cdb48c.jpg",
@@ -355,9 +355,9 @@
       "volume24h_usd": 72.39,
       "last_hist": 0.0055,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0055,
         "4h": 0.0045,
-        "12h": 0.005,
+        "12h": 0.0045,
         "24h": 0.0035
       },
       "price_24h": 0.0035
@@ -371,18 +371,18 @@
       "bid": 0.002,
       "ask": 0.003,
       "last": 0.002,
-      "volume": 2283145.1919940007,
+      "volume": 2283145.191994,
       "volume24h": 18025.356,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-sebastien-lecornu-5cef549ec3.jpg",
       "slug": "sebastien-lecornu",
       "first_seen": 1791451018,
-      "volume_usd": 625932.29,
-      "volume24h_usd": 8080.65,
+      "volume_usd": 625933.44,
+      "volume24h_usd": 7272.21,
       "last_hist": 0.0025,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0025,
         "4h": 0.0025,
         "12h": 0.0025,
         "24h": 0.0025
@@ -409,7 +409,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -436,9 +436,9 @@
       "volume24h_usd": 31.65,
       "last_hist": 0.0015,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0015,
         "4h": 0.0015,
-        "12h": 0.002,
+        "12h": 0.0015,
         "24h": 0.0035
       },
       "price_24h": 0.0035
@@ -463,7 +463,7 @@
       "volume24h_usd": 45.52,
       "last_hist": 0.001,
       "price_ref": {
-        "1h": null,
+        "1h": 0.001,
         "4h": 0.001,
         "12h": 0.001,
         "24h": 0.001
@@ -490,7 +490,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -506,7 +506,7 @@
       "bid": null,
       "ask": 0.002,
       "last": 0.001,
-      "volume": 4841767.680627,
+      "volume": 4841767.680626999,
       "volume24h": 130.0,
       "active": true,
       "closed": false,
@@ -517,7 +517,7 @@
       "volume24h_usd": 0.13,
       "last_hist": 0.001,
       "price_ref": {
-        "1h": null,
+        "1h": 0.001,
         "4h": 0.001,
         "12h": 0.001,
         "24h": 0.001
@@ -533,7 +533,7 @@
       "bid": null,
       "ask": 0.002,
       "last": 0.001,
-      "volume": 4615046.859947,
+      "volume": 4615046.859946999,
       "volume24h": 50.0,
       "active": true,
       "closed": false,
@@ -544,7 +544,7 @@
       "volume24h_usd": 0.05,
       "last_hist": 0.001,
       "price_ref": {
-        "1h": null,
+        "1h": 0.001,
         "4h": 0.001,
         "12h": 0.001,
         "24h": 0.001
@@ -571,7 +571,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -598,7 +598,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -625,7 +625,7 @@
       "volume24h_usd": 0.06,
       "last_hist": 0.001,
       "price_ref": {
-        "1h": null,
+        "1h": 0.001,
         "4h": 0.001,
         "12h": 0.001,
         "24h": 0.001
@@ -652,7 +652,7 @@
       "volume24h_usd": 0.06,
       "last_hist": 0.001,
       "price_ref": {
-        "1h": null,
+        "1h": 0.001,
         "4h": 0.001,
         "12h": 0.001,
         "24h": 0.001
@@ -679,7 +679,7 @@
       "volume24h_usd": 5.0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -706,7 +706,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -733,7 +733,7 @@
       "volume24h_usd": 5.0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -760,7 +760,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -787,7 +787,7 @@
       "volume24h_usd": 5.0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -814,7 +814,7 @@
       "volume24h_usd": 5.0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -841,7 +841,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -868,9 +868,9 @@
       "volume24h_usd": 295.9,
       "last_hist": 0.001,
       "price_ref": {
-        "1h": null,
+        "1h": 0.001,
         "4h": 0.001,
-        "12h": 0.0015,
+        "12h": 0.001,
         "24h": 0.001
       },
       "price_24h": 0.001
@@ -895,7 +895,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -922,7 +922,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -949,7 +949,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -976,7 +976,7 @@
       "volume24h_usd": 55.0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -1003,7 +1003,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -1030,7 +1030,7 @@
       "volume24h_usd": 8.15,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -1057,7 +1057,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -1084,7 +1084,7 @@
       "volume24h_usd": 0.06,
       "last_hist": 0.001,
       "price_ref": {
-        "1h": null,
+        "1h": 0.001,
         "4h": 0.001,
         "12h": 0.001,
         "24h": 0.001
@@ -1111,7 +1111,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -1138,7 +1138,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -1165,7 +1165,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -1192,7 +1192,7 @@
       "volume24h_usd": 0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
@@ -1219,7 +1219,7 @@
       "volume24h_usd": 1.0,
       "last_hist": 0.0005,
       "price_ref": {
-        "1h": null,
+        "1h": 0.0005,
         "4h": 0.0005,
         "12h": 0.0005,
         "24h": 0.0005
