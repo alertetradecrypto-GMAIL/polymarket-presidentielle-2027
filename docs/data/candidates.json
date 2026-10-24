@@ -1,14 +1,14 @@
 {
-  "updated": 1792813591,
+  "updated": 1792815598,
   "event": {
     "id": "79987",
     "slug": "next-french-presidential-election",
     "title": "Next French Presidential Election",
     "end_date": "2027-04-19T03:59:00Z",
     "volume": 155797757.859391,
-    "volume24h": 224778.91661400002,
-    "volume_usd": 71855777.44,
-    "volume24h_usd": 30914.22
+    "volume24h": 224716.15765500002,
+    "volume_usd": 71855810.38,
+    "volume24h_usd": 30902.29
   },
   "candidates": [
     {
@@ -21,22 +21,22 @@
       "ask": 0.463,
       "last": 0.463,
       "volume": 4361385.248614001,
-      "volume24h": 34102.594944,
+      "volume24h": 34036.26231800001,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-marine-le-pen-win-the-2027-french-presidential-election-8hg67PHSk27M.jpg",
       "slug": "marine-le-pen",
       "first_seen": 1791451018,
       "volume_usd": 1708595.31,
-      "volume24h_usd": 15873.4,
+      "volume24h_usd": 15838.81,
       "last_hist": 0.4625,
       "price_ref": {
         "1h": 0.4625,
         "4h": 0.4625,
         "12h": 0.462,
-        "24h": 0.4625
+        "24h": 0.4635
       },
-      "price_24h": 0.4625
+      "price_24h": 0.4635
     },
     {
       "id": "679021",
@@ -60,7 +60,7 @@
       "price_ref": {
         "1h": 0.165,
         "4h": 0.165,
-        "12h": 0.175,
+        "12h": 0.165,
         "24h": 0.175
       },
       "price_24h": 0.175
@@ -87,7 +87,7 @@
       "price_ref": {
         "1h": 0.1365,
         "4h": 0.1375,
-        "12h": 0.1285,
+        "12h": 0.1295,
         "24h": 0.136
       },
       "price_24h": 0.136
@@ -129,19 +129,19 @@
       "ask": 0.044,
       "last": 0.044,
       "volume": 2979090.8451600005,
-      "volume24h": 7001.589419,
+      "volume24h": 7000.249419000001,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-raphael-glucksmann-c0032d60f6.jpg",
       "slug": "raphael-glucksmann",
       "first_seen": 1791451018,
-      "volume_usd": 642605.79,
-      "volume24h_usd": 1137.24,
+      "volume_usd": 642617.6,
+      "volume24h_usd": 1139.05,
       "last_hist": 0.0435,
       "price_ref": {
         "1h": 0.0435,
         "4h": 0.0435,
-        "12h": 0.0455,
+        "12h": 0.0435,
         "24h": 0.0445
       },
       "price_24h": 0.0445
@@ -156,18 +156,18 @@
       "ask": 0.024,
       "last": 0.023,
       "volume": 2654843.1177090006,
-      "volume24h": 6958.644891,
+      "volume24h": 6966.554891,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-francois-hollande-0a70931c82.jpg",
       "slug": "francois-hollande",
       "first_seen": 1791451018,
-      "volume_usd": 711406.79,
-      "volume24h_usd": 194.8,
+      "volume_usd": 711414.52,
+      "volume24h_usd": 202.53,
       "last_hist": 0.0235,
       "price_ref": {
         "1h": 0.0235,
-        "4h": 0.0225,
+        "4h": 0.0235,
         "12h": 0.0205,
         "24h": 0.0165
       },
@@ -194,8 +194,8 @@
       "last_hist": 0.0115,
       "price_ref": {
         "1h": 0.0115,
-        "4h": 0.0115,
-        "12h": 0.006,
+        "4h": 0.01,
+        "12h": 0.0055,
         "24h": 0.006
       },
       "price_24h": 0.006
@@ -209,7 +209,7 @@
       "bid": 0.009,
       "ask": 0.011,
       "last": 0.01,
-      "volume": 3214505.266221001,
+      "volume": 3214505.2662210003,
       "volume24h": 4210.809811,
       "active": true,
       "closed": false,
@@ -222,7 +222,7 @@
       "price_ref": {
         "1h": 0.01,
         "4h": 0.01,
-        "12h": 0.012,
+        "12h": 0.0115,
         "24h": 0.012
       },
       "price_24h": 0.012
@@ -237,19 +237,19 @@
       "ask": 0.01,
       "last": 0.008,
       "volume": 3163011.1656669993,
-      "volume24h": 22662.010639000004,
+      "volume24h": 22660.014306000005,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-ric-zemmour-win-the-2027-french-presidential-election-Tdu7Nb9S2y9Q.jpg",
       "slug": "eric-zemmour",
       "first_seen": 1791451018,
       "volume_usd": 447583.04,
-      "volume24h_usd": 229.47,
+      "volume24h_usd": 229.38,
       "last_hist": 0.0085,
       "price_ref": {
         "1h": 0.0085,
-        "4h": 0.0085,
-        "12h": 0.007,
+        "4h": 0.0075,
+        "12h": 0.0065,
         "24h": 0.007
       },
       "price_24h": 0.007
@@ -270,8 +270,8 @@
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-jordan-bardella-7f0e440b56.jpg",
       "slug": "jordan-bardella",
       "first_seen": 1791451018,
-      "volume_usd": 703011.2,
-      "volume24h_usd": 23.65,
+      "volume_usd": 703024.6,
+      "volume24h_usd": 37.05,
       "last_hist": 0.0075,
       "price_ref": {
         "1h": 0.0075,
@@ -291,19 +291,19 @@
       "ask": 0.007,
       "last": 0.006,
       "volume": 2730854.442194,
-      "volume24h": 3229.080564,
+      "volume24h": 3228.080564,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-sarah-knafo-d8d46e9729.jpg",
       "slug": "sarah-knafo",
       "first_seen": 1791451018,
       "volume_usd": 1108331.4,
-      "volume24h_usd": 247.86,
+      "volume24h_usd": 247.67,
       "last_hist": 0.0065,
       "price_ref": {
         "1h": 0.0065,
         "4h": 0.0065,
-        "12h": 0.0075,
+        "12h": 0.0065,
         "24h": 0.0075
       },
       "price_24h": 0.0075
@@ -371,8 +371,8 @@
       "bid": 0.002,
       "ask": 0.003,
       "last": 0.002,
-      "volume": 2307229.1616560007,
-      "volume24h": 5031.214832,
+      "volume": 2307229.161656,
+      "volume24h": 5031.214831999999,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-sebastien-lecornu-5cef549ec3.jpg",
@@ -560,7 +560,7 @@
       "bid": null,
       "ask": 0.001,
       "last": 0.001,
-      "volume": 4264176.111008,
+      "volume": 4264176.111008001,
       "volume24h": 8.0,
       "active": true,
       "closed": false,
