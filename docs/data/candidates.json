@@ -1,14 +1,14 @@
 {
-  "updated": 1792803469,
+  "updated": 1792805777,
   "event": {
     "id": "79987",
     "slug": "next-french-presidential-election",
     "title": "Next French Presidential Election",
     "end_date": "2027-04-19T03:59:00Z",
-    "volume": 155772650.23955,
-    "volume24h": 212229.795241,
-    "volume_usd": 71854357.24,
-    "volume24h_usd": 29829.74
+    "volume": 155774079.846235,
+    "volume24h": 213296.476338,
+    "volume_usd": 71854917.48,
+    "volume24h_usd": 30266.99
   },
   "candidates": [
     {
@@ -19,21 +19,21 @@
       "price": 0.4625,
       "bid": 0.462,
       "ask": 0.463,
-      "last": 0.461,
-      "volume": 4360240.54019,
-      "volume24h": 33194.564038000004,
+      "last": 0.463,
+      "volume": 4361385.248614001,
+      "volume24h": 34285.642462,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-marine-le-pen-win-the-2027-french-presidential-election-8hg67PHSk27M.jpg",
       "slug": "marine-le-pen",
       "first_seen": 1791451018,
-      "volume_usd": 1708065.31,
-      "volume24h_usd": 15468.15,
-      "last_hist": 0.462,
+      "volume_usd": 1708595.31,
+      "volume24h_usd": 15880.83,
+      "last_hist": 0.4625,
       "price_ref": {
-        "1h": 0.4625,
+        "1h": 0.462,
         "4h": 0.462,
-        "12h": 0.4615,
+        "12h": 0.462,
         "24h": 0.4625
       },
       "price_24h": 0.4625
@@ -85,8 +85,8 @@
       "volume24h_usd": 5106.27,
       "last_hist": 0.1365,
       "price_ref": {
-        "1h": 0.1375,
-        "4h": 0.1395,
+        "1h": 0.1365,
+        "4h": 0.139,
         "12h": 0.1285,
         "24h": 0.136
       },
@@ -129,7 +129,7 @@
       "ask": 0.044,
       "last": 0.044,
       "volume": 2979082.94516,
-      "volume24h": 7020.009419,
+      "volume24h": 7017.249419,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-raphael-glucksmann-c0032d60f6.jpg",
@@ -155,18 +155,18 @@
       "bid": 0.023,
       "ask": 0.024,
       "last": 0.023,
-      "volume": 2654829.0277090003,
-      "volume24h": 7204.388254999999,
+      "volume": 2654837.4877090007,
+      "volume24h": 7212.848254999999,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-francois-hollande-0a70931c82.jpg",
       "slug": "francois-hollande",
       "first_seen": 1791451018,
-      "volume_usd": 711394.63,
-      "volume24h_usd": 285.12,
+      "volume_usd": 711401.29,
+      "volume24h_usd": 290.73,
       "last_hist": 0.0235,
       "price_ref": {
-        "1h": 0.0225,
+        "1h": 0.0235,
         "4h": 0.0225,
         "12h": 0.0205,
         "24h": 0.0185
@@ -195,7 +195,7 @@
       "price_ref": {
         "1h": 0.01,
         "4h": 0.01,
-        "12h": 0.011,
+        "12h": 0.0115,
         "24h": 0.012
       },
       "price_24h": 0.012
@@ -220,12 +220,39 @@
       "volume24h_usd": 508.53,
       "last_hist": 0.01,
       "price_ref": {
-        "1h": 0.0125,
+        "1h": 0.01,
         "4h": 0.0055,
         "12h": 0.006,
         "24h": 0.006
       },
       "price_24h": 0.006
+    },
+    {
+      "id": "679020",
+      "name": "Éric Zemmour",
+      "condition_id": "0x290b3a5826b17e48ae7166b188767d95df5a9ed0b69fda116d98d0d27d753281",
+      "token_yes": "51126599157451146230415396920771455069752975116525743821340393650626382714261",
+      "price": 0.0085,
+      "bid": 0.007,
+      "ask": 0.01,
+      "last": 0.008,
+      "volume": 3160508.7975249994,
+      "volume24h": 20161.142497,
+      "active": true,
+      "closed": false,
+      "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-ric-zemmour-win-the-2027-french-presidential-election-Tdu7Nb9S2y9Q.jpg",
+      "slug": "eric-zemmour",
+      "first_seen": 1791451018,
+      "volume_usd": 447580.7,
+      "volume24h_usd": 229.11,
+      "last_hist": 0.0085,
+      "price_ref": {
+        "1h": 0.0075,
+        "4h": 0.009,
+        "12h": 0.007,
+        "24h": 0.007
+      },
+      "price_24h": 0.007
     },
     {
       "id": "679019",
@@ -249,37 +276,10 @@
       "price_ref": {
         "1h": 0.0075,
         "4h": 0.0075,
-        "12h": 0.008,
+        "12h": 0.0075,
         "24h": 0.0075
       },
       "price_24h": 0.0075
-    },
-    {
-      "id": "679020",
-      "name": "Éric Zemmour",
-      "condition_id": "0x290b3a5826b17e48ae7166b188767d95df5a9ed0b69fda116d98d0d27d753281",
-      "token_yes": "51126599157451146230415396920771455069752975116525743821340393650626382714261",
-      "price": 0.0075,
-      "bid": 0.007,
-      "ask": 0.008,
-      "last": 0.009,
-      "volume": 3160508.7975249994,
-      "volume24h": 20162.560997,
-      "active": true,
-      "closed": false,
-      "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/will-ric-zemmour-win-the-2027-french-presidential-election-Tdu7Nb9S2y9Q.jpg",
-      "slug": "eric-zemmour",
-      "first_seen": 1791451018,
-      "volume_usd": 447560.7,
-      "volume24h_usd": 212.01,
-      "last_hist": 0.0075,
-      "price_ref": {
-        "1h": 0.0085,
-        "4h": 0.0085,
-        "12h": 0.007,
-        "24h": 0.007
-      },
-      "price_24h": 0.007
     },
     {
       "id": "679051",
@@ -371,15 +371,15 @@
       "bid": 0.002,
       "ask": 0.003,
       "last": 0.002,
-      "volume": 2307225.568156,
-      "volume24h": 5032.848665,
+      "volume": 2307225.5681560007,
+      "volume24h": 5030.584332,
       "active": true,
       "closed": false,
       "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/fr27-sebastien-lecornu-5cef549ec3.jpg",
       "slug": "sebastien-lecornu",
       "first_seen": 1791451018,
-      "volume_usd": 627857.17,
-      "volume24h_usd": 99.35,
+      "volume_usd": 627860.75,
+      "volume24h_usd": 101.21,
       "last_hist": 0.0025,
       "price_ref": {
         "1h": 0.0025,
