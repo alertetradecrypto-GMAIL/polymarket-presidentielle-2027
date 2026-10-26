@@ -1,26 +1,16 @@
 {
   "keys": {
     "raphael-glucksmann|24h|up": {
-      "streak": 3,
-      "seen_t": 1793028495,
+      "streak": 4,
+      "seen_t": 1793031862,
       "alert_t": 1793022560,
       "alert_price": 0.045
     },
     "francois-hollande|24h|up": {
-      "streak": 1,
-      "seen_t": 1793028495
-    },
-    "natacha-polony|7j|down": {
-      "streak": 1,
-      "seen_t": 1793028562
-    },
-    "anasse-kazib|7j|down": {
-      "streak": 1,
-      "seen_t": 1793028558
-    },
-    "sylvain-durif|7j|down": {
-      "streak": 1,
-      "seen_t": 1793028560
+      "streak": 2,
+      "seen_t": 1793031861,
+      "alert_t": 1793031910,
+      "alert_price": 0.0315
     }
   }
 }
