@@ -1,12 +1,10 @@
 {
   "keys": {
-    "david-lisnard|24h|up": {
-      "streak": 1,
-      "seen_t": 1792986198
-    },
     "raphael-glucksmann|24h|up": {
-      "streak": 1,
-      "seen_t": 1792986201
+      "streak": 2,
+      "seen_t": 1792988361,
+      "alert_t": 1792988419,
+      "alert_price": 0.0475
     }
   }
 }
