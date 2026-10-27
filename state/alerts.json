@@ -1,14 +1,14 @@
 {
   "keys": {
     "edouard-philippe|24h|up": {
-      "streak": 12,
-      "seen_t": 1793074640,
+      "streak": 13,
+      "seen_t": 1793077280,
       "alert_t": 1793051375,
       "alert_price": 0.195
     },
     "raphael-glucksmann|24h|down": {
-      "streak": 5,
-      "seen_t": 1793074643,
+      "streak": 6,
+      "seen_t": 1793077284,
       "alert_t": 1793067387,
       "alert_price": 0.0335
     }
