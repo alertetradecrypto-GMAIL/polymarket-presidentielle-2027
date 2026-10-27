@@ -1,8 +1,10 @@
 {
   "keys": {
     "david-lisnard|7j|up": {
-      "streak": 1,
-      "seen_t": 1793141961
+      "streak": 2,
+      "seen_t": 1793143760,
+      "alert_t": 1793143793,
+      "alert_price": 0.1545
     }
   }
 }
