@@ -1,22 +1,20 @@
 {
   "keys": {
     "francois-hollande|24h|down": {
-      "streak": 13,
-      "seen_t": 1793197903,
+      "streak": 14,
+      "seen_t": 1793201493,
       "alert_t": 1793164879,
       "alert_price": 0.0135
     },
     "david-lisnard|7j|up": {
-      "streak": 5,
-      "seen_t": 1793197901,
+      "streak": 6,
+      "seen_t": 1793201491,
       "alert_t": 1793188380,
       "alert_price": 0.1575
     },
-    "david-lisnard|24h|up": {
-      "streak": 2,
-      "seen_t": 1793197901,
-      "alert_t": 1793197938,
-      "alert_price": 0.1555
+    "jordan-bardella|24h|up": {
+      "streak": 1,
+      "seen_t": 1793201492
     }
   }
 }
