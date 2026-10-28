@@ -1,14 +1,8 @@
 {
   "keys": {
-    "francois-hollande|24h|down": {
-      "streak": 16,
-      "seen_t": 1793208440,
-      "alert_t": 1793164879,
-      "alert_price": 0.0135
-    },
     "jordan-bardella|24h|up": {
-      "streak": 3,
-      "seen_t": 1793208439,
+      "streak": 4,
+      "seen_t": 1793209550,
       "alert_t": 1793205069,
       "alert_price": 0.0185
     }
