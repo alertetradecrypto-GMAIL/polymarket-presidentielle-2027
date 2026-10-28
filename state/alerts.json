@@ -1,20 +1,22 @@
 {
   "keys": {
     "francois-hollande|24h|down": {
-      "streak": 12,
-      "seen_t": 1793194696,
+      "streak": 13,
+      "seen_t": 1793197903,
       "alert_t": 1793164879,
       "alert_price": 0.0135
     },
     "david-lisnard|7j|up": {
-      "streak": 4,
-      "seen_t": 1793194694,
+      "streak": 5,
+      "seen_t": 1793197901,
       "alert_t": 1793188380,
       "alert_price": 0.1575
     },
     "david-lisnard|24h|up": {
-      "streak": 1,
-      "seen_t": 1793194694
+      "streak": 2,
+      "seen_t": 1793197901,
+      "alert_t": 1793197938,
+      "alert_price": 0.1555
     }
   }
 }
