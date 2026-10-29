@@ -1,14 +1,14 @@
 {
   "keys": {
     "christine-lagarde|24h|up": {
-      "streak": 15,
-      "seen_t": 1793314398,
+      "streak": 16,
+      "seen_t": 1793316388,
       "alert_t": 1793298225,
       "alert_price": 0.0355
     },
     "christine-lagarde|7j|up": {
-      "streak": 10,
-      "seen_t": 1793314398,
+      "streak": 11,
+      "seen_t": 1793316388,
       "alert_t": 1793292690,
       "alert_price": 0.0315
     }
