@@ -252,3 +252,21 @@ td.muted { text-align: center; padding: 14px; }
 .pf-side { font-weight: 600; font-size: 12px; }
 .pf-chart { height: 280px; }
 #cur button:disabled { opacity: .4; cursor: default; }
+
+/* Tablette / écran tactile */
+@media (pointer: coarse) {
+  .seg button { min-height: 40px; padding: 6px 14px; }
+  .table-tools .seg button, .ob-head .seg button { min-height: 36px; }
+  .tabs a { padding: 9px 16px; font-size: 14px; }
+  .chip { min-height: 36px; }
+  .chip .x { padding: 6px 10px; font-size: 18px; }
+  input, select, .filters select, .filters input { min-height: 40px; font-size: 16px; }
+}
+@media (pointer: coarse) and (orientation: portrait) {
+  .chart-wrap { height: clamp(360px, 52vh, 1000px); }
+}
+/* Appli installée : marges de sécurité (encoche, barre de navigation) */
+.standalone body {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  overscroll-behavior-y: contain;
+}

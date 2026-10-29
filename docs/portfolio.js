@@ -311,7 +311,21 @@ function setCur(c) {
 }
 
 /* ---------- démarrage ---------- */
+/* Lien d'enregistrement : portfolio.html#setup=A1:0x…,A2:0x…  → localStorage, puis effacé de l'URL.
+ * Les adresses restent dans le navigateur ; rien n'est commité. */
+function importSetupLink() {
+  const m = location.hash.match(/(?:^#|&)setup=([^&]+)/);
+  if (!m) return;
+  const out = decodeURIComponent(m[1]).split(",").slice(0, N_ADDR).map((it, i) => {
+    const [a, b] = it.includes(":") ? it.split(":") : ["", it];
+    return { label: a.trim() || `A${i + 1}`, addr: b.trim().toLowerCase() };
+  }).filter((a) => /^0x[0-9a-f]{40}$/.test(a.addr));
+  if (out.length) lsSet(LS.addrs, out);
+  history.replaceState(null, "", location.pathname + location.search);
+}
+
 async function init() {
+  importSetupLink();
   state.addrs = lsGet(LS.addrs, []).filter((a) => a && /^0x[0-9a-f]{40}$/i.test(a.addr));
   state.cur = lsGet(LS.cur, "USD");
   $("#addr-form").addEventListener("submit", saveAddrs);
