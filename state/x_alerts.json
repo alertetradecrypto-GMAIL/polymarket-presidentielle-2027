@@ -1,11 +1,12 @@
 {
-  "day": "2026-10-28",
-  "count": 3,
+  "day": "2026-10-29",
+  "count": 1,
   "last": {
     "raphael-glucksmann|up": 1793022586,
     "raphael-glucksmann|down": 1793102772,
     "david-lisnard|up": 1793188403,
     "francois-hollande|up": 1793032507,
-    "francois-hollande|down": 1793164907
+    "francois-hollande|down": 1793164907,
+    "jordan-bardella|up": 1793233060
   }
 }
