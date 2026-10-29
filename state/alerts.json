@@ -1,8 +1,10 @@
 {
   "keys": {
     "jordan-bardella|24h|up": {
-      "streak": 1,
-      "seen_t": 1793251401
+      "streak": 2,
+      "seen_t": 1793254100,
+      "alert_t": 1793254138,
+      "alert_price": 0.024
     }
   }
 }
