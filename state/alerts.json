@@ -1,16 +1,14 @@
 {
   "keys": {
-    "jordan-bardella|7j|up": {
-      "streak": 7,
-      "seen_t": 1793360960,
-      "alert_t": 1793346132,
-      "alert_price": 0.041
-    },
     "raphael-glucksmann|24h|down": {
-      "streak": 5,
-      "seen_t": 1793360962,
+      "streak": 6,
+      "seen_t": 1793363660,
       "alert_t": 1793352689,
       "alert_price": 0.0305
+    },
+    "christine-lagarde|24h|up": {
+      "streak": 1,
+      "seen_t": 1793363658
     }
   }
 }
