@@ -1,20 +1,16 @@
 {
   "keys": {
     "christine-lagarde|24h|up": {
-      "streak": 20,
-      "seen_t": 1793328918,
+      "streak": 21,
+      "seen_t": 1793331318,
       "alert_t": 1793298225,
       "alert_price": 0.0355
     },
     "christine-lagarde|7j|up": {
-      "streak": 15,
-      "seen_t": 1793328918,
+      "streak": 16,
+      "seen_t": 1793331318,
       "alert_t": 1793292690,
       "alert_price": 0.0315
-    },
-    "jordan-bardella|24h|up": {
-      "streak": 1,
-      "seen_t": 1793328920
     }
   }
 }
