@@ -1,28 +1,26 @@
 {
   "keys": {
     "christine-lagarde|24h|up": {
-      "streak": 26,
-      "seen_t": 1793346079,
+      "streak": 27,
+      "seen_t": 1793349078,
       "alert_t": 1793298225,
       "alert_price": 0.0355
     },
-    "christine-lagarde|7j|up": {
-      "streak": 21,
-      "seen_t": 1793346079,
-      "alert_t": 1793292690,
-      "alert_price": 0.0315
-    },
     "jordan-bardella|24h|up": {
-      "streak": 2,
-      "seen_t": 1793346081,
+      "streak": 3,
+      "seen_t": 1793349080,
       "alert_t": 1793346132,
       "alert_price": 0.041
     },
     "jordan-bardella|7j|up": {
-      "streak": 2,
-      "seen_t": 1793346081,
+      "streak": 3,
+      "seen_t": 1793349080,
       "alert_t": 1793346132,
       "alert_price": 0.041
+    },
+    "raphael-glucksmann|24h|down": {
+      "streak": 1,
+      "seen_t": 1793349081
     }
   }
 }
