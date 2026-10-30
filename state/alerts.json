@@ -1,14 +1,16 @@
 {
   "keys": {
     "christine-lagarde|7j|up": {
-      "streak": 12,
-      "seen_t": 1793397858,
+      "streak": 13,
+      "seen_t": 1793400319,
       "alert_t": 1793371002,
       "alert_price": 0.0295
     },
     "david-lisnard|24h|up": {
-      "streak": 1,
-      "seen_t": 1793397859
+      "streak": 2,
+      "seen_t": 1793400319,
+      "alert_t": 1793400357,
+      "alert_price": 0.179
     }
   }
 }
