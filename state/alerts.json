@@ -1,14 +1,16 @@
 {
   "keys": {
     "raphael-glucksmann|24h|down": {
-      "streak": 7,
-      "seen_t": 1793367691,
+      "streak": 8,
+      "seen_t": 1793370918,
       "alert_t": 1793352689,
       "alert_price": 0.0305
     },
     "christine-lagarde|7j|up": {
-      "streak": 1,
-      "seen_t": 1793367688
+      "streak": 2,
+      "seen_t": 1793370980,
+      "alert_t": 1793371002,
+      "alert_price": 0.0295
     }
   }
 }
