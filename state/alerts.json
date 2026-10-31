@@ -1,20 +1,14 @@
 {
   "keys": {
     "christine-lagarde|7j|up": {
-      "streak": 15,
-      "seen_t": 1793404770,
-      "alert_t": 1793371002,
-      "alert_price": 0.0295
+      "streak": 16,
+      "seen_t": 1793407939,
+      "alert_t": 1793407986,
+      "alert_price": 0.0395
     },
-    "david-lisnard|24h|up": {
-      "streak": 4,
-      "seen_t": 1793404700,
-      "alert_t": 1793400357,
-      "alert_price": 0.179
-    },
-    "david-lisnard|7j|up": {
+    "edouard-philippe|24h|down": {
       "streak": 1,
-      "seen_t": 1793404700
+      "seen_t": 1793407879
     }
   }
 }
