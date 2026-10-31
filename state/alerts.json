@@ -13,14 +13,14 @@
       "alert_price": 0.0215
     },
     "edouard-philippe|24h|down": {
-      "streak": 22,
-      "seen_t": 1793466056,
+      "streak": 23,
+      "seen_t": 1793468643,
       "alert_t": 1793441098,
       "alert_price": 0.12
     },
     "christine-lagarde|24h|up": {
-      "streak": 2,
-      "seen_t": 1793466055,
+      "streak": 3,
+      "seen_t": 1793468679,
       "alert_t": 1793466836,
       "alert_price": 0.0505
     }
