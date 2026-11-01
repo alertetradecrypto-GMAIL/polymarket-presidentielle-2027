@@ -1,16 +1,20 @@
 {
   "keys": {
     "christine-lagarde|7j|up": {
-      "streak": 81,
-      "seen_t": 1793573416,
+      "streak": 82,
+      "seen_t": 1793575515,
       "alert_t": 1793524485,
       "alert_price": 0.0825
     },
     "christine-lagarde|24h|up": {
-      "streak": 4,
-      "seen_t": 1793573416,
+      "streak": 5,
+      "seen_t": 1793575515,
       "alert_t": 1793568935,
       "alert_price": 0.061
+    },
+    "jean-luc-melenchon|24h|up": {
+      "streak": 1,
+      "seen_t": 1793575520
     }
   }
 }
