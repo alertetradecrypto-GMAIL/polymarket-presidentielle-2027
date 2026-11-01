@@ -1,26 +1,22 @@
 {
   "keys": {
     "christine-lagarde|7j|up": {
-      "streak": 52,
-      "seen_t": 1793500690,
+      "streak": 53,
+      "seen_t": 1793503691,
       "alert_t": 1793491074,
       "alert_price": 0.0615
     },
     "christine-lagarde|24h|up": {
-      "streak": 16,
-      "seen_t": 1793500690,
+      "streak": 17,
+      "seen_t": 1793503691,
       "alert_t": 1793491074,
       "alert_price": 0.0615
     },
-    "david-lisnard|7j|up": {
-      "streak": 11,
-      "seen_t": 1793500691,
-      "alert_t": 1793478240,
-      "alert_price": 0.1715
-    },
     "david-lisnard|24h|down": {
-      "streak": 1,
-      "seen_t": 1793500691
+      "streak": 2,
+      "seen_t": 1793503691,
+      "alert_t": 1793503766,
+      "alert_price": 0.1695
     }
   }
 }
