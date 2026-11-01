@@ -1,14 +1,15 @@
 {
   "day": "2026-11-01",
-  "count": 2,
+  "count": 3,
   "last": {
     "raphael-glucksmann|up": 1793022586,
     "raphael-glucksmann|down": 1793414315,
-    "david-lisnard|up": 1793414315,
+    "david-lisnard|up": 1793521678,
     "francois-hollande|up": 1793032507,
     "francois-hollande|down": 1793164907,
     "jordan-bardella|up": 1793346155,
     "christine-lagarde|up": 1793491113,
-    "david-lisnard|down": 1793503788
+    "david-lisnard|down": 1793503788,
+    "edouard-philippe|down": 1793521678
   }
 }
