@@ -1,3 +1,12 @@
 {
-  "keys": {}
+  "keys": {
+    "david-lisnard|24h|up": {
+      "streak": 1,
+      "seen_t": 1794417556
+    },
+    "edouard-philippe|7j|down": {
+      "streak": 1,
+      "seen_t": 1794417556
+    }
+  }
 }
