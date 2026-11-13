@@ -25,8 +25,8 @@ MAX_SPREAD_FOR_MID = 0.10    # au-delà, Polymarket affiche le dernier prix éch
 HTTP_TIMEOUT_S = 20
 
 # Volume (trades de la Data API, côté taker = définition du volume Gamma)
-TRADES_PAGE = 500            # taille max d'une page /trades
-TRADES_MAX_OFFSET = 10000    # offset max accepté par /trades
+TRADES_PAGE = 1000           # taille max d'une page /v2/trades
+POSITIONS_PAGE = 100         # taille d'une page /v2/positions
 VOL_BACKFILL_PER_RUN = 3     # rattrapages complets max par collecte (nouveaux candidats)
 
 # Journal des trades (adresses complètes, données publiques on-chain)

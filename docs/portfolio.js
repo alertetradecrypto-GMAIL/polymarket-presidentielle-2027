@@ -1,7 +1,7 @@
 /* Portefeuille en temps réel.
  * Tout se passe dans le navigateur : les adresses sont lues depuis localStorage,
  * jamais depuis le dépôt. Sources :
- *  - positions : data-api.polymarket.com/positions (même logique que src/daily.py)
+ *  - positions : data-api.polymarket.com/v2/positions (même logique que src/daily.py)
  *  - cash      : solde pUSD + USDC.e sur Polygon (eth_call balanceOf)
  *  - prix 24 h : data/candidates.json (price_24h, généré par collect.py)
  *  - devises   : api.frankfurter.app (USDC ≈ USD)
@@ -58,14 +58,23 @@ async function getJSON(url, opts = {}) {
   return r.json();
 }
 
+/* Data API v2 : enveloppe {data, pagination}, curseur, snake_case → noms v1 */
+const POS_V1 = {
+  condition_id: "conditionId", event_slug: "eventSlug", current_size: "size",
+  avg_price: "avgPrice", current_price: "curPrice", entry_cost_usdc: "initialValue",
+  current_value: "currentValue", realized_pnl: "realizedPnl",
+};
+const toV1 = (p) => { const o = { ...p }; for (const [k, v] of Object.entries(POS_V1)) if (k in p) o[v] = p[k]; return o; };
+
 async function fetchPositions(addr) {
   const out = [];
-  for (let offset = 0; ; offset += 500) {
-    const page = await getJSON(`${DATA_API}/positions?user=${addr}&sizeThreshold=0&limit=500&offset=${offset}`);
-    if (!Array.isArray(page) || !page.length) break;
-    out.push(...page);
-    if (page.length < 500) break;
-  }
+  let cursor = null;
+  do {
+    const q = `user=${addr}&limit=100` + (cursor ? `&cursor=${encodeURIComponent(cursor)}` : "");
+    const page = await getJSON(`${DATA_API}/v2/positions?${q}`);
+    out.push(...(page.data || []).map(toV1));
+    cursor = page.pagination && page.pagination.next_cursor;
+  } while (cursor);
   return out;
 }
 

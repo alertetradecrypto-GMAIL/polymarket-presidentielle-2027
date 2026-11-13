@@ -10,32 +10,30 @@ def trade(t, size=10.0, price=0.5):
     return {"timestamp": t, "size": size, "price": price}
 
 
-def fake_api(monkeypatch, trades, page=3, max_offset=6):
-    """API /trades simulée : tri décroissant, start/end inclusifs, offset plafonné."""
+def fake_api(monkeypatch, trades, page=3):
+    """/v2/trades simulée : flux décroissant, pages par curseur, start/end ignorés."""
     monkeypatch.setattr(pm, "TRADES_PAGE", page)
-    monkeypatch.setattr(pm, "TRADES_MAX_OFFSET", max_offset)
     calls = []
 
-    def get_trades(cond, *, start=None, end=None, offset=0):
-        calls.append((start, end, offset))
-        assert offset <= max_offset
-        rows = sorted((t for t in trades
-                       if (start is None or t["timestamp"] >= start)
-                       and (end is None or t["timestamp"] <= end)),
-                      key=lambda t: -t["timestamp"])
-        return rows[offset:offset + page]
+    def _get(url, params=None):
+        calls.append(dict(params))
+        assert "offset" not in params and "start" not in params
+        rows = sorted(trades, key=lambda t: -t["timestamp"])
+        i = int(params.get("cursor") or 0)
+        nxt = i + page if i + page < len(rows) else None
+        return {"data": rows[i:i + page],
+                "pagination": {"next_cursor": str(nxt) if nxt else None}}
 
-    monkeypatch.setattr(pm, "get_trades", get_trades)
+    monkeypatch.setattr(pm, "_get", _get)
     return calls
 
 
-def test_iter_trades_sliding_windows_no_gap_no_dup(monkeypatch):
-    # 40 trades dont des paquets dans la même seconde, fenêtre max = 9 lignes
+def test_iter_trades_cursor_no_gap_no_dup(monkeypatch):
     trades = [trade(1000 + i // 3, size=i + 1) for i in range(40)]
     calls = fake_api(monkeypatch, trades)
     got = list(pm.iter_trades("c", None, 2000))
     assert sorted(s for _, s, _ in got) == [float(i + 1) for i in range(40)]
-    assert len({c[1] for c in calls}) > 1          # plusieurs fenêtres
+    assert len(calls) > 1                           # plusieurs pages
 
 
 def test_iter_trades_respects_start(monkeypatch):
@@ -56,7 +54,7 @@ def test_vol_buckets_and_compact():
 def test_update_volume_backfill_then_incremental(monkeypatch):
     t0 = NOW - 3 * 86400
     trades = [trade(t0 + i * 600, size=100, price=0.2) for i in range(10)]
-    fake_api(monkeypatch, trades, page=500, max_offset=10000)
+    fake_api(monkeypatch, trades, page=500)
     c = {"name": "X", "condition_id": "c", "active": True, "volume": 1000.0}
     hist = {}
     assert collect.update_volume(hist, c, NOW, True) is True
@@ -85,3 +83,14 @@ def test_backfill_budget(tmp_path, monkeypatch):
     collect.run(backfill_budget=None)
     data = json.loads((tmp_path / "candidates.json").read_text())
     assert data["event"]["volume_usd"] == 0
+
+
+def test_get_positions_v2_mapped_to_v1(monkeypatch):
+    row = {"condition_id": "0xab", "current_size": 300.0, "avg_price": 0.88,
+           "current_price": 0.865, "current_value": 259.5, "entry_cost_usdc": 264.0,
+           "event_slug": "next-french-presidential-election", "outcome": "No"}
+    monkeypatch.setattr(pm, "_get", lambda url, params=None: {
+        "data": [row], "pagination": {"next_cursor": None}})
+    p, = pm.get_positions("0x1")
+    assert (p["conditionId"], p["size"], p["avgPrice"], p["curPrice"],
+            p["currentValue"], p["initialValue"]) == ("0xab", 300.0, 0.88, 0.865, 259.5, 264.0)

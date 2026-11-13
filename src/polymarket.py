@@ -20,7 +20,7 @@ from config import (
     HTTP_TIMEOUT_S,
     MAX_SPREAD_FOR_MID,
     POLYGON_RPCS,
-    TRADES_MAX_OFFSET,
+    POSITIONS_PAGE,
     TRADES_PAGE,
 )
 
@@ -142,70 +142,68 @@ def get_price_history(
 
 # ---------------------------------------------------------------- Data API
 
+def _paged(url: str, params: dict, limit: int):
+    """Data API v2 : enveloppe {data, pagination}, pagination par curseur."""
+    params = {**params, "limit": limit}
+    while True:
+        page = _get(url, params) or {}
+        yield page.get("data") or []
+        cursor = (page.get("pagination") or {}).get("next_cursor")
+        if not cursor:
+            return
+        params = {**params, "cursor": cursor}
+
+
+# v2 (snake_case) -> noms v1 utilisés dans le reste du code
+_POS_V1 = {
+    "condition_id": "conditionId", "event_slug": "eventSlug", "current_size": "size",
+    "avg_price": "avgPrice", "current_price": "curPrice", "entry_cost_usdc": "initialValue",
+    "current_value": "currentValue", "realized_pnl": "realizedPnl",
+    "unrealized_pnl": "cashPnl", "percent_pnl": "percentPnl", "token_id": "asset",
+    "proxy_wallet": "proxyWallet",
+}
+_TRADE_V1 = {"proxy_wallet": "proxyWallet", "transaction_hash": "transactionHash",
+             "condition_id": "conditionId", "token_id": "asset"}
+
+
+def _to_v1(row: dict, mapping: dict) -> dict:
+    return {**row, **{v1: row[v2] for v2, v1 in mapping.items() if v2 in row}}
+
+
 def get_positions(address: str) -> list[dict]:
     """Positions ouvertes d'une adresse proxy (utilisé par le récap)."""
-    out, offset = [], 0
-    while True:
-        page = _get(
-            f"{DATA_API_URL}/positions",
-            {"user": address, "sizeThreshold": 0, "limit": 500, "offset": offset},
-        )
-        if not page:
-            break
-        out.extend(page)
-        if len(page) < 500:
-            break
-        offset += 500
+    out = []
+    for rows in _paged(f"{DATA_API_URL}/v2/positions", {"user": address}, POSITIONS_PAGE):
+        out.extend(_to_v1(r, _POS_V1) for r in rows)
     return out
 
 
-def get_trades(condition_id: str, *, start: int | None = None, end: int | None = None,
-               offset: int = 0) -> list[dict]:
-    """Une page de trades (côté taker, plus récents d'abord). start/end inclusifs."""
-    params: dict = {"market": condition_id, "limit": TRADES_PAGE, "offset": offset,
-                    "takerOnly": "true"}
-    if start is not None:
-        params["start"] = int(start)
-    if end is not None:
-        params["end"] = int(end)
-    page = _get(f"{DATA_API_URL}/trades", params)
-    return page if isinstance(page, list) else []
+def iter_trade_rows(condition_id: str, start: int | None, end: int):
+    """Tous les trades (côté taker) d'un marché entre start et end inclus.
+
+    En v2, start/end sont ignorés sur le flux d'un marché : on parcourt le flux
+    (plus récents d'abord) par curseur et on s'arrête sous start.
+    """
+    params = {"condition": condition_id, "taker_only": "true"}
+    for rows in _paged(f"{DATA_API_URL}/v2/trades", params, TRADES_PAGE):
+        done = False
+        for r in rows:
+            if "timestamp" not in r or "size" not in r or "price" not in r:
+                continue
+            t = int(r["timestamp"])
+            if start is not None and t < start:
+                done = True
+                continue
+            if t <= end:
+                yield _to_v1(r, _TRADE_V1)
+        if done or not rows:
+            return
 
 
 def iter_trades(condition_id: str, start: int | None, end: int):
     """Comme iter_trade_rows, réduit à (t, parts, prix)."""
     for r in iter_trade_rows(condition_id, start, end):
         yield int(r["timestamp"]), float(r["size"]), float(r["price"])
-
-
-def iter_trade_rows(condition_id: str, start: int | None, end: int):
-    """Tous les trades bruts entre start et end (inclus), par fenêtres glissantes.
-
-    L'API plafonne l'offset à 10 000 : quand une fenêtre est pleine, on écarte
-    la seconde la plus ancienne (peut-être incomplète) et on repart avec
-    end = cette seconde. Ni doublon ni trou.
-    """
-    window_end = int(end)
-    while True:
-        rows, offset, full = [], 0, False
-        while True:
-            page = get_trades(condition_id, start=start, end=window_end, offset=offset)
-            rows.extend(page)
-            if len(page) < TRADES_PAGE:
-                break
-            if offset + TRADES_PAGE > TRADES_MAX_OFFSET:
-                full = True
-                break
-            offset += TRADES_PAGE
-        trades = [r for r in rows if "timestamp" in r and "size" in r and "price" in r]
-        if not full:
-            yield from trades
-            return
-        oldest = min(int(r["timestamp"]) for r in trades)
-        if oldest >= window_end:
-            raise RuntimeError(f"plus de {TRADES_MAX_OFFSET} trades dans la même seconde")
-        yield from (r for r in trades if int(r["timestamp"]) > oldest)
-        window_end = oldest
 
 
 # ---------------------------------------------------------------- Polygon (cash)

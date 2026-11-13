@@ -41,7 +41,7 @@ def setup(tmp_path, monkeypatch, history_fn):
         return history_fn(token, kw)
 
     monkeypatch.setattr(pm, "get_price_history", fake_hist)
-    monkeypatch.setattr(pm, "get_trades", lambda *a, **kw: [])   # pas de réseau
+    monkeypatch.setattr(pm, "iter_trades", lambda *a, **kw: iter(()))   # pas de réseau
     return calls
 
 
