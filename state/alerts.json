@@ -1,20 +1,16 @@
 {
   "keys": {
     "edouard-philippe|7j|down": {
-      "streak": 10,
-      "seen_t": 1794623683,
+      "streak": 11,
+      "seen_t": 1794648266,
       "alert_t": 1794608554,
       "alert_price": 0.045
     },
     "edouard-philippe|24h|down": {
-      "streak": 6,
-      "seen_t": 1794623683,
+      "streak": 7,
+      "seen_t": 1794648266,
       "alert_t": 1794608554,
       "alert_price": 0.045
-    },
-    "dominique-de-villepin|24h|down": {
-      "streak": 1,
-      "seen_t": 1794623684
     }
   }
 }
