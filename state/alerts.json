@@ -1,14 +1,14 @@
 {
   "keys": {
     "edouard-philippe|7j|down": {
-      "streak": 15,
-      "seen_t": 1794723973,
+      "streak": 16,
+      "seen_t": 1794751991,
       "alert_t": 1794608554,
       "alert_price": 0.045
     },
     "edouard-philippe|24h|up": {
-      "streak": 3,
-      "seen_t": 1794723973,
+      "streak": 4,
+      "seen_t": 1794751991,
       "alert_t": 1794700995,
       "alert_price": 0.065
     }
