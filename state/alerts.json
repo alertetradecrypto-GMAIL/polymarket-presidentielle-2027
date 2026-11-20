@@ -1,10 +1,18 @@
 {
   "keys": {
     "dominique-de-villepin|24h|up": {
-      "streak": 2,
-      "seen_t": 1795161610,
-      "alert_t": 1795161672,
-      "alert_price": 0.0185
+      "streak": 3,
+      "seen_t": 1795193780,
+      "alert_t": 1795193838,
+      "alert_price": 0.033
+    },
+    "edouard-philippe|24h|up": {
+      "streak": 1,
+      "seen_t": 1795193780
+    },
+    "christine-lagarde|24h|up": {
+      "streak": 1,
+      "seen_t": 1795193779
     }
   }
 }
