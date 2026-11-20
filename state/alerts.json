@@ -1,8 +1,10 @@
 {
   "keys": {
     "dominique-de-villepin|24h|up": {
-      "streak": 1,
-      "seen_t": 1795135754
+      "streak": 2,
+      "seen_t": 1795161610,
+      "alert_t": 1795161672,
+      "alert_price": 0.0185
     }
   }
 }
