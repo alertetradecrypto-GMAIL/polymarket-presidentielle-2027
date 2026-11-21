@@ -1,28 +1,20 @@
 {
   "keys": {
-    "dominique-de-villepin|24h|up": {
-      "streak": 5,
-      "seen_t": 1795231856,
-      "alert_t": 1795193838,
-      "alert_price": 0.033
-    },
     "christine-lagarde|24h|down": {
-      "streak": 2,
-      "seen_t": 1795233030,
+      "streak": 3,
+      "seen_t": 1795262535,
       "alert_t": 1795233054,
       "alert_price": 0.0385
     },
     "christine-lagarde|7j|down": {
-      "streak": 2,
-      "seen_t": 1795233030,
+      "streak": 3,
+      "seen_t": 1795262535,
       "alert_t": 1795233054,
       "alert_price": 0.0385
     },
-    "dominique-de-villepin|7j|up": {
-      "streak": 2,
-      "seen_t": 1795231856,
-      "alert_t": 1795233054,
-      "alert_price": 0.0345
+    "edouard-philippe|24h|down": {
+      "streak": 1,
+      "seen_t": 1795262535
     }
   }
 }
