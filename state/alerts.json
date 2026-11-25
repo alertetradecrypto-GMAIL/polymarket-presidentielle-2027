@@ -1,14 +1,14 @@
 {
   "keys": {
     "david-lisnard|7j|up": {
-      "streak": 4,
-      "seen_t": 1795567332,
+      "streak": 5,
+      "seen_t": 1795597948,
       "alert_t": 1795536488,
       "alert_price": 0.2495
     },
     "dominique-de-villepin|24h|down": {
-      "streak": 2,
-      "seen_t": 1795567332,
+      "streak": 3,
+      "seen_t": 1795597949,
       "alert_t": 1795567360,
       "alert_price": 0.0135
     }
