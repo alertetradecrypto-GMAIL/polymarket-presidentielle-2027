@@ -1,12 +1,12 @@
 {
-  "day": "2026-11-24",
-  "count": 3,
+  "day": "2026-11-25",
+  "count": 1,
   "last": {
     "edouard-philippe|down": 1795323227,
     "edouard-philippe|up": 1795080215,
     "christine-lagarde|down": 1795233076,
     "dominique-de-villepin|up": 1795233076,
-    "dominique-de-villepin|down": 1795323227,
+    "dominique-de-villepin|down": 1795567378,
     "francois-hollande|up": 1795352585,
     "david-lisnard|up": 1795536521
   }
