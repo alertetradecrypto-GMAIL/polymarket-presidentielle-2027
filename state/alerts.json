@@ -1,3 +1,12 @@
 {
-  "keys": {}
+  "keys": {
+    "edouard-philippe|24h|up": {
+      "streak": 1,
+      "seen_t": 1795724473
+    },
+    "francois-hollande|7j|up": {
+      "streak": 1,
+      "seen_t": 1795724474
+    }
+  }
 }

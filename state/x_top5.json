@@ -3,16 +3,10 @@
     "marine-le-pen",
     "david-lisnard",
     "jean-luc-melenchon",
-    "francois-hollande",
-    "edouard-philippe"
-  ],
-  "t": 1795659749,
-  "cand": [
-    "marine-le-pen",
-    "david-lisnard",
-    "jean-luc-melenchon",
     "edouard-philippe",
     "francois-hollande"
   ],
-  "seen": 1
+  "t": 1795724532,
+  "cand": null,
+  "seen": 0
 }
