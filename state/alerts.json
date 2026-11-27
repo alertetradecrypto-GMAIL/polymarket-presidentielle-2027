@@ -1,12 +1,10 @@
 {
   "keys": {
     "edouard-philippe|24h|up": {
-      "streak": 1,
-      "seen_t": 1795724473
-    },
-    "francois-hollande|7j|up": {
-      "streak": 1,
-      "seen_t": 1795724474
+      "streak": 2,
+      "seen_t": 1795748478,
+      "alert_t": 1795748543,
+      "alert_price": 0.0565
     }
   }
 }
