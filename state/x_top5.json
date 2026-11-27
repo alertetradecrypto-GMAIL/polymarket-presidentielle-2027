@@ -7,6 +7,12 @@
     "francois-hollande"
   ],
   "t": 1795724532,
-  "cand": null,
-  "seen": 0
+  "cand": [
+    "marine-le-pen",
+    "david-lisnard",
+    "jean-luc-melenchon",
+    "francois-hollande",
+    "edouard-philippe"
+  ],
+  "seen": 1
 }
