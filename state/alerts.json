@@ -1,20 +1,20 @@
 {
   "keys": {
     "david-lisnard|7j|up": {
-      "streak": 2,
-      "seen_t": 1795814433,
+      "streak": 3,
+      "seen_t": 1795836269,
       "alert_t": 1795814477,
       "alert_price": 0.2565
     },
-    "christine-lagarde|7j|down": {
-      "streak": 2,
-      "seen_t": 1795814432,
-      "alert_t": 1795814477,
-      "alert_price": 0.0355
-    },
     "edouard-philippe|24h|down": {
+      "streak": 2,
+      "seen_t": 1795836269,
+      "alert_t": 1795836341,
+      "alert_price": 0.0385
+    },
+    "dominique-de-villepin|7j|down": {
       "streak": 1,
-      "seen_t": 1795814432
+      "seen_t": 1795836270
     }
   }
 }
